@@ -269,42 +269,42 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
     return 1;
 }
 
-void movements(checkersGrid Board[][SIZE], int turn, coordinates c1, coordinates c2)
+void movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates c2)
 {
+    char Y1, Y2;
+    Y1 = c1.y + 'A';
+    Y2 = c2.y + 'A';
 
-    //Condition -1(coordinates remain within the array && the final coordinates should be diagonal)
-    if (c2.x >= 1 && c2.x <= SIZE && c1.y >= 0 && c1.y <= SIZE - 1)
+    int ans = isvalid(Board, turn, Y1, c1.x, Y2, c2.x);
+
+    if (ans == 0)
     {
-        // Condition-2 (final coordinates should be empty)
-        if (Board[c2.x - 1][c2.y].state == EMPTY)
-        {
-            // Check for turn - turn =0 for player -1
-            if (turn == 0)
-            {
-                Board[c2.x - 1][c2.y].state = FULL;
-                Board[c2.x - 1][c2.y].checkers.colour = RED;
-                Board[c2.x - 1][c2.y].checkers.type = NORMAL;
-            }
-            else
-            {
-                Board[c2.x - 1][c2.y].state = FULL;
-                Board[c2.x - 1][c2.y].checkers.colour = BLUE;
-                Board[c2.x - 1][c2.y].checkers.type = NORMAL;
-            }
-            Board[c1.x - 1][c1.y].state = EMPTY;
-            Board[c1.x - 1][c1.y].checkers.colour = NOCOLOUR;
-            Board[c1.x - 1][c1.y].checkers.type = NOPEICE;
-        }
-        else
-        {
-            printf("Invalid move");
-        }
+        return;
     }
     else
-    {
-        printf("Invalid move");
+    {   
+        // Player - X
+        if (turn == 'X')
+        {   
+            // Change the current piece features
+            Board[c2.x - 1][c2.y].state = FULL;
+            Board[c2.x - 1][c2.y].checkers.colour = RED;
+            Board[c2.x - 1][c2.y].checkers.type = NORMAL;
+        }
+
+        // Player - O
+        else
+        {   
+            // Change the current piece features
+            Board[c2.x - 1][c2.y].state = FULL;
+            Board[c2.x - 1][c2.y].checkers.colour = BLUE;
+            Board[c2.x - 1][c2.y].checkers.type = NORMAL;    
+        }
+
+        // Update the previous piece features
+        Board[c1.x - 1][c1.y].state = EMPTY;
+        Board[c1.x - 1][c1.y].checkers.colour = NOCOLOUR;
+        Board[c1.x - 1][c1.y].checkers.type = NOPEICE;
+
     }
 }
-
-
-
