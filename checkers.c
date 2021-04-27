@@ -1,7 +1,12 @@
 #include "checkers.h"
 
-
-
+void initBoard(checkersGrid Board[][SIZE])
+{
+    //Create empty board
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
             Board[i][j].state = EMPTY;
             (Board[i][j].checkers).colour = NOCOLOUR;
             (Board[i][j].checkers).type = NOPEICE;
@@ -141,13 +146,14 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
             {
                 if (c == a - 2)
                 {
-                    if ((Board[b - 1][a - 1].checkers).colour == BLUE || (Board[b - 1][a - 1].checkers).colour == NOCOLOUR)
+                    if ((Board[b - 1][a - 1].checkers).colour == BLUE || (Board[b - 1][a- 1].checkers).colour == NOCOLOUR)
                         return 0;
                 }
 
                 if (c == a + 2)
                 {
-                    if ((Board[b - 1][a + 1].checkers).colour == BLUE || (Board[b - 1][a + 1].checkers).colour == NOCOLOUR)
+
+                    if ((Board[b - 1][a+1].checkers).colour == BLUE || (Board[b - 1][a + 1].checkers).colour == NOCOLOUR)
                         return 0;
                 }
             }
@@ -161,13 +167,14 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
             {
                 if (c == a - 2)
                 {
-                    if ((Board[b - 1][a - 1].checkers).colour == BLUE || (Board[b - 1][a - 1].checkers).colour == NOCOLOUR)
+                    if ((Board[b- 1][a - 1].checkers).colour == BLUE || (Board[b - 1][a - 1].checkers).colour == NOCOLOUR)
+
                         return 0;
                 }
 
                 if (c == a + 2)
                 {
-                    if ((Board[b - 1][a + 1].checkers).colour == BLUE || (Board[b - 1][a + 1].checkers).colour == NOCOLOUR)
+                    if ((Board[b-1][a + 1].checkers).colour == BLUE || (Board[b - 1][a +1].checkers).colour == NOCOLOUR)
                         return 0;
                 }
             }
@@ -176,13 +183,15 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
             {
                 if (c == a - 2)
                 {
-                    if ((Board[b + 1][a - 1].checkers).colour == BLUE || (Board[b + 1][a - 1].checkers).colour == NOCOLOUR)
+
+                    if ((Board[b+ 1][a - 1].checkers).colour == BLUE || (Board[b+ 1][a - 1].checkers).colour == NOCOLOUR)
                         return 0;
                 }
 
                 if (c == a + 2)
                 {
-                    if ((Board[b + 1][a + 1].checkers).colour == BLUE || (Board[b + 1][a + 1].checkers).colour == NOCOLOUR)
+                    if ((Board[b+ 1][a + 1].checkers).colour == BLUE || (Board[b + 1][a+ 1].checkers).colour == NOCOLOUR)
+
                         return 0;
                 }
             }
@@ -204,7 +213,9 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
             {
                 if (c == a - 2)
                 {
-                    if ((Board[b + 1][a - 1].checkers).colour == RED || (Board[b + 1][a - 1].checkers).colour == NOCOLOUR)
+
+                    if ((Board[b+1][a-1].checkers).colour == RED || (Board[b+1][a-1].checkers).colour == NOCOLOUR)
+
                         return 0;
                 }
 
@@ -245,12 +256,15 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
 
                 if (c == a + 2)
                 {
-                    if ((Board[b - 1][a + 1].checkers).colour == RED || (Board[b - 1][a + 1].checkers).colour == NOCOLOUR)
+
+                    if ((Board[b - 1][a + 1].checkers).colour == RED || (Board[b- 1][a + 1].checkers).colour == NOCOLOUR)
+
                         return 0;
                 }
             }
         }
     }
+
 
     return 1;
 }
@@ -291,4 +305,6 @@ void movements(checkersGrid Board[][SIZE], int turn, coordinates c1, coordinates
         printf("Invalid move");
     }
 }
+
+
 

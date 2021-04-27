@@ -1,11 +1,15 @@
+#include "checkers.h"
+
 
 
 int main()
 {
 
+
     checkersGrid CheckerBoard[SIZE][SIZE];
     initBoard(CheckerBoard);
     printBoard(CheckerBoard);
+
     
     //Input from user
     int turn = 1;
@@ -24,4 +28,5 @@ int main()
 
     return 0;
 }
+
 

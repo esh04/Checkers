@@ -1,7 +1,8 @@
 #ifndef __CHECKERS_H
 #define __CHECKERS_H
 
-#include "constants.h"
+
+
 
 #include <stdio.h>
 #include<stdlib.h>
