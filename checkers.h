@@ -6,5 +6,5 @@
 
 void initBoard(checkersGrid Board[][SIZE]);
 void printBoard(checkersGrid Board[][SIZE]);
-
+int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d);
 #endif
