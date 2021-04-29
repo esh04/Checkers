@@ -21,9 +21,9 @@ void initBoard(checkersGrid Board[][SIZE])
         {
             if (i == 1)
             {
-                Board[i][j + 1].state = FULL;
-                (Board[i][j + 1].checkers).colour = RED;
-                (Board[i][j + 1].checkers).type = NORMAL;
+                Board[i][j].state = FULL;
+                (Board[i][j].checkers).colour = RED;
+                (Board[i][j].checkers).type = NORMAL;
 
                 Board[SIZE - 1 - i][j + 1].state = FULL;
                 (Board[SIZE - 1 - i][j + 1].checkers).colour = BLUE;
@@ -31,9 +31,9 @@ void initBoard(checkersGrid Board[][SIZE])
             }
             else
             {
-                Board[i][j].state = FULL;
-                (Board[i][j].checkers).colour = RED;
-                (Board[i][j].checkers).type = NORMAL;
+                Board[i][j + 1].state = FULL;
+                (Board[i][j + 1].checkers).colour = RED;
+                (Board[i][j + 1].checkers).type = NORMAL;
 
                 Board[SIZE - 1 - i][j].state = FULL;
                 (Board[SIZE - 1 - i][j].checkers).colour = BLUE;
