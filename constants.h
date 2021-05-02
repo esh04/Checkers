@@ -22,8 +22,8 @@
 
 typedef struct coordinates
 {
-    int x; // board starts from 1, hence input - 1 will be stored.
-    int y; // coordinate y is an aplhabet so the ascii - 'A' can be stored.
+    int x; // coordinate y is an aplhabet so the ascii - 'A' can be stored. 
+    int y; // board starts from 1, hence input - 1 will be stored.
 } coordinates;
 
 typedef struct peice
