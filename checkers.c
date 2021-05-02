@@ -44,7 +44,7 @@ void initBoard(checkersGrid Board[][SIZE])
 }
 
 void printBoard(checkersGrid Board[][SIZE])
-{
+{   
     for (int i = 0; i < SIZE; i++)
     {
 
@@ -62,10 +62,12 @@ void printBoard(checkersGrid Board[][SIZE])
         for (int j = 0; j < SIZE; j++)
         {
 
-            if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == RED) && ((Board[i][j].checkers).type == NORMAL))
-                printf(" %c |", 'X');
-            else if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == BLUE) && ((Board[i][j].checkers).type == NORMAL))
-                printf(" %c |", 'O');
+            if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == RED) && ((Board[i][j].checkers).type == NORMAL)){
+                printf("\033[31m X ");
+                printf("\033[0m|");}
+            else if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == BLUE) && ((Board[i][j].checkers).type == NORMAL)){
+                printf("\033[36m O ");
+                printf("\033[0m|");}
             else
                 printf("   |");
         }
@@ -269,7 +271,7 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
     return 1;
 }
 
-void movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates c2)
+int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates c2)
 {
     char Y1, Y2;
     Y1 = c1.y + 'A';
@@ -279,7 +281,7 @@ void movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinate
 
     if (ans == 0)
     {
-        return;
+        return 0;
     }
     else
     {   
@@ -307,4 +309,5 @@ void movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinate
         Board[c1.x - 1][c1.y].checkers.type = NOPEICE;
 
     }
+    return 1;
 }
