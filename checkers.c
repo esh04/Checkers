@@ -277,14 +277,16 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
     Y1 = c1.y + 'A';
     Y2 = c2.y + 'A';
 
+
+    // isvalid=0 if valid move, else isvalid=1
     int ans = isvalid(Board, turn, Y1, c1.x, Y2, c2.x);
 
-    if (ans == 0)
+    if (ans == 0) // Invalid move
     {
         return 0;
     }
-    else
-    {   
+    else  // Valid move
+    {    
         // Player - X
         if (turn == 'X')
         {   
