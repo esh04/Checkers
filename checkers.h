@@ -10,5 +10,6 @@ void initBoard(checkersGrid Board[][SIZE]);
 void printBoard(checkersGrid Board[][SIZE]);
 int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d);
 int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates c2); //c1-Initial & c2-final coordinates 
+
 void asciiArt();
 #endif

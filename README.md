@@ -7,3 +7,4 @@ We have developed a terminal version of this game.
 ## How to play the game?
 
 ## Time Complexities of all the functions
+Initialising the board and printing the board both have time complexities O(n^2).

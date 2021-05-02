@@ -2,11 +2,9 @@
 
 int main()
 {
-
     checkersGrid CheckerBoard[SIZE][SIZE];
     initBoard(CheckerBoard);
     int ans = 1;
-
     char turn = 'O';
     char ch;
     asciiArt();
@@ -68,6 +66,5 @@ int main()
                 }
             }
         }
-
     return 0;
 }

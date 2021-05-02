@@ -94,7 +94,7 @@ void printBoard(checkersGrid Board[][SIZE])
 
     printf("\n");
     printf("   ");
-             printf("                   ");
+    printf("                   ");
 
     for (int i = 0; i < SIZE; i++)
     {
