@@ -44,9 +44,10 @@ void initBoard(checkersGrid Board[][SIZE])
 }
 
 void printBoard(checkersGrid Board[][SIZE])
-{   
+{
     for (int i = 0; i < SIZE; i++)
     {
+        printf("                   ");
 
         for (int k = 0; k < SIZE + 1; k++)
         {
@@ -57,22 +58,31 @@ void printBoard(checkersGrid Board[][SIZE])
         }
         printf("-");
         printf("\n");
+        printf("                   ");
 
         printf("%d  |", i + 1);
         for (int j = 0; j < SIZE; j++)
         {
-
-            if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == RED) && ((Board[i][j].checkers).type == NORMAL)){
+            if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == RED) && ((Board[i][j].checkers).type == NORMAL))
+            {
                 printf("\033[31m X ");
-                printf("\033[0m|");}
-            else if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == BLUE) && ((Board[i][j].checkers).type == NORMAL)){
+                printf("\033[0m|");
+            }
+            else if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == BLUE) && ((Board[i][j].checkers).type == NORMAL))
+            {
                 printf("\033[36m O ");
-                printf("\033[0m|");}
+                printf("\033[0m|");
+            }
             else
+            {
                 printf("   |");
+            }
         }
+
         printf("\n");
     }
+    printf("                   ");
+
     for (int k = 0; k < SIZE + 1; k++)
     {
         if (k == 0)
@@ -80,8 +90,11 @@ void printBoard(checkersGrid Board[][SIZE])
         else
             printf("----");
     }
+    printf("                   ");
+
     printf("\n");
     printf("   ");
+    printf("                   ");
 
     for (int i = 0; i < SIZE; i++)
     {
@@ -148,14 +161,14 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
             {
                 if (c == a - 2)
                 {
-                    if ((Board[b - 1][a - 1].checkers).colour == BLUE || (Board[b - 1][a- 1].checkers).colour == NOCOLOUR)
+                    if ((Board[b - 1][a - 1].checkers).colour == BLUE || (Board[b - 1][a - 1].checkers).colour == NOCOLOUR)
                         return 0;
                 }
 
                 if (c == a + 2)
                 {
 
-                    if ((Board[b - 1][a+1].checkers).colour == BLUE || (Board[b - 1][a + 1].checkers).colour == NOCOLOUR)
+                    if ((Board[b - 1][a + 1].checkers).colour == BLUE || (Board[b - 1][a + 1].checkers).colour == NOCOLOUR)
                         return 0;
                 }
             }
@@ -169,14 +182,14 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
             {
                 if (c == a - 2)
                 {
-                    if ((Board[b- 1][a - 1].checkers).colour == BLUE || (Board[b - 1][a - 1].checkers).colour == NOCOLOUR)
+                    if ((Board[b - 1][a - 1].checkers).colour == BLUE || (Board[b - 1][a - 1].checkers).colour == NOCOLOUR)
 
                         return 0;
                 }
 
                 if (c == a + 2)
                 {
-                    if ((Board[b-1][a + 1].checkers).colour == BLUE || (Board[b - 1][a +1].checkers).colour == NOCOLOUR)
+                    if ((Board[b - 1][a + 1].checkers).colour == BLUE || (Board[b - 1][a + 1].checkers).colour == NOCOLOUR)
                         return 0;
                 }
             }
@@ -186,13 +199,13 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
                 if (c == a - 2)
                 {
 
-                    if ((Board[b+ 1][a - 1].checkers).colour == BLUE || (Board[b+ 1][a - 1].checkers).colour == NOCOLOUR)
+                    if ((Board[b + 1][a - 1].checkers).colour == BLUE || (Board[b + 1][a - 1].checkers).colour == NOCOLOUR)
                         return 0;
                 }
 
                 if (c == a + 2)
                 {
-                    if ((Board[b+ 1][a + 1].checkers).colour == BLUE || (Board[b + 1][a+ 1].checkers).colour == NOCOLOUR)
+                    if ((Board[b + 1][a + 1].checkers).colour == BLUE || (Board[b + 1][a + 1].checkers).colour == NOCOLOUR)
 
                         return 0;
                 }
@@ -216,7 +229,7 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
                 if (c == a - 2)
                 {
 
-                    if ((Board[b+1][a-1].checkers).colour == RED || (Board[b+1][a-1].checkers).colour == NOCOLOUR)
+                    if ((Board[b + 1][a - 1].checkers).colour == RED || (Board[b + 1][a - 1].checkers).colour == NOCOLOUR)
 
                         return 0;
                 }
@@ -259,14 +272,13 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
                 if (c == a + 2)
                 {
 
-                    if ((Board[b - 1][a + 1].checkers).colour == RED || (Board[b- 1][a + 1].checkers).colour == NOCOLOUR)
+                    if ((Board[b - 1][a + 1].checkers).colour == RED || (Board[b - 1][a + 1].checkers).colour == NOCOLOUR)
 
                         return 0;
                 }
             }
         }
     }
-
 
     return 1;
 }
@@ -277,7 +289,6 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
     Y1 = c1.y + 'A';
     Y2 = c2.y + 'A';
 
-
     // isvalid=0 if valid move, else isvalid=1
     int ans = isvalid(Board, turn, Y1, c1.x, Y2, c2.x);
 
@@ -285,11 +296,11 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
     {
         return 0;
     }
-    else  // Valid move
-    {    
+    else // Valid move
+    {
         // Player - X
         if (turn == 'X')
-        {   
+        {
             // Change the current piece features
             Board[c2.x - 1][c2.y].state = FULL;
             Board[c2.x - 1][c2.y].checkers.colour = RED;
@@ -298,18 +309,47 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
 
         // Player - O
         else
-        {   
+        {
             // Change the current piece features
             Board[c2.x - 1][c2.y].state = FULL;
             Board[c2.x - 1][c2.y].checkers.colour = BLUE;
-            Board[c2.x - 1][c2.y].checkers.type = NORMAL;    
+            Board[c2.x - 1][c2.y].checkers.type = NORMAL;
         }
 
         // Update the previous piece features
         Board[c1.x - 1][c1.y].state = EMPTY;
         Board[c1.x - 1][c1.y].checkers.colour = NOCOLOUR;
         Board[c1.x - 1][c1.y].checkers.type = NOPEICE;
-
     }
     return 1;
+}
+
+void allPossibleMoves()
+{
+    /*LIST OF ALL POSSIBLE MOVES:
+    1. forward empty diagonal for every peice not captured
+    2. if its king forward and backward diagonals 
+    3. jump/double jump -- should be the only valid move when exists
+
+
+
+
+    */
+}
+void asciiArt()
+{
+    system("clear");
+
+    printf("\n\n\n +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n"
+           " ____________________________________________________________________________\n\n"
+           "   ######  ##     ## ########  ######  ##    ## ######## ########   ######\n"
+           "  ##    ## ##     ## ##       ##    ## ##   ##  ##       ##     ## ##    ##\n"
+           "  ##       ##     ## ##       ##       ##  ##   ##       ##     ## ##       \n"
+           "  ##       ######### ######   ##       #####    ######   ########   ######  \n"
+           "  ##       ##     ## ##       ##       ##  ##   ##       ##   ##         ## \n"
+           "  ##    ## ##     ## ##       ##    ## ##   ##  ##       ##    ##  ##    ##\n"
+           "   ######  ##     ## ########  ######  ##    ## ######## ##     ##  ######  \n"
+           " ____________________________________________________________________________\n\n"
+           " +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+    printf("\n\n\n\n Print any key to continue..");
 }
