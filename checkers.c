@@ -296,6 +296,11 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
     {
         return 0;
     }
+
+    if((abs(c1.y - c2.y) != 1) && (abs(c1.x - c2.x) != 1))
+    {
+	    return 0;
+    }
     else // Valid move
     {
         // Player - X
@@ -324,16 +329,66 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
     return 1;
 }
 
+int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates c2)
+{
+	char y1, y2;
+	y1 = c1.y + 'A';
+	y2 = c2.y + 'A';
+	int ans, x_coordinate, y_coordinate;
+	x_coordinate = (c2.x + c1.x)/2;
+	y_coordinate = (c2.y + c1.y)/2;
+	ans = isvalid(Board, turn, y1, c1.x, y2, c2.x);
+	if(ans == 0)
+	{
+		return 0;
+	}
+	else if((abs(c2.x - c1.x) != 2) && (abs(c2.y - c1.y) != 2)) 
+	{
+		return 0;
+	}
+	else
+	{
+        	Board[c1.x - 1][c1.y].state = EMPTY;
+        	Board[c1.x - 1][c1.y].checkers.colour = NOCOLOUR;
+        	Board[c1.x - 1][c1.y].checkers.type = NOPEICE;
+		Board[x_coordinate - 1][y_coordinate].state = EMPTY;
+		Board[x_coordinate - 1][y_coordinate].checkers.colour = NOCOLOUR;
+		Board[x_coordinate - 1][y_coordinate].checkers.type = NOPEICE;
+		if(turn == 'X')
+		{
+                	Board[c2.x - 1][c2.y].state = FULL;
+                	Board[c2.x - 1][c2.y].checkers.colour = RED;
+			if(c2.y == 7)
+			{
+				Board[c2.x - 1][c2.y].checkers.type = KING;
+			}	
+			else
+			{
+				Board[c2.x - 1][c2.y].checkers.type = NORMAL;
+			}
+		}
+		else
+		{
+                	Board[c2.x - 1][c2.y].state = FULL;
+               		Board[c2.x - 1][c2.y].checkers.colour = BLUE;
+			if(c2.y == 0)
+                        {
+                                Board[c2.x - 1][c2.y].checkers.type = KING;
+                        }
+                        else
+                        {
+                                Board[c2.x - 1][c2.y].checkers.type = NORMAL;
+                        }
+		}
+	}
+	return 1;
+}
 void allPossibleMoves()
 {
     /*LIST OF ALL POSSIBLE MOVES:
     1. forward empty diagonal for every peice not captured
     2. if its king forward and backward diagonals 
     3. jump/double jump -- should be the only valid move when exists
-
-
-
-
     */
 }
 void asciiArt()
