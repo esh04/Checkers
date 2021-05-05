@@ -329,6 +329,7 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
     return 1;
 }
 
+
 int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates c2)
 {
 	char y1, y2;
@@ -408,3 +409,74 @@ void asciiArt()
            " +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
     printf("\n\n\n\n Press any key to continue..");
 }
+
+
+
+
+// Stack Implementation in C- using arrays
+int top;
+
+void push(StackContents s[10000], StackContents c){
+    top++;
+    s[top] = c;
+}
+
+void pop(StackContents s[10000]){
+    if(top<=-1){
+        printf("You have entered a wrong value of moves!\n");
+        return;
+    }else{
+        top--;
+    }
+}
+
+
+int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves, int capture){
+    // Stack
+    if(top < moves-1)
+    {
+        return 0;
+    }   
+    else
+    {   
+        if(capture == 1)
+        {
+            moves++;
+        }
+        
+        for(int i=0;i<moves;i++)
+        {
+            
+            StackContents AllValues = stack[top];
+            coordinates c1 = AllValues.start;  // Initial
+            coordinates c2 = AllValues.final;  // Final
+            char turn = AllValues.turn;        // Turn can be X or O
+
+            pop(stack);
+
+        
+            
+                if(turn == 'X')
+                {
+                    // Inital State
+                    Board[c1.x - 1][c1.y].state = FULL;
+                    Board[c1.x - 1][c1.y].checkers.colour = RED;
+                    Board[c1.x - 1][c1.y].checkers.type = NORMAL;
+                }
+                else
+                {
+                    // Inital State
+                    Board[c1.x - 1][c1.y].state = FULL;
+                    Board[c1.x - 1][c1.y].checkers.colour = BLUE;
+                    Board[c1.x - 1][c1.y].checkers.type = NORMAL;
+                }
+
+                // Final State
+                Board[c2.x - 1][c2.y].state = EMPTY;
+                Board[c2.x - 1][c2.y].checkers.colour = NOCOLOUR;
+                Board[c2.x - 1][c2.y].checkers.type = NOPEICE;
+            
+        }
+    } 
+}
+
