@@ -47,13 +47,10 @@ int main()
             // Converting to integer values
             start.y = y1 - 'A';
             final.y = y2 - 'A';
-            int capture = 1;
 
-            if(captures(CheckerBoard, turn, start, final) == 0){
-                capture = 0;
-            }
-
-            ans = captures(CheckerBoard, turn, start, final) || movements(CheckerBoard, turn, start, final);
+            int capture = captures(CheckerBoard, turn, start, final);
+            
+            ans =  movements(CheckerBoard, turn, start, final) || capture;
             printf("\n\n");
 
 
