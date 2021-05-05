@@ -1,4 +1,3 @@
-
 #include "checkers.h"
 #include "stack.h"
 
