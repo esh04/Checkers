@@ -18,8 +18,6 @@ int main()
             // To clear output everytime
             system("clear");
 
-            //printf("\n\n       WELCOME TO CHECKER'S GAME\n\n");
-
             // Prints the board
             printBoard(CheckerBoard);
 
