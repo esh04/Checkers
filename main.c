@@ -1,3 +1,4 @@
+
 #include "checkers.h"
 #include "stack.h"
 
@@ -5,42 +6,44 @@ StackContents stack[10000];
 
 int main()
 {
-
     checkersGrid CheckerBoard[SIZE][SIZE];
     initBoard(CheckerBoard);
-
-    //Input from user
+    int ans = 1;
     char turn = 'O';
-    while (1)
-    {
-        // To clear output everytime
-        system("clear");
+    char ch;
+    asciiArt();
+    if (scanf("%c", &ch))
+        while (1)
+        {
+            // To clear output everytime
+            system("clear");
 
-        printf("\n\n       WELCOME TO CHECKER'S GAME\n\n");
+            //printf("\n\n       WELCOME TO CHECKER'S GAME\n\n");
 
-        // Prints the board
-        printBoard(CheckerBoard);
+            // Prints the board
+            printBoard(CheckerBoard);
 
-        coordinates start, final;
-        printf("\n   *********** %c Turn **************\n", turn);
+            coordinates start, final;
+            printf("\n                   ");
 
-        // Taking inputs
-        char y1, y2;
-        printf("     Enter values of X1 Y1 X2 Y2\n");
-        scanf("\n%c %d %c %d", &y1, &start.x, &y2, &final.x);
+            printf(" ************* %c's Turn *************\n", turn);
+            if (ans == 0)
+            {
+                printf("\n                   ");
 
-        // Takes lower characters as input
-        y1 = toupper(y1);
-        y2 = toupper(y2);
+                printf("      Invalid Move, Try Again!\n");
+            }
+            // Taking inputs
+            char y1, y2;
+            printf("                   ");
 
-<<<<<<< Updated upstream
-        // Converting to integer values
-        start.y = y1 - 'A';
-        final.y = y2 - 'A';
+            printf("     Enter values of X1 Y1 X2 Y2\n");
+            //Input from user
+            scanf("\n%c %d %c %d", &y1, &start.x, &y2, &final.x);
+            // Takes lower characters as input
+            y1 = toupper(y1);
+            y2 = toupper(y2);
 
-        int ans = movements(CheckerBoard, turn, start, final);
-        printf("\n\n");
-=======
             // Converting to integer values
             start.y = y1 - 'A';
             final.y = y2 - 'A';
@@ -52,25 +55,15 @@ int main()
 
             ans = captures(CheckerBoard, turn, start, final) || movements(CheckerBoard, turn, start, final);
             printf("\n\n");
->>>>>>> Stashed changes
 
-        if (ans == 0)
-        {
-            // Invalid move
-            printf("\n      Invalid Move, Try Again!!!\n");
-        }
-        else
-        {
-            // Valid move
-            if (turn == 'X')
-            { // Player- O turn
-                turn = 'O';
+
+
+            if (ans == 0)
+            {
+                // Invalid move
+                printf("\n      Invalid Move, Try Again!\n");
             }
             else
-<<<<<<< Updated upstream
-            { // Player- X turn
-                turn = 'X';
-=======
             {   
                 printBoard(CheckerBoard);
                 // If Valid move push into stack everytime
@@ -107,11 +100,8 @@ int main()
                 { // Player- X turn
                     turn = 'X';
                 }
-                
->>>>>>> Stashed changes
+
             }
         }
-    }
-
     return 0;
 }

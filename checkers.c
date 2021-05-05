@@ -21,9 +21,9 @@ void initBoard(checkersGrid Board[][SIZE])
         {
             if (i == 1)
             {
-                Board[i][j + 1].state = FULL;
-                (Board[i][j + 1].checkers).colour = RED;
-                (Board[i][j + 1].checkers).type = NORMAL;
+                Board[i][j].state = FULL;
+                (Board[i][j].checkers).colour = RED;
+                (Board[i][j].checkers).type = NORMAL;
 
                 Board[SIZE - 1 - i][j + 1].state = FULL;
                 (Board[SIZE - 1 - i][j + 1].checkers).colour = BLUE;
@@ -31,9 +31,9 @@ void initBoard(checkersGrid Board[][SIZE])
             }
             else
             {
-                Board[i][j].state = FULL;
-                (Board[i][j].checkers).colour = RED;
-                (Board[i][j].checkers).type = NORMAL;
+                Board[i][j + 1].state = FULL;
+                (Board[i][j + 1].checkers).colour = RED;
+                (Board[i][j + 1].checkers).type = NORMAL;
 
                 Board[SIZE - 1 - i][j].state = FULL;
                 (Board[SIZE - 1 - i][j].checkers).colour = BLUE;
@@ -44,9 +44,10 @@ void initBoard(checkersGrid Board[][SIZE])
 }
 
 void printBoard(checkersGrid Board[][SIZE])
-{   
+{
     for (int i = 0; i < SIZE; i++)
     {
+        printf("                   ");
 
         for (int k = 0; k < SIZE + 1; k++)
         {
@@ -57,22 +58,31 @@ void printBoard(checkersGrid Board[][SIZE])
         }
         printf("-");
         printf("\n");
+        printf("                   ");
 
         printf("%d  |", i + 1);
         for (int j = 0; j < SIZE; j++)
         {
-
-            if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == RED) && ((Board[i][j].checkers).type == NORMAL)){
+            if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == RED) && ((Board[i][j].checkers).type == NORMAL))
+            {
                 printf("\033[31m X ");
-                printf("\033[0m|");}
-            else if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == BLUE) && ((Board[i][j].checkers).type == NORMAL)){
+                printf("\033[0m|");
+            }
+            else if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == BLUE) && ((Board[i][j].checkers).type == NORMAL))
+            {
                 printf("\033[36m O ");
-                printf("\033[0m|");}
+                printf("\033[0m|");
+            }
             else
+            {
                 printf("   |");
+            }
         }
+
         printf("\n");
     }
+    printf("                   ");
+
     for (int k = 0; k < SIZE + 1; k++)
     {
         if (k == 0)
@@ -80,8 +90,11 @@ void printBoard(checkersGrid Board[][SIZE])
         else
             printf("----");
     }
+    printf("                   ");
+
     printf("\n");
     printf("   ");
+    printf("                   ");
 
     for (int i = 0; i < SIZE; i++)
     {
@@ -148,14 +161,14 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
             {
                 if (c == a - 2)
                 {
-                    if ((Board[b - 1][a - 1].checkers).colour == BLUE || (Board[b - 1][a- 1].checkers).colour == NOCOLOUR)
+                    if ((Board[b - 1][a - 1].checkers).colour == BLUE || (Board[b - 1][a - 1].checkers).colour == NOCOLOUR)
                         return 0;
                 }
 
                 if (c == a + 2)
                 {
 
-                    if ((Board[b - 1][a+1].checkers).colour == BLUE || (Board[b - 1][a + 1].checkers).colour == NOCOLOUR)
+                    if ((Board[b - 1][a + 1].checkers).colour == BLUE || (Board[b - 1][a + 1].checkers).colour == NOCOLOUR)
                         return 0;
                 }
             }
@@ -169,14 +182,14 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
             {
                 if (c == a - 2)
                 {
-                    if ((Board[b- 1][a - 1].checkers).colour == BLUE || (Board[b - 1][a - 1].checkers).colour == NOCOLOUR)
+                    if ((Board[b - 1][a - 1].checkers).colour == BLUE || (Board[b - 1][a - 1].checkers).colour == NOCOLOUR)
 
                         return 0;
                 }
 
                 if (c == a + 2)
                 {
-                    if ((Board[b-1][a + 1].checkers).colour == BLUE || (Board[b - 1][a +1].checkers).colour == NOCOLOUR)
+                    if ((Board[b - 1][a + 1].checkers).colour == BLUE || (Board[b - 1][a + 1].checkers).colour == NOCOLOUR)
                         return 0;
                 }
             }
@@ -186,13 +199,13 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
                 if (c == a - 2)
                 {
 
-                    if ((Board[b+ 1][a - 1].checkers).colour == BLUE || (Board[b+ 1][a - 1].checkers).colour == NOCOLOUR)
+                    if ((Board[b + 1][a - 1].checkers).colour == BLUE || (Board[b + 1][a - 1].checkers).colour == NOCOLOUR)
                         return 0;
                 }
 
                 if (c == a + 2)
                 {
-                    if ((Board[b+ 1][a + 1].checkers).colour == BLUE || (Board[b + 1][a+ 1].checkers).colour == NOCOLOUR)
+                    if ((Board[b + 1][a + 1].checkers).colour == BLUE || (Board[b + 1][a + 1].checkers).colour == NOCOLOUR)
 
                         return 0;
                 }
@@ -216,7 +229,7 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
                 if (c == a - 2)
                 {
 
-                    if ((Board[b+1][a-1].checkers).colour == RED || (Board[b+1][a-1].checkers).colour == NOCOLOUR)
+                    if ((Board[b + 1][a - 1].checkers).colour == RED || (Board[b + 1][a - 1].checkers).colour == NOCOLOUR)
 
                         return 0;
                 }
@@ -259,14 +272,13 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
                 if (c == a + 2)
                 {
 
-                    if ((Board[b - 1][a + 1].checkers).colour == RED || (Board[b- 1][a + 1].checkers).colour == NOCOLOUR)
+                    if ((Board[b - 1][a + 1].checkers).colour == RED || (Board[b - 1][a + 1].checkers).colour == NOCOLOUR)
 
                         return 0;
                 }
             }
         }
     }
-
 
     return 1;
 }
@@ -277,7 +289,6 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
     Y1 = c1.y + 'A';
     Y2 = c2.y + 'A';
 
-
     // isvalid=0 if valid move, else isvalid=1
     int ans = isvalid(Board, turn, Y1, c1.x, Y2, c2.x);
 
@@ -285,11 +296,16 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
     {
         return 0;
     }
-    else  // Valid move
-    {    
+
+    if((abs(c1.y - c2.y) != 1) && (abs(c1.x - c2.x) != 1))
+    {
+	    return 0;
+    }
+    else // Valid move
+    {
         // Player - X
         if (turn == 'X')
-        {   
+        {
             // Change the current piece features
             Board[c2.x - 1][c2.y].state = FULL;
             Board[c2.x - 1][c2.y].checkers.colour = RED;
@@ -298,23 +314,21 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
 
         // Player - O
         else
-        {   
+        {
             // Change the current piece features
             Board[c2.x - 1][c2.y].state = FULL;
             Board[c2.x - 1][c2.y].checkers.colour = BLUE;
-            Board[c2.x - 1][c2.y].checkers.type = NORMAL;    
+            Board[c2.x - 1][c2.y].checkers.type = NORMAL;
         }
 
         // Update the previous piece features
         Board[c1.x - 1][c1.y].state = EMPTY;
         Board[c1.x - 1][c1.y].checkers.colour = NOCOLOUR;
         Board[c1.x - 1][c1.y].checkers.type = NOPEICE;
-
     }
     return 1;
 }
-<<<<<<< Updated upstream
-=======
+
 
 int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates c2)
 {
@@ -398,6 +412,7 @@ void asciiArt()
 
 
 
+
 // Stack Implementation in C- using arrays
 int top;
 
@@ -464,4 +479,4 @@ int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves, int captur
         }
     } 
 }
->>>>>>> Stashed changes
+
