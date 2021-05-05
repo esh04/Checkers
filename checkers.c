@@ -439,23 +439,61 @@ int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves, int captur
     }   
     else
     {   
-        if(capture == 1)
-        {
-            moves++;
-        }
-        
+        // if(capture == 1)
+        // {
+        //     moves++;
+        // }
+
         for(int i=0;i<moves;i++)
         {
-            
-            StackContents AllValues = stack[top];
-            coordinates c1 = AllValues.start;  // Initial
-            coordinates c2 = AllValues.final;  // Final
-            char turn = AllValues.turn;        // Turn can be X or O
+            if(capture == 1 && moves==1)
+            {
+                StackContents AllValues = stack[top];
+                coordinates c1 = AllValues.start;  // Initial
+                coordinates c2 = AllValues.final;  // Final
+                char turn = AllValues.turn;        // Turn can be X or O
 
-            pop(stack);
+                pop(stack);
 
-        
-            
+                if(turn == 'X')
+                {
+                    // Inital State
+                    Board[c1.x - 1][c1.y].state = FULL;
+                    Board[c1.x - 1][c1.y].checkers.colour = RED;
+                    Board[c1.x - 1][c1.y].checkers.type = NORMAL;
+
+                    Board[(c1.x + c2.x)/2 - 1][(c1.y+c2.y)/2].state = FULL;
+                    Board[(c1.x + c2.x)/2 - 1][(c1.y+c2.y)/2].checkers.colour = BLUE;
+                    Board[(c1.x + c2.x)/2 - 1][(c1.y+c2.y)/2].checkers.type = NORMAL;
+                }
+                else
+                {
+                    // Inital State
+                    Board[c1.x - 1][c1.y].state = FULL;
+                    Board[c1.x - 1][c1.y].checkers.colour = BLUE;
+                    Board[c1.x - 1][c1.y].checkers.type = NORMAL;
+
+                    Board[(c1.x + c2.x)/2 - 1][(c1.y+c2.y)/2].state = FULL;
+                    Board[(c1.x + c2.x)/2 - 1][(c1.y+c2.y)/2].checkers.colour = RED;
+                    Board[(c1.x + c2.x)/2 - 1][(c1.y+c2.y)/2].checkers.type = NORMAL;
+                }
+
+                // Final State
+                Board[c2.x - 1][c2.y].state = EMPTY;
+                Board[c2.x - 1][c2.y].checkers.colour = NOCOLOUR;
+                Board[c2.x - 1][c2.y].checkers.type = NOPEICE;
+            }
+
+            else
+            {
+
+                StackContents AllValues = stack[top];
+                coordinates c1 = AllValues.start;  // Initial
+                coordinates c2 = AllValues.final;  // Final
+                char turn = AllValues.turn;        // Turn can be X or O
+
+                pop(stack);
+
                 if(turn == 'X')
                 {
                     // Inital State
@@ -475,7 +513,7 @@ int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves, int captur
                 Board[c2.x - 1][c2.y].state = EMPTY;
                 Board[c2.x - 1][c2.y].checkers.colour = NOCOLOUR;
                 Board[c2.x - 1][c2.y].checkers.type = NOPEICE;
-            
+            }
         }
     } 
 }
