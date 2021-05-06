@@ -11,7 +11,7 @@ int main()
     int ans = 1;
     char turn = 'O';
     char ch;
-    introduction();
+    asciiArt();
     if (scanf("%c", &ch))
         while (1)
         {
@@ -81,6 +81,11 @@ int main()
 
                     // Do Undo 
                     int undoAns = undo(CheckerBoard, stack, moves, capture);
+                    if(turn=='X'){
+                        turn = 'O';
+                    }else{
+                        turn = 'X';
+                    }
                     if(undoAns==0){
                         printf("The no. of moves were Invalid");
                     }
