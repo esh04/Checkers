@@ -342,7 +342,6 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
     }
     return 1;
 }
-// this is a comment
 int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates c2)
 {
     char y1, y2;
