@@ -309,7 +309,14 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
             // Change the current piece features
             Board[c2.x - 1][c2.y].state = FULL;
             Board[c2.x - 1][c2.y].checkers.colour = RED;
-            Board[c2.x - 1][c2.y].checkers.type = NORMAL;
+            if (c2.x == 8)
+            {
+                Board[c2.x - 1][c2.y].checkers.type = KING;
+            }
+            else
+            {
+                Board[c2.x - 1][c2.y].checkers.type = NORMAL;
+            }
         }
 
         // Player - O
@@ -318,7 +325,14 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
             // Change the current piece features
             Board[c2.x - 1][c2.y].state = FULL;
             Board[c2.x - 1][c2.y].checkers.colour = BLUE;
-            Board[c2.x - 1][c2.y].checkers.type = NORMAL;
+            if (c2.x == 1)
+            {
+                Board[c2.x - 1][c2.y].checkers.type = KING;
+            }
+            else
+            {
+                Board[c2.x - 1][c2.y].checkers.type = NORMAL;
+            }
         }
 
         // Update the previous piece features
