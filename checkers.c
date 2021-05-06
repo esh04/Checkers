@@ -430,26 +430,33 @@ void allPossibleMoves(checkersGrid Board[][SIZE], char turn)
     {
         for (int j = 0; j < SIZE; j++)
         {
-            if ((Board[i][j].checkers).colour == colour)
+            if ((Board[j][i].checkers).colour == colour)
             {
 
                 //check valid moves for this peice
 
-                if ((Board[i][j].checkers).type == KING)
+                if ((Board[j][i].checkers).type == KING)
                 {
                     //can move to backward diagonal too
-                    if (Board[i + 1][j - forward].state == EMPTY)
-                        printf("%c%d to %c%d\n", i + 'A', j, i + 'A' + 1, j - forward);
-                    if (Board[i - 1][j - forward].state == EMPTY)
-                        printf("%c%d to %c%d\n", i + 'A', j, i + 'A' - 1, j - forward);
+                    if (isvalid(Board, turn, i + 'A', j + 1, i + 'A' + 1, j + 1 - forward))
+                        printf("%c%d to %c%d\n", i + 'A', j + 1, i + 'A' + 1, j - forward + 1);
+                    if (isvalid(Board, turn, i + 'A', j + 1, i + 'A' - 1, j - forward + 1))
+                        printf("%c%d to %c%d\n", i + 'A', j + 1, i + 'A' - 1, j - forward + 1);
                 }
                 //check forward movement
-                if (Board[i + 1][j + forward].state == EMPTY)
-                    printf("%c%d to %c%d\n", i + 'A', j, i + 'A' + 1, j + forward);
-                if (Board[i - 1][j + forward].state == EMPTY)
-                    printf("%c%d to %c%d\n", i + 'A', j, i + 'A' - 1, j + forward);
+                if (isvalid(Board, turn, i + 'A', j + 1, i + 1 + 'A', j + 1 + forward))
+                    printf("%c%d to %c%d\n", i + 'A', j + 1, i + 'A' + 1, j + forward + 1);
+                if (isvalid(Board, turn, i + 'A', j + 1, i + 'A' - 1, j + 1 + forward))
+                    printf("%c%d to %c%d\n", i + 'A', j + 1, i + 'A' - 1, j + forward + 1);
             }
         }
+    }
+    int temp;
+    printf("Press any key to continue.\n");
+    if (scanf("%d", &temp))
+        ;
+    {
+        return;
     }
 }
 
