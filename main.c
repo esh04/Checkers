@@ -1,4 +1,3 @@
-
 #include "checkers.h"
 #include "stack.h"
 
@@ -79,6 +78,11 @@ int main()
 
                     // Do Undo 
                     int undoAns = undo(CheckerBoard, stack, moves, capture);
+                    if(turn=='X'){
+                        turn = 'O';
+                    }else{
+                        turn = 'X';
+                    }
                     if(undoAns==0){
                         printf("The no. of moves were Invalid");
                     }
