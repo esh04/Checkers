@@ -10,7 +10,7 @@ int main()
     int ans = 1;
     char turn = 'O';
     char ch;
-    asciiArt();
+    introduction();
     if (scanf("%c", &ch))
         while (1)
         {
