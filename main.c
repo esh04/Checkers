@@ -30,6 +30,7 @@ int main()
 
                 printf("      Invalid Move, Try Again!\n");
             }
+
             // Taking inputs
             char y1, y2;
             printf("                   ");
@@ -57,6 +58,7 @@ int main()
             }
             else
             {
+                system("clear");
                 printBoard(CheckerBoard);
                 // If Valid move push into stack everytime
                 StackContents StackValues;
