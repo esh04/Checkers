@@ -25,7 +25,7 @@ int main()
             printf("\n                   ");
 
             printf(" ************* %c's Turn *************\n", turn);
-            if (ans == 0)
+            if (ans == 0) // ans is 0 incase of an invalid move
             {
                 printf("\n                   ");
 
@@ -34,14 +34,14 @@ int main()
 
             // Taking inputs
             char y1, y2;
-            if (counter == 0)
+            if (counter == 0) //visible only for first move as undo will not be valid at this point, hence only all posible moves 
             {
                 printf("Press 2 if you want to view all possible moves for %c, else press any other key!\n", turn);
                 int a;
                 scanf("%d", &a);
                 if (a == 2)
                 {
-                    allPossibleMoves(CheckerBoard, turn);
+                    allPossibleMoves(CheckerBoard, turn); //prints coordinates of all moves possible of the current player
                 }
                 system("clear");
                 printBoard(CheckerBoard);
@@ -63,9 +63,10 @@ int main()
             start.y = y1 - 'A';
             final.y = y2 - 'A';
 
+            //checks whether the coordinates are for capture
             int capture = captures(CheckerBoard, turn, start, final);
 
-            ans = movements(CheckerBoard, turn, start, final) || capture;
+            ans = movements(CheckerBoard, turn, start, final) || capture; //move will be valid if either of capture or movements are tru
             printf("\n\n");
 
             if (ans == 0)
@@ -84,8 +85,8 @@ int main()
                 StackValues.turn = turn;
                 push(stack, StackValues);
 
-                // Asking for Undo Option from user
-                printf("\nPress 1 if you want to Undo, 2 to view all possible moves for %c, else press any other key!\n", switchTurn(turn));
+                // Asking for Undo and all possible moves Option from user
+                printf("\nPress 1 to Undo, 2 to view all possible moves for %c, else press any other key!\n", switchTurn(turn));
                 int a;
                 scanf("%d", &a);
                 if (a == 1)
@@ -97,8 +98,8 @@ int main()
                     // Do Undo
                     int undoAns = undo(CheckerBoard, stack, moves, capture);
                     if (moves % 2 == 1)
-                    {
-                        turn = switchTurn(turn);
+                    {//turn swicthes if we undo odd number of moves but remains same when we undo even number
+                        turn = switchTurn(turn); //toggles turn
                     }
                     if (undoAns == 0)
                     {
@@ -108,11 +109,11 @@ int main()
                 else if (a == 2)
                 {
 
-                    allPossibleMoves(CheckerBoard, switchTurn(turn));
+                    allPossibleMoves(CheckerBoard, switchTurn(turn));//will check all possible moves of next player hence the toggle
                 }
 
-                // Valid move
-                turn = switchTurn(turn);
+                
+                turn = switchTurn(turn); //toggle turn
             }
         }
     return 0;
