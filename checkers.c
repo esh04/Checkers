@@ -6,7 +6,7 @@ void initBoard(checkersGrid Board[][SIZE])
     for (int i = 0; i < SIZE; i++)
     {
         for (int j = 0; j < SIZE; j++)
-        {
+        { //empty, nocolour and nopeice are properties corresponding to an empty square on the board
             Board[i][j].state = EMPTY;
             (Board[i][j].checkers).colour = NOCOLOUR;
             (Board[i][j].checkers).type = NOPEICE;
@@ -43,6 +43,7 @@ void initBoard(checkersGrid Board[][SIZE])
     }
 }
 
+//prints the checkerboard in its current state
 void printBoard(checkersGrid Board[][SIZE])
 {
     for (int i = 0; i < SIZE; i++)
@@ -65,12 +66,18 @@ void printBoard(checkersGrid Board[][SIZE])
         {
             if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == RED) && ((Board[i][j].checkers).type == NORMAL))
             {
-                printf("\033[31m X ");
+                if ((Board[i][j].checkers).type == KING)
+                    printf("\033[31m X* "); //king will be denoted with an asterix next to it
+                else
+                    printf("\033[31m X ");
                 printf("\033[0m|");
             }
             else if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == BLUE) && ((Board[i][j].checkers).type == NORMAL))
             {
-                printf("\033[36m O ");
+                if ((Board[i][j].checkers).type == KING)
+                    printf("\033[36m O* ");
+                else
+                    printf("\033[36m O ");
                 printf("\033[0m|");
             }
             else
@@ -102,6 +109,8 @@ void printBoard(checkersGrid Board[][SIZE])
     }
     printf("\n");
 }
+
+//checks whether the given input is valid
 int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
 {
     int m;
@@ -480,7 +489,7 @@ void allPossibleMoves(checkersGrid Board[][SIZE], char turn)
     }
 }
 
-void introduction()
+void introduction() //introductory page that shows up towards the start of the game
 {
     system("clear");
 
