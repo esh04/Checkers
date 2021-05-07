@@ -10,6 +10,7 @@ int main()
     int ans = 1;
     char turn = 'O';
     char ch;
+    int counter = 0;
     introduction();
     if (scanf("%c", &ch))
         while (1)
@@ -33,11 +34,27 @@ int main()
 
             // Taking inputs
             char y1, y2;
-            printf("                   ");
+            if (counter == 0)
+            {
+                printf("Press 2 if you want to view all possible moves for %c, else press any other key!\n", turn);
+                int a;
+                scanf("%d", &a);
+                if (a == 2)
+                {
+                    allPossibleMoves(CheckerBoard, turn);
+                }
+                system("clear");
+                printBoard(CheckerBoard);
+                printf("\n                   ");
+                printf(" ************* %c's Turn *************\n", turn);
+            }
 
+            printf("                   ");
             printf("     Enter values of X1 Y1 X2 Y2\n");
+
             //Input from user
             scanf("\n%c %d %c %d", &y1, &start.x, &y2, &final.x);
+
             // Takes lower characters as input
             y1 = toupper(y1);
             y2 = toupper(y2);
@@ -68,7 +85,7 @@ int main()
                 push(stack, StackValues);
 
                 // Asking for Undo Option from user
-                printf("Press 1 if you want to Undo, else press any other key!\n");
+                printf("\nPress 1 if you want to Undo, 2 to view all possible moves for %c, else press any other key!\n", switchTurn(turn));
                 int a;
                 scanf("%d", &a);
                 if (a == 1)
@@ -81,31 +98,21 @@ int main()
                     int undoAns = undo(CheckerBoard, stack, moves, capture);
                     if (moves % 2 == 1)
                     {
-                        if (turn == 'X')
-                        {
-                            turn = 'O';
-                        }
-                        else
-                        {
-                            turn = 'X';
-                        }
+                        turn = switchTurn(turn);
                     }
                     if (undoAns == 0)
                     {
                         printf("The no. of moves were Invalid");
                     }
                 }
+                else if (a == 2)
+                {
+
+                    allPossibleMoves(CheckerBoard, switchTurn(turn));
+                }
 
                 // Valid move
-                if (turn == 'X')
-                {
-                    // Player- O turn
-                    turn = 'O';
-                }
-                else
-                { // Player- X turn
-                    turn = 'X';
-                }
+                turn = switchTurn(turn);
             }
         }
     return 0;
