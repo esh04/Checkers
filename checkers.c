@@ -425,11 +425,12 @@ void allPossibleMoves(checkersGrid Board[][SIZE], char turn)
 
         return;
     }
-
+    int counter = 0;
     for (int i = 0; i < SIZE; i++)
     {
         for (int j = 0; j < SIZE; j++)
         {
+
             if ((Board[j][i].checkers).colour == colour)
             {
 
@@ -439,22 +440,41 @@ void allPossibleMoves(checkersGrid Board[][SIZE], char turn)
                 {
                     //can move to backward diagonal too
                     if (isvalid(Board, turn, i + 'A', j + 1, i + 'A' + 1, j + 1 - forward))
-                        printf("%c%d to %c%d\n", i + 'A', j + 1, i + 'A' + 1, j - forward + 1);
+                    {
+                        printf("%c%d to %c%d\t", i + 'A', j + 1, i + 'A' + 1, j - forward + 1);
+                        counter++;
+                        if (counter % 5 == 0)
+                            printf("\n");
+                    }
                     if (isvalid(Board, turn, i + 'A', j + 1, i + 'A' - 1, j - forward + 1))
-                        printf("%c%d to %c%d\n", i + 'A', j + 1, i + 'A' - 1, j - forward + 1);
+                    {
+                        printf("%c%d to %c%d\t", i + 'A', j + 1, i + 'A' - 1, j - forward + 1);
+                        counter++;
+                        if (counter % 5 == 0)
+                            printf("\n");
+                    }
                 }
                 //check forward movement
                 if (isvalid(Board, turn, i + 'A', j + 1, i + 1 + 'A', j + 1 + forward))
-                    printf("%c%d to %c%d\n", i + 'A', j + 1, i + 'A' + 1, j + forward + 1);
+                {
+                    printf("%c%d to %c%d\t", i + 'A', j + 1, i + 'A' + 1, j + forward + 1);
+                    counter++;
+                    if (counter % 5 == 0)
+                        printf("\n");
+                }
                 if (isvalid(Board, turn, i + 'A', j + 1, i + 'A' - 1, j + 1 + forward))
-                    printf("%c%d to %c%d\n", i + 'A', j + 1, i + 'A' - 1, j + forward + 1);
+                {
+                    printf("%c%d to %c%d\t", i + 'A', j + 1, i + 'A' - 1, j + forward + 1);
+                    counter++;
+                    if (counter % 5 == 0)
+                        printf("\n");
+                }
             }
         }
     }
     int temp;
-    printf("Press any key to continue.\n");
+    printf("\n\nPress any key to continue.\n");
     if (scanf("%d", &temp))
-        ;
     {
         return;
     }
@@ -586,4 +606,17 @@ int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves, int captur
             }
         }
     }
+}
+char switchTurn(char turn)
+{
+    if (turn == 'X')
+    {
+        // Player- O turn
+        turn = 'O';
+    }
+    else
+    { // Player- X turn
+        turn = 'X';
+    }
+    return turn;
 }
