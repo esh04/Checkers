@@ -424,7 +424,6 @@ int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates 
 	
     }
     return 1;
-
 }
 
 ///
@@ -479,6 +478,7 @@ int is_capture(checkersGrid Board[][SIZE], char turn, coordinates c)
 
 ///checking if captures is possible at all 
 int if_capture(checkersGrid Board[][SIZE], char turn)
+
 {       int colour, flag = 0;
         //char input;
 	coordinates temp;
@@ -508,9 +508,10 @@ int if_capture(checkersGrid Board[][SIZE], char turn)
 
                         }
                 }
-        }
-        return flag;
 
+        }
+    }
+    return flag;
 }
 
 void allPossibleMoves(checkersGrid Board[][SIZE], char turn, int k)
@@ -546,19 +547,24 @@ void allPossibleMoves(checkersGrid Board[][SIZE], char turn, int k)
 
     // check whether capture is possible, if it is that is the only possible move for the player
 
-    // put the code for checking if any capture is possible here
-    if (0) //iscapture
+    if (if_capture(tempBoard, turn))
     {
-        //perform capture on tempBoard
+        //perform capture or double capture on tempBoard
+        
         allPossibleMoves(tempBoard, switchTurn(turn), k - 1);
-        return;
     }
-
-    for (int i = 0; i < SIZE; i++)
+    else
     {
-        for (int j = 0; j < SIZE; j++)
+        for (int i = 0; i < SIZE; i++)
         {
+            for (int j = 0; j < SIZE; j++)
+            {
 
+                if ((tempBoard[j][i].checkers).colour == colour)
+                {
+                    coordinates initial, final;
+                    initial.x = i;
+                    initial.y = j;
 
             if ((tempBoard[j][i].checkers).colour == colour)
             {
@@ -568,58 +574,59 @@ void allPossibleMoves(checkersGrid Board[][SIZE], char turn, int k)
 
                 //check valid moves for this peice
 
-                if ((tempBoard[j][i].checkers).type == KING)
-                {
-                    //can move to backward diagonal too
-                    if (isvalid(tempBoard, turn, i + 'A', j + 1, i + 'A' + 1, j - forward + 1))
+
+                    if ((tempBoard[j][i].checkers).type == KING)
+                    {
+                        //can move to backward diagonal too
+                        if (isvalid(tempBoard, turn, i + 'A', j + 1, i + 'A' + 1, j - forward + 1))
+                        {
+                            final.x = i + 1;
+                            final.y = i - forward;
+                            movements(tempBoard, turn, initial, final);
+                            printf("%c%d to %c%d->\n\t", i + 'A', j + 1, i + 'A' + 1, j - forward + 1);
+                            for (int m = 0; m < 3 - k; m++) //this loop is only for indenting the output for a better view
+                                printf("\t");
+                            if (k - 1 > 0)
+                                allPossibleMoves(tempBoard, switchTurn(turn), k - 1); //recursion after toggling the turn and decrementing k as one iteration is completed
+                            printf("\n");
+                        }
+                        if (isvalid(tempBoard, turn, i + 'A', j + 1, i + 'A' - 1, j - forward + 1))
+                        {
+                            final.x = i - 1;
+                            final.y = i - forward;
+                            movements(tempBoard, turn, initial, final);
+                            printf("%c%d to %c%d->\n\t", i + 'A', j + 1, i + 'A' - 1, j - forward + 1);
+                            for (int m = 0; m < 3 - k; m++)
+                                printf("\t");
+                            if (k - 1 > 0)
+                                allPossibleMoves(tempBoard, switchTurn(turn), k - 1); //recursion after toggling the turn and decrementing k as one iteration is completed
+                            printf("\n");
+                        }
+                    }
+                    //check forward movement
+                    if (isvalid(tempBoard, turn, i + 'A', j + 1, i + 1 + 'A', j + 1 + forward))
                     {
                         final.x = i + 1;
-                        final.y = i - forward;
+                        final.y = i + forward;
                         movements(tempBoard, turn, initial, final);
-                        printf("%c%d to %c%d->\n\t", i + 'A', j + 1, i + 'A' + 1, j - forward + 1);
-                        for (int m = 0; m < 3 - k; m++)   //this loop is only for indenting the output for a better view
-                            printf("\t");
-                        if (k - 1 > 0)
-                            allPossibleMoves(tempBoard, switchTurn(turn), k - 1); //recursion after toggling the turn and decrementing k as one iteration is completed
-                        printf("\n");
-                    }
-                    if (isvalid(tempBoard, turn, i + 'A', j + 1, i + 'A' - 1, j - forward + 1))
-                    {
-                        final.x = i - 1;
-                        final.y = i - forward;
-                        movements(tempBoard, turn, initial, final);
-                        printf("%c%d to %c%d->\n\t", i + 'A', j + 1, i + 'A' - 1, j - forward + 1);
                         for (int m = 0; m < 3 - k; m++)
                             printf("\t");
+                        printf("%c%d to %c%d->\n", i + 'A', j + 1, i + 'A' + 1, j + forward + 1);
                         if (k - 1 > 0)
                             allPossibleMoves(tempBoard, switchTurn(turn), k - 1); //recursion after toggling the turn and decrementing k as one iteration is completed
-                        printf("\n");
+                    }
+                    if (isvalid(tempBoard, turn, i + 'A', j + 1, i + 'A' - 1, j + 1 + forward))
+                    {
+                        final.x = i - 1;
+                        final.y = i + forward;
+                        movements(tempBoard, turn, initial, final);
+                        for (int m = 0; m < 3 - k; m++)
+                            printf("\t");
+                        printf("%c%d to %c%d->\n", i + 'A', j + 1, i + 'A' - 1, j + forward + 1);
+                        if (k - 1 > 0)
+                            allPossibleMoves(tempBoard, switchTurn(turn), k - 1); //recursion after toggling the turn and decrementing k as one iteration is completed
                     }
                 }
-                //check forward movement
-                if (isvalid(tempBoard, turn, i + 'A', j + 1, i + 1 + 'A', j + 1 + forward))
-                {
-                    final.x = i + 1;
-                    final.y = i + forward;
-                    movements(tempBoard, turn, initial, final);
-                    for (int m = 0; m < 3 - k; m++)
-                        printf("\t");
-                    printf("%c%d to %c%d->\n", i + 'A', j + 1, i + 'A' + 1, j + forward + 1);
-                    if (k - 1 > 0)
-                        allPossibleMoves(tempBoard, switchTurn(turn), k - 1); //recursion after toggling the turn and decrementing k as one iteration is completed
-                }
-                if (isvalid(tempBoard, turn, i + 'A', j + 1, i + 'A' - 1, j + 1 + forward))
-                {
-                    final.x = i - 1;
-                    final.y = i + forward;
-                    movements(tempBoard, turn, initial, final);
-                    for (int m = 0; m < 3 - k; m++)
-                        printf("\t");
-                    printf("%c%d to %c%d->\n", i + 'A', j + 1, i + 'A' - 1, j + forward + 1);
-                    if (k - 1 > 0)
-                        allPossibleMoves(tempBoard, switchTurn(turn), k - 1); //recursion after toggling the turn and decrementing k as one iteration is completed
-                }
-
             }
         }
     }
@@ -850,59 +857,56 @@ void pull(Queue q)
 
         s->next = NULL;
 
-        q->rear=s;
+        q->rear = s;
     }
 }
 
-
-void Reviewgame(Queue q,int n)
+void Reviewgame(Queue q, int n)
 {
-    int count=0;
+    int count = 0;
     char h;
     //int x1,x2,y1,y2;
-    coordinates c1,c2;
+    coordinates c1, c2;
     char d;
     int g;
     checkersGrid Board[8][8];
     initBoard(Board);
     while (count < n)
     {
-        
-        if(count==0)
+
+        if (count == 0)
         {
             system("clear");
             printBoard(Board);
-                 for (int c = 1; c <= 32767; c++) 
-       for (int d = 1; d <= 32767; d++) 
-       {} 
-
+            for (int c = 1; c <= 32767; c++)
+                for (int d = 1; d <= 32767; d++)
+                {
+                }
         }
         Que p = (Que)malloc(sizeof(struct quecontents));
         p = deQueue(q);
         c1.x = p->c1.x;
-        c1.y= p->c1.y;
+        c1.y = p->c1.y;
         c2.x = p->c2.x;
         c2.y = p->c2.y;
-        d=p->c;
+        d = p->c;
 
-        enQueue( q, c1, c2, d);
-        
+        enQueue(q, c1, c2, d);
 
         if (abs(c2.x - c1.x) == 2 && abs(c2.y - c1.y) == 2)
         {
-          g=captures(Board, d,c1,c2);
+            g = captures(Board, d, c1, c2);
         }
-            else
-            {
-                g = movements( Board,d,c1,c2);
-            }
+        else
+        {
+            g = movements(Board, d, c1, c2);
+        }
 
-            system("clear");
-            printBoard(Board);
-            printf("--------Press any alphabet to see next move------\n");
-            scanf("\n%c",&h);
+        system("clear");
+        printBoard(Board);
+        printf("--------Press any alphabet to see next move------\n");
+        scanf("\n%c", &h);
 
-            count++;
-        
+        count++;
     }
 }
