@@ -7,10 +7,11 @@ int main()
 {
     checkersGrid CheckerBoard[SIZE][SIZE];
     initBoard(CheckerBoard);
-    int ans = 1;
+    int ans = 1, temp_size = 0;
     char turn = 'O';
     char ch;
     int counter = 0;
+    coordinates *temp;
     introduction();
     if (scanf("%c", &ch))
         while (1)
@@ -21,7 +22,7 @@ int main()
             // Prints the board
             printBoard(CheckerBoard);
 
-            coordinates start, final;
+            coordinates start, final;// *temp;
             printf("\n                   ");
 
             printf(" ************* %c's Turn *************\n", turn);
@@ -66,7 +67,7 @@ int main()
             //checks whether the coordinates are for capture
             int capture = captures(CheckerBoard, turn, start, final);
 
-            ans = movements(CheckerBoard, turn, start, final) || capture; //move will be valid if either of capture or movements are tru
+            ans = movements(CheckerBoard, turn, start, final) | capture; //move will be valid if either of capture or movements are tru
             printf("\n\n");
 
             if (ans == 0)
@@ -74,7 +75,7 @@ int main()
                 // Invalid move
                 printf("\n      Invalid Move, Try Again!\n");
             }
-            else
+            else if(ans == 1)
             {
                 system("clear");
                 printBoard(CheckerBoard);

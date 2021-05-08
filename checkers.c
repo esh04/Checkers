@@ -393,15 +393,74 @@ int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates 
                 Board[c2.x - 1][c2.y].checkers.type = NORMAL;
             }
         }
+	// for double captures 
+	if(is_capture(Board, turn, c2) >= 1)
+	{
+		//double captures is possible, return 2
+		return 2;
+	}
+	
     }
     return 1;
 
 }
 
+///
+//checking for coordinates where captures can be continued, from before 
+coordinates* double_captures(checkersGrid Board[][SIZE], char turn, coordinates c)
+{
+int x = c.x, i = 0, temp; 
+char y = c.y + 'A';
+int size = isvalid(Board, turn, y, x, y + 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x - 2) + isvalid(Board, turn, y, x, y + 2, x -2);
+coordinates *final_coordinates;
+final_coordinates = (coordinates *)malloc(sizeof(coordinates) * size);
+if(isvalid(Board, turn, y, x, y + 2, x + 2) == 1)
+{
+	final_coordinates[i].x = x + 2;
+	temp = y + 2 - 'A';
+	final_coordinates[i].y = temp;
+	i++;
+}
+if(isvalid(Board, turn, y, x, y - 2, x + 2) == 1)
+{
+        final_coordinates[i].x = x + 2;
+	temp = y - 2 - 'A';
+        final_coordinates[i].y = temp;//int(y - 2 - 'A');
+        i++;
+}
+if(isvalid(Board, turn, y, x, y - 2, x - 2) == 1)
+{
+        final_coordinates[i].x = x - 2;
+	temp = y - 2 - 'A';
+        final_coordinates[i].y = temp;//int(y - 2 - 'A');
+        i++;
+}
+if(isvalid(Board, turn, y, x, y + 2, x -2) == 1)
+{
+        final_coordinates[i].x = x - 2;
+	temp = y + 2 - 'A';
+        final_coordinates[i].y = temp;
+        i++;
+}
+return final_coordinates;
+}
+/////
+//
+//checking if capture is possible for a single square 
+int is_capture(checkersGrid Board[][SIZE], char turn, coordinates c)
+{
+	//if captures is possible, return 1 else return 0
+	int x = c.x;
+	char y = c.y + 'A';
+       	return isvalid(Board, turn, y, x, y + 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x - 2) + isvalid(Board, turn, y, x, y + 2, x -2); 
+}
+
+///checking if captures is possible at all 
 int if_capture(checkersGrid Board[][SIZE], char turn)
-{       int colour, step, flag = 0;
-        char input;
-        if(turn == 'X')
+{       int colour, flag = 0;
+        //char input;
+	coordinates temp;
+        /*if(turn == 'X')
         {
                 colour = RED;
                 step = 2;
@@ -410,7 +469,7 @@ int if_capture(checkersGrid Board[][SIZE], char turn)
         {
                 colour = BLUE;
                 step = -2;
-        }
+        }*/
         for(int i = 0; i < SIZE; i++)
         {
                 for(int j = 0; j < SIZE; j++)
@@ -418,8 +477,10 @@ int if_capture(checkersGrid Board[][SIZE], char turn)
                         //we'll first check which one of these are within bounds. 
                         if ((Board[i][j].checkers).colour == colour)
                         {
-                                input = j + 'A';
-                                flag = flag | isvalid(Board, turn, input, i, input + 2, i + 2) | isvalid(Board, turn, input, i, input + 2, i - 2) | isvalid(Board, turn, input, i, input - 2, i + 2) | isvalid(Board, turn, input, i, input - 2, i - 2);
+				temp.x = i;
+				temp.y = j + 'A';
+                                //flag = flag | isvalid(Board, turn, input, i, input + 2, i + 2) | isvalid(Board, turn, input, i, input + 2, i - 2) | isvalid(Board, turn, input, i, input - 2, i + 2) | isvalid(Board, turn, input, i, input - 2, i - 2);
+				flag = flag | is_capture(Board, turn, temp);
                                 // j will be the alphabet, i is the letter input        
                                 //pass all possible vanues to is_valid function and see if a one is being returned
 
@@ -523,6 +584,20 @@ void pop(StackContents s[10000])
     {
         top--;
     }
+}
+
+char switchTurn(char turn)
+{
+    if (turn == 'X')
+    {
+        // Player- O turn
+        turn = 'O';
+    }
+    else
+    { // Player- X turn
+        turn = 'X';
+    }
+    return turn;
 }
 
 int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves, int capture)
