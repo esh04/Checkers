@@ -34,14 +34,21 @@ int main()
 
             // Taking inputs
             char y1, y2;
-            if (counter == 0) //visible only for first move as undo will not be valid at this point, hence only all posible moves 
+            if (counter == 0) //visible only for first move as undo will not be valid at this point, hence only all posible moves
             {
                 printf("Press 2 if you want to view all possible moves for %c, else press any other key!\n", turn);
                 int a;
                 scanf("%d", &a);
                 if (a == 2)
                 {
-                    allPossibleMoves(CheckerBoard, turn); //prints coordinates of all moves possible of the current player
+                    printf("Enter k: ");
+                    int k = 0;
+                    scanf("%d", &k);
+                    allPossibleMoves(CheckerBoard, turn, k); //prints coordinates of all moves possible of the current player
+                    int temp;
+                    printf("\n\nPress any key to continue.\n");
+                    scanf("%d", &temp);
+                 
                 }
                 system("clear");
                 printBoard(CheckerBoard);
@@ -98,7 +105,7 @@ int main()
                     // Do Undo
                     int undoAns = undo(CheckerBoard, stack, moves, capture);
                     if (moves % 2 == 1)
-                    {//turn swicthes if we undo odd number of moves but remains same when we undo even number
+                    {                            //turn swicthes if we undo odd number of moves but remains same when we undo even number
                         turn = switchTurn(turn); //toggles turn
                     }
                     if (undoAns == 0)
@@ -108,11 +115,15 @@ int main()
                 }
                 else if (a == 2)
                 {
-
-                    allPossibleMoves(CheckerBoard, switchTurn(turn));//will check all possible moves of next player hence the toggle
+                    printf("Enter k: ");
+                    int k = 0;
+                    scanf("%d", &k);
+                    allPossibleMoves(CheckerBoard, switchTurn(turn), k); //will check all possible moves of next player hence the toggle
+                    int temp;
+                    printf("\n\nPress any key to continue.\n");
+                    scanf("%d", &temp);
                 }
 
-                
                 turn = switchTurn(turn); //toggle turn
             }
         }

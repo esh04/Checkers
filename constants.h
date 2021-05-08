@@ -38,5 +38,8 @@ typedef struct checkersGrid
     peice checkers; // peice assosciated with that position in the grid;
 } checkersGrid;
 
-
+typedef struct Moves{
+    coordinates coord;
+    struct Moves *next;
+}Moves;
 #endif
