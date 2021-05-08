@@ -1,6 +1,7 @@
 #ifndef __QUE_H
 #define __QUE_H
 
+// ************This file contains the Queue Implementation in C************
 
 #include "constants.h"
 #include "checkers.h"
