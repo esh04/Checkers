@@ -6,7 +6,7 @@ void initBoard(checkersGrid Board[][SIZE])
     for (int i = 0; i < SIZE; i++)
     {
         for (int j = 0; j < SIZE; j++)
-        {
+        { //empty, nocolour and nopeice are properties corresponding to an empty square on the board
             Board[i][j].state = EMPTY;
             (Board[i][j].checkers).colour = NOCOLOUR;
             (Board[i][j].checkers).type = NOPEICE;
@@ -43,6 +43,7 @@ void initBoard(checkersGrid Board[][SIZE])
     }
 }
 
+//prints the checkerboard in its current state
 void printBoard(checkersGrid Board[][SIZE])
 {
     for (int i = 0; i < SIZE; i++)
@@ -65,12 +66,18 @@ void printBoard(checkersGrid Board[][SIZE])
         {
             if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == RED) && ((Board[i][j].checkers).type == NORMAL))
             {
-                printf("\033[31m X ");
+                if ((Board[i][j].checkers).type == KING)
+                    printf("\033[31m X* "); //king will be denoted with an asterix next to it
+                else
+                    printf("\033[31m X ");
                 printf("\033[0m|");
             }
             else if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == BLUE) && ((Board[i][j].checkers).type == NORMAL))
             {
-                printf("\033[36m O ");
+                if ((Board[i][j].checkers).type == KING)
+                    printf("\033[36m O* ");
+                else
+                    printf("\033[36m O ");
                 printf("\033[0m|");
             }
             else
@@ -102,6 +109,8 @@ void printBoard(checkersGrid Board[][SIZE])
     }
     printf("\n");
 }
+
+//checks whether the given input is valid
 int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
 {
     int m;
@@ -424,35 +433,62 @@ void allPossibleMoves(checkersGrid Board[][SIZE], char turn)
 
         return;
     }
-
+    int counter = 0;
     for (int i = 0; i < SIZE; i++)
     {
         for (int j = 0; j < SIZE; j++)
         {
-            if ((Board[i][j].checkers).colour == colour)
+
+            if ((Board[j][i].checkers).colour == colour)
             {
 
                 //check valid moves for this peice
 
-                if ((Board[i][j].checkers).type == KING)
+                if ((Board[j][i].checkers).type == KING)
                 {
                     //can move to backward diagonal too
-                    if (Board[i + 1][j - forward].state == EMPTY)
-                        printf("%c%d to %c%d\n", i + 'A', j, i + 'A' + 1, j - forward);
-                    if (Board[i - 1][j - forward].state == EMPTY)
-                        printf("%c%d to %c%d\n", i + 'A', j, i + 'A' - 1, j - forward);
+                    if (isvalid(Board, turn, i + 'A', j + 1, i + 'A' + 1, j + 1 - forward))
+                    {
+                        printf("%c%d to %c%d\t", i + 'A', j + 1, i + 'A' + 1, j - forward + 1);
+                        counter++;
+                        if (counter % 5 == 0)
+                            printf("\n");
+                    }
+                    if (isvalid(Board, turn, i + 'A', j + 1, i + 'A' - 1, j - forward + 1))
+                    {
+                        printf("%c%d to %c%d\t", i + 'A', j + 1, i + 'A' - 1, j - forward + 1);
+                        counter++;
+                        if (counter % 5 == 0)
+                            printf("\n");
+                    }
                 }
                 //check forward movement
-                if (Board[i + 1][j + forward].state == EMPTY)
-                    printf("%c%d to %c%d\n", i + 'A', j, i + 'A' + 1, j + forward);
-                if (Board[i - 1][j + forward].state == EMPTY)
-                    printf("%c%d to %c%d\n", i + 'A', j, i + 'A' - 1, j + forward);
+                if (isvalid(Board, turn, i + 'A', j + 1, i + 1 + 'A', j + 1 + forward))
+                {
+                    printf("%c%d to %c%d\t", i + 'A', j + 1, i + 'A' + 1, j + forward + 1);
+                    counter++;
+                    if (counter % 5 == 0)
+                        printf("\n");
+                }
+                if (isvalid(Board, turn, i + 'A', j + 1, i + 'A' - 1, j + 1 + forward))
+                {
+                    printf("%c%d to %c%d\t", i + 'A', j + 1, i + 'A' - 1, j + forward + 1);
+                    counter++;
+                    if (counter % 5 == 0)
+                        printf("\n");
+                }
             }
         }
     }
+    int temp;
+    printf("\n\nPress any key to continue.\n");
+    if (scanf("%d", &temp))
+    {
+        return;
+    }
 }
 
-void introduction()
+void introduction() //introductory page that shows up towards the start of the game
 {
     system("clear");
 
@@ -578,4 +614,17 @@ int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves, int captur
             }
         }
     }
+}
+char switchTurn(char turn)
+{
+    if (turn == 'X')
+    {
+        // Player- O turn
+        turn = 'O';
+    }
+    else
+    { // Player- X turn
+        turn = 'X';
+    }
+    return turn;
 }
