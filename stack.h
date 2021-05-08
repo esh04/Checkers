@@ -10,6 +10,8 @@ struct StackContents{
     coordinates start;
     coordinates final;
     char turn;
+    int cap;
+    int type;
 };
 
 void push(StackContents s[10000], StackContents c);
