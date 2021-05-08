@@ -16,7 +16,7 @@ int is_capture(checkersGrid Board[][SIZE], char turn, coordinates c);
 int if_capture(checkersGrid Board[][SIZE], char turn);
 coordinates* double_captures(checkersGrid Board[][SIZE], char turn, coordinates c);
 void introduction();
-int undo(checkersGrid Board[][SIZE],StackContents *stack, int moves, int capture);
+int undo(checkersGrid Board[][SIZE],StackContents *stack, int moves);
 void allPossibleMoves(checkersGrid Board[][SIZE], char turn, int k);
 char switchTurn(char turn);
 //int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates c2);
