@@ -126,8 +126,8 @@ void printBoard(checkersGrid Board[][SIZE])
 }
 
 // checks if the move being made is valid or not
-// return 2 if it is a capture move 
-// returns 0 if it is invalid 
+// return 2 if it is a capture move
+// returns 0 if it is invalid
 // returns 1 is it a simple diagnol move
 int isValid(checkersGrid Board[][SIZE], char turn, coordinates start, coordinates end)
 {
@@ -298,6 +298,7 @@ int isValid(checkersGrid Board[][SIZE], char turn, coordinates start, coordinate
     return 2;
 }
 
+// Introduces the game in the start
 void introduction()
 {
     system("clear");
@@ -313,7 +314,7 @@ void introduction()
            "   ######  ##     ## ########  ######  ##    ## ######## ##     ##  ######  \n"
            " ____________________________________________________________________________\n\n"
            " +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+    printf("\n\n\nInstructions to play the game are specified as you move forward in the game\n");
+    printf("Enjoy the game!!\n");
     printf("\n\n\n\n Press any key to continue..");
-    // TODO 
-    // Implement rules and instructions
 }
