@@ -19,6 +19,9 @@ void introduction();
 int undo(checkersGrid Board[][SIZE],StackContents *stack, int moves, int capture);
 void allPossibleMoves(checkersGrid Board[][SIZE], char turn, int k);
 char switchTurn(char turn);
-//int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates c2);
+void PossibleCapturesRepeatingSteps(checkersGrid tempBoard[][SIZE], char turn, coordinates initial, coordinates final, int k);
+void temporaryBoard(checkersGrid Board[][SIZE], checkersGrid tempBoard[][SIZE]);
+void PossibleMovesRepeatingSteps(checkersGrid Board[][SIZE], char turn, coordinates initial, coordinates final, int k);
+
 
 #endif

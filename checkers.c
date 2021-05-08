@@ -64,7 +64,7 @@ void printBoard(checkersGrid Board[][SIZE])
         printf("%d  |", i + 1);
         for (int j = 0; j < SIZE; j++)
         {
-           if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == RED))
+            if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == RED))
             {
                 if ((Board[i][j].checkers).type == KING)
                     printf("\033[31m X*"); //king will be denoted with an asterix next to it
@@ -415,109 +415,148 @@ int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates 
                 Board[c2.x - 1][c2.y].checkers.type = NORMAL;
             }
         }
-	// for double captures 
-	if(is_capture(Board, turn, c2) >= 1)
-	{
-		//double captures is possible, return 2
-		return 2;
-	}
-	
+        // for double captures
+        if (is_capture(Board, turn, c2) >= 1)
+        {
+            //double captures is possible, return 2
+            return 2;
+        }
     }
     return 1;
 }
 
 ///
-//checking for coordinates where captures can be continued, from before 
-coordinates* double_captures(checkersGrid Board[][SIZE], char turn, coordinates c)
+//checking for coordinates where captures can be continued, from before
+coordinates *double_captures(checkersGrid Board[][SIZE], char turn, coordinates c)
 {
-int x = c.x, i = 0, temp; 
-char y = c.y + 'A';
-int size = isvalid(Board, turn, y, x, y + 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x - 2) + isvalid(Board, turn, y, x, y + 2, x -2);
-coordinates *final_coordinates;
-final_coordinates = (coordinates *)malloc(sizeof(coordinates) * size);
-if(isvalid(Board, turn, y, x, y + 2, x + 2) == 1)
-{
-	final_coordinates[i].x = x + 2;
-	temp = y + 2 - 'A';
-	final_coordinates[i].y = temp;
-	i++;
-}
-if(isvalid(Board, turn, y, x, y - 2, x + 2) == 1)
-{
+    int x = c.x, i = 0, temp;
+    char y = c.y + 'A';
+    int size = isvalid(Board, turn, y, x, y + 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x - 2) + isvalid(Board, turn, y, x, y + 2, x - 2);
+    coordinates *final_coordinates;
+    final_coordinates = (coordinates *)malloc(sizeof(coordinates) * size);
+    if (isvalid(Board, turn, y, x, y + 2, x + 2) == 1)
+    {
         final_coordinates[i].x = x + 2;
-	temp = y - 2 - 'A';
-        final_coordinates[i].y = temp;//int(y - 2 - 'A');
-        i++;
-}
-if(isvalid(Board, turn, y, x, y - 2, x - 2) == 1)
-{
-        final_coordinates[i].x = x - 2;
-	temp = y - 2 - 'A';
-        final_coordinates[i].y = temp;//int(y - 2 - 'A');
-        i++;
-}
-if(isvalid(Board, turn, y, x, y + 2, x -2) == 1)
-{
-        final_coordinates[i].x = x - 2;
-	temp = y + 2 - 'A';
+        temp = y + 2 - 'A';
         final_coordinates[i].y = temp;
         i++;
-}
-return final_coordinates;
+    }
+    if (isvalid(Board, turn, y, x, y - 2, x + 2) == 1)
+    {
+        final_coordinates[i].x = x + 2;
+        temp = y - 2 - 'A';
+        final_coordinates[i].y = temp; //int(y - 2 - 'A');
+        i++;
+    }
+    if (isvalid(Board, turn, y, x, y - 2, x - 2) == 1)
+    {
+        final_coordinates[i].x = x - 2;
+        temp = y - 2 - 'A';
+        final_coordinates[i].y = temp; //int(y - 2 - 'A');
+        i++;
+    }
+    if (isvalid(Board, turn, y, x, y + 2, x - 2) == 1)
+    {
+        final_coordinates[i].x = x - 2;
+        temp = y + 2 - 'A';
+        final_coordinates[i].y = temp;
+        i++;
+    }
+    return final_coordinates;
 }
 /////
 //
-//checking if capture is possible for a single square 
+//checking if capture is possible for a single square
 int is_capture(checkersGrid Board[][SIZE], char turn, coordinates c)
 {
-	//if captures is possible, return 1 else return 0
-	int x = c.x;
-	char y = c.y + 'A';
-       	return isvalid(Board, turn, y, x, y + 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x - 2) + isvalid(Board, turn, y, x, y + 2, x -2); 
+    //if captures is possible, return 1 else return 0
+    int x = c.x;
+    char y = c.y + 'A';
+    return isvalid(Board, turn, y, x, y + 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x - 2) + isvalid(Board, turn, y, x, y + 2, x - 2);
 }
 
-///checking if captures is possible at all 
+///checking if captures is possible at all
 int if_capture(checkersGrid Board[][SIZE], char turn)
-
-{       int colour, flag = 0;
-        //char input;
-	coordinates temp;
-        /*if(turn == 'X')
+{
+    int colour, flag = 0;
+    //char input;
+    coordinates temp;
+    if (turn == 'X')
+    {
+        colour = RED;
+    }
+    else
+    {
+        colour = BLUE;
+    }
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
         {
-                colour = RED;
-                step = 2;
-        }
-        else
-        {
-                colour = BLUE;
-                step = -2;
-        }*/
-        for(int i = 0; i < SIZE; i++)
-        {
-                for(int j = 0; j < SIZE; j++)
-                {
-                        //we'll first check which one of these are within bounds. 
-                        if ((Board[i][j].checkers).colour == colour)
-                        {
-				temp.x = i;
-				temp.y = j + 'A';
-                                //flag = flag | isvalid(Board, turn, input, i, input + 2, i + 2) | isvalid(Board, turn, input, i, input + 2, i - 2) | isvalid(Board, turn, input, i, input - 2, i + 2) | isvalid(Board, turn, input, i, input - 2, i - 2);
-				flag = flag | is_capture(Board, turn, temp);
-                                // j will be the alphabet, i is the letter input        
-                                //pass all possible vanues to is_valid function and see if a one is being returned
-
-                        }
-                }
-
+            //we'll first check which one of these are within bounds.
+            if (Board[j][i].checkers.colour == colour)
+            {
+                temp.x = j + 1;
+                temp.y = i;
+                //flag = flag | isvalid(Board, turn, input, i, input + 2, i + 2) | isvalid(Board, turn, input, i, input + 2, i - 2) | isvalid(Board, turn, input, i, input - 2, i + 2) | isvalid(Board, turn, input, i, input - 2, i - 2);
+                flag = flag | is_capture(Board, turn, temp);
+                // j will be the alphabet, i is the letter input
+                //pass all possible vanues to is_valid function and see if a one is being returned
+            }
         }
     }
+
     return flag;
 }
 
-void allPossibleMoves(checkersGrid Board[][SIZE], char turn, int k)
+void PossibleCapturesRepeatingSteps(checkersGrid Board[][SIZE], char turn, coordinates initial, coordinates final, int k)
 {
-    int colour, forward;
     checkersGrid tempBoard[SIZE][SIZE];
+    temporaryBoard(Board, tempBoard);
+    captures(tempBoard, turn, initial, final);
+    if (is_capture(tempBoard, turn, final) == 1)
+    {
+
+        //double capture
+        coordinates *doubleCaptures = double_captures(tempBoard, turn, final);
+        int x = initial.x;
+        char y = initial.y + 'A';
+        int size = isvalid(tempBoard, turn, y, x, y + 2, x + 2) + isvalid(tempBoard, turn, y, x, y - 2, x + 2) + isvalid(tempBoard, turn, y, x, y - 2, x - 2) + isvalid(tempBoard, turn, y, x, y + 2, x - 2);
+      
+        for (int n = 0; n < size; n++)
+        {          
+            for (int m = 0; m < 3 - k; m++)
+                printf("\t");
+            printf("%c%d to %c%d->", initial.y + 'A', initial.x, final.y + 'A', final.x);
+            printf(" %c%d to %c%d\n", final.y + 'A', final.x, doubleCaptures[n].y + 'A', doubleCaptures[n].x); //final will become initial
+            if (k - 1 > 0)
+                allPossibleMoves(tempBoard, switchTurn(turn), k - 1);
+        }
+    }
+    else
+    {
+        for (int m = 0; m < 3 - k; m++)
+            printf("\t");
+        printf("%c%d to %c%d->\n", initial.y + 'A', initial.x, final.y + 'A', final.x);
+        if (k - 1 > 0)
+            allPossibleMoves(tempBoard, switchTurn(turn), k - 1);
+    }
+}
+void PossibleMovesRepeatingSteps(checkersGrid Board[][SIZE], char turn, coordinates initial, coordinates final, int k)
+{
+    for (int m = 0; m < 3 - k; m++)
+        printf("\t");
+    printf("%c%d to %c%d->\n", initial.y + 'A', initial.x, final.y + 'A', final.x);
+    checkersGrid tempBoard[SIZE][SIZE];
+    temporaryBoard(Board, tempBoard);
+    movements(tempBoard, turn, initial, final);
+    if (k - 1 > 0)
+        allPossibleMoves(tempBoard, switchTurn(turn), k - 1); //recursion after toggling the turn and decrementing k as one iteration is completed
+    //printBoard(tempBoard);
+}
+void temporaryBoard(checkersGrid Board[][SIZE], checkersGrid tempBoard[][SIZE])
+{
+
     //Copy contents of Board to tempBoard
     for (int i = 0; i < SIZE; i++)
     {
@@ -528,108 +567,86 @@ void allPossibleMoves(checkersGrid Board[][SIZE], char turn, int k)
             (tempBoard[i][j].checkers).type = (Board[i][j].checkers).type;
         }
     }
-    /*LIST OF ALL POSSIBLE MOVES:
-    1. forward empty diagonal for every peice not captured
-    2. if its king forward and backward diagonals 
-    3. jump/double jump -- should be the only valid move when exists
-    */
+}
+void allPossibleMoves(checkersGrid Board[][SIZE], char turn, int k)
+{
 
-    if (turn == 'X')
-    {
-        colour = RED;
-        forward = 1; // for player X forward is adding one to the y coordinate
-    }
-    else if (turn == 'O')
-    {
-        colour = BLUE;
-        forward = -1; // for the player O forward is subtracting one from the y coordinate
-    }
-
-    // check whether capture is possible, if it is that is the only possible move for the player
-
-    if (if_capture(tempBoard, turn))
-    {
-        //perform capture or double capture on tempBoard
-        
-        allPossibleMoves(tempBoard, switchTurn(turn), k - 1);
-    }
-    else
+    if (if_capture(Board, turn))
     {
         for (int i = 0; i < SIZE; i++)
         {
             for (int j = 0; j < SIZE; j++)
             {
 
-                if ((tempBoard[j][i].checkers).colour == colour)
-                {
-                    coordinates initial, final;
-                    initial.x = i;
-                    initial.y = j;
-
-            if ((tempBoard[j][i].checkers).colour == colour)
-            {
                 coordinates initial, final;
-                initial.x = i;
+                initial.x = i + 1;
                 initial.y = j;
 
-                //check valid moves for this peice
-
-
-                    if ((tempBoard[j][i].checkers).type == KING)
+                if (is_capture(Board, turn, initial)) //check if capture is possible by that peice
+                {
+                    if (isvalid(Board, turn, initial.y + 'A', initial.x, initial.y + 'A' + 2, initial.x + 2))
                     {
-                        //can move to backward diagonal too
-                        if (isvalid(tempBoard, turn, i + 'A', j + 1, i + 'A' + 1, j - forward + 1))
-                        {
-                            final.x = i + 1;
-                            final.y = i - forward;
-                            movements(tempBoard, turn, initial, final);
-                            printf("%c%d to %c%d->\n\t", i + 'A', j + 1, i + 'A' + 1, j - forward + 1);
-                            for (int m = 0; m < 3 - k; m++) //this loop is only for indenting the output for a better view
-                                printf("\t");
-                            if (k - 1 > 0)
-                                allPossibleMoves(tempBoard, switchTurn(turn), k - 1); //recursion after toggling the turn and decrementing k as one iteration is completed
-                            printf("\n");
-                        }
-                        if (isvalid(tempBoard, turn, i + 'A', j + 1, i + 'A' - 1, j - forward + 1))
-                        {
-                            final.x = i - 1;
-                            final.y = i - forward;
-                            movements(tempBoard, turn, initial, final);
-                            printf("%c%d to %c%d->\n\t", i + 'A', j + 1, i + 'A' - 1, j - forward + 1);
-                            for (int m = 0; m < 3 - k; m++)
-                                printf("\t");
-                            if (k - 1 > 0)
-                                allPossibleMoves(tempBoard, switchTurn(turn), k - 1); //recursion after toggling the turn and decrementing k as one iteration is completed
-                            printf("\n");
-                        }
+                        final.x = initial.x + 2;
+                        final.y = initial.y + 2;
+                        PossibleCapturesRepeatingSteps(Board, turn, initial, final, k);
                     }
-                    //check forward movement
-                    if (isvalid(tempBoard, turn, i + 'A', j + 1, i + 1 + 'A', j + 1 + forward))
+                    else if (isvalid(Board, turn, initial.y + 'A', initial.x, initial.y + 'A' - 2, initial.x + 2))
                     {
-                        final.x = i + 1;
-                        final.y = i + forward;
-                        movements(tempBoard, turn, initial, final);
-                        for (int m = 0; m < 3 - k; m++)
-                            printf("\t");
-                        printf("%c%d to %c%d->\n", i + 'A', j + 1, i + 'A' + 1, j + forward + 1);
-                        if (k - 1 > 0)
-                            allPossibleMoves(tempBoard, switchTurn(turn), k - 1); //recursion after toggling the turn and decrementing k as one iteration is completed
+                        final.x = initial.x - 2;
+                        final.y = initial.y + 2;
+                        PossibleCapturesRepeatingSteps(Board, turn, initial, final, k);
                     }
-                    if (isvalid(tempBoard, turn, i + 'A', j + 1, i + 'A' - 1, j + 1 + forward))
+                    else if (isvalid(Board, turn, initial.y + 'A', initial.x, initial.y + 'A' - 2, initial.x - 2))
                     {
-                        final.x = i - 1;
-                        final.y = i + forward;
-                        movements(tempBoard, turn, initial, final);
-                        for (int m = 0; m < 3 - k; m++)
-                            printf("\t");
-                        printf("%c%d to %c%d->\n", i + 'A', j + 1, i + 'A' - 1, j + forward + 1);
-                        if (k - 1 > 0)
-                            allPossibleMoves(tempBoard, switchTurn(turn), k - 1); //recursion after toggling the turn and decrementing k as one iteration is completed
+                        final.x = initial.x - 2;
+                        final.y = initial.y - 2;
+                        PossibleCapturesRepeatingSteps(Board, turn, initial, final, k);
+                    }
+                    else if (isvalid(Board, turn, initial.y + 'A', initial.x, initial.y + 'A' + 2, initial.x - 2))
+                    {
+                        final.x = initial.x - 2;
+                        final.y = initial.y + 2;
+                        PossibleCapturesRepeatingSteps(Board, turn, initial, final, k);
                     }
                 }
             }
         }
     }
+    else
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+                coordinates initial, final;
+                initial.y = i;
+                initial.x = j + 1;
+
+                if (isvalid(Board, turn, initial.y + 'A', initial.x, initial.y + 'A' + 1, initial.x - 1))
+                {
+                    final.y = initial.y + 1;
+                    final.x = initial.x - 1;
+                    PossibleMovesRepeatingSteps(Board, turn, initial, final, k);
+                }
+                if (isvalid(Board, turn, initial.y + 'A', initial.x, initial.y + 'A' - 1, initial.x + 1))
+                {
+                    final.y = initial.y - 1;
+                    final.x = initial.x + 1;
+                    PossibleMovesRepeatingSteps(Board, turn, initial, final, k);
+                }
+                if (isvalid(Board, turn, initial.y + 'A', initial.x, initial.y + 'A' - 1, initial.x - 1))
+                {
+                    final.y = initial.y - 1;
+                    final.x = initial.x - 1;
+                    PossibleMovesRepeatingSteps(Board, turn, initial, final, k);
+                }
+                if (isvalid(Board, turn, initial.y + 'A', initial.x, initial.y + 'A' + 1, initial.x + 1))
+                {
+                    final.y = initial.y + 1;
+                    final.x = initial.x + 1;
+                    PossibleMovesRepeatingSteps(Board, turn, initial, final, k);
+                }
+            }
+        }
 }
 
 void introduction()
@@ -670,20 +687,6 @@ void pop(StackContents s[10000])
     {
         top--;
     }
-}
-
-char switchTurn(char turn)
-{
-    if (turn == 'X')
-    {
-        // Player- O turn
-        turn = 'O';
-    }
-    else
-    { // Player- X turn
-        turn = 'X';
-    }
-    return turn;
 }
 
 int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves, int capture)
@@ -774,6 +777,7 @@ int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves, int captur
     }
     return 1;
 }
+
 Que newmove(coordinates a, coordinates b, char c)
 {
     Que temp = (Que)malloc(sizeof(struct quecontents));
