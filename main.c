@@ -1,5 +1,6 @@
 #include "checkers.h"
 #include "stack.h"
+#include "Que.h"
 
 StackContents stack[10000];
 
@@ -7,6 +8,9 @@ int main()
 {
     checkersGrid CheckerBoard[SIZE][SIZE];
     initBoard(CheckerBoard);
+    Queue q= createQueue();
+    int count=0;
+    
     int ans = 1;
     char turn = 'O';
     char ch;
@@ -78,6 +82,9 @@ int main()
             {
                 system("clear");
                 printBoard(CheckerBoard);
+                
+                 enQueue( q,start,final,turn);
+                 count++;
                 // If Valid move push into stack everytime
                 StackContents StackValues;
                 StackValues.start = start;
@@ -86,7 +93,7 @@ int main()
                 push(stack, StackValues);
 
                 // Asking for Undo and all possible moves Option from user
-                printf("\nPress 1 to Undo, 2 to view all possible moves for %c, else press any other key!\n", switchTurn(turn));
+                printf("\nPress 1 to Undo, 2 to view all possible moves and 3 for review for %c, else press any other key!\n", switchTurn(turn));
                 int a;
                 scanf("%d", &a);
                 if (a == 1)
@@ -110,6 +117,10 @@ int main()
                 {
 
                     allPossibleMoves(CheckerBoard, switchTurn(turn));//will check all possible moves of next player hence the toggle
+                }
+                else if(a == 3)
+                {
+                    Reviewgame(q,count);
                 }
 
                 

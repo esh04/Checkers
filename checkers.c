@@ -1,4 +1,5 @@
 #include "checkers.h"
+#include "Que.h"
 
 void initBoard(checkersGrid Board[][SIZE])
 {
@@ -610,5 +611,144 @@ int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves, int captur
                 Board[c2.x - 1][c2.y].checkers.type = NOPEICE;
             }
         }
+    }
+}
+Que newmove(coordinates a, coordinates b, char c)
+{
+    Que temp = (Que)malloc(sizeof(struct quecontents));
+    temp->c1.x = a.x;
+    temp->c1.y = a.y;
+    temp->c2.x = b.x;
+    temp->c2.y = b.y;
+    temp->c = c;
+    temp->next = NULL;
+    return temp;
+}
+// basically my datastructure has three properties
+//1. enque 2.Deque 3.eject
+
+Queue createQueue()
+{
+    Queue q = (Queue)malloc(sizeof(struct queue));
+    q->front = q->rear = NULL;
+    return q;
+}
+void enQueue(Queue q, coordinates a, coordinates b, char c)
+{
+    Que temp = newmove(a, b, c);
+    // If queue is empty, then new node is front and rear both
+    if (q->rear == NULL)
+    {
+        q->front = q->rear = temp;
+        return;
+    }
+    // Add the new node at the end of queue and change rear
+
+    q->rear->next = temp;
+    q->rear = temp;
+}
+
+Que deQueue(Queue q)
+{
+    // If queue is empty, return NULL.
+    if (q->front == NULL)
+        return NULL;
+
+    // Store previous front and move front one node ahead
+    Que temp = q->front;
+
+    q->front = q->front->next;
+
+    // If front becomes NULL, then change rear also as NULL
+    if (q->front == NULL)
+        q->rear = NULL;
+
+    temp->next = NULL;
+
+    return temp;
+}
+
+void pull(Queue q)
+{
+
+    Que s;
+    s = (Que)malloc(sizeof(struct quecontents));
+
+    if (q->front == NULL)
+    {
+        return;
+    }
+    s = q->front;
+
+    if (s->next == NULL)
+    {
+        q->front = NULL;
+        q->rear = NULL;
+        s = NULL;
+    }
+    else
+    {
+
+        while (s->next->next != NULL)
+        {
+            s = s->next;
+        }
+
+        s->next = NULL;
+
+        q->rear=s;
+    }
+}
+
+
+void Reviewgame(Queue q,int n)
+{
+    int count=0;
+    char h;
+    //int x1,x2,y1,y2;
+    coordinates c1,c2;
+    char d;
+    int g;
+    checkersGrid Board[8][8];
+    initBoard(Board);
+    while (count < n)
+    {
+        
+        if(count==0)
+        {
+            system("clear");
+            printBoard(Board);
+                 for (int c = 1; c <= 32767; c++) 
+       for (int d = 1; d <= 32767; d++) 
+       {} 
+
+        }
+        Que p = (Que)malloc(sizeof(struct quecontents));
+        p = deQueue(q);
+        c1.x = p->c1.x;
+        c1.y= p->c1.y;
+        c2.x = p->c2.x;
+        c2.y = p->c2.y;
+        d=p->c;
+
+        enQueue( q, c1, c2, d);
+        
+
+        if (abs(c2.x - c1.x) == 2 && abs(c2.y - c1.y) == 2)
+        {
+          g=captures(Board, d,c1,c2);
+        }
+            else
+            {
+                g = movements( Board,d,c1,c2);
+            }
+
+            system("clear");
+            printBoard(Board);
+            printf("--------Press any alphabet to see next move------\n");
+            scanf("\n%c",&h);
+
+            count++;
+        
     }
 }
