@@ -103,6 +103,21 @@ void printBoard(checkersGrid Board[][SIZE])
     }
     printf("\n");
 }
+
+char switchTurn(char turn)
+{
+    if (turn == 'X')
+    {
+        // Player- O turn
+        turn = 'O';
+    }
+    else
+    { // Player- X turn
+        turn = 'X';
+    }
+    return turn;
+}
+
 int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
 {
     int m;
