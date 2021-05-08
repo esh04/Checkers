@@ -104,6 +104,11 @@ int main()
 
                     // Do Undo
                     int undoAns = undo(CheckerBoard, stack, moves, capture);
+                    for(int i=0;i<moves;i++)
+                    {
+                          pull(q);
+                          count--;
+                    }
                     if (moves % 2 == 1)
                     {//turn swicthes if we undo odd number of moves but remains same when we undo even number
                         turn = switchTurn(turn); //toggles turn
