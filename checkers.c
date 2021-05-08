@@ -494,7 +494,7 @@ void allPossibleMoves(checkersGrid Board[][SIZE], char turn, int k)
 
 
             if ((tempBoard[j][i].checkers).colour == colour)
-
+            {
                 coordinates initial, final;
                 initial.x = i;
                 initial.y = j;
