@@ -48,8 +48,8 @@ int main(void)
                 scanf(" %c %d %c %d", &temp1, &start.x, &temp2, &final.x);
                 temp1 = toupper(temp1);
                 temp2 = toupper(temp2);
-                start.y = temp1-65;
-                final.y = temp2-65;
+                start.y = temp1 - 65;
+                final.y = temp2 - 65;
                 int capture = captures(CheckerBoard, turn, start, final);
 
                 valid = movements(CheckerBoard, turn, start, final) || capture; //move will be valid if either of capture or movements are tru
@@ -75,7 +75,10 @@ int main(void)
                     else
                         StackValues.type = 0;
                     push(stack, StackValues);
-                    turn = switchTurn(turn);
+                    if (ifdouble(CheckerBoard, final, turn))
+                        ;
+                    else
+                        turn = switchTurn(turn);
                 }
             }
             else if (input == 2)
@@ -103,7 +106,6 @@ int main(void)
                 }
                 else
                 {
-                    printf("                        ");
                     printf("The player %c denies\n", switchTurn(turn));
                 }
             }
@@ -113,7 +115,6 @@ int main(void)
             }
             else
             {
-                printf("                        ");
                 printf("Enter the number of moves(k):");
                 scanf("%d", &k);
                 allPossibleMoves(CheckerBoard, switchTurn(turn), k); //will check all possible moves of next player hence the toggle

@@ -6,7 +6,9 @@
 #include<ctype.h>
 #include "constants.h"
 #include "stack.h"
+#include <stdbool.h>
 
+bool ifdouble(checkersGrid Board[][SIZE], coordinates a, char turn);
 void initBoard(checkersGrid Board[][SIZE]);
 void printBoard(checkersGrid Board[][SIZE]);
 int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d);
