@@ -64,18 +64,18 @@ void printBoard(checkersGrid Board[][SIZE])
         printf("%d  |", i + 1);
         for (int j = 0; j < SIZE; j++)
         {
-           if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == RED) && ((Board[i][j].checkers).type == NORMAL))
+           if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == RED))
             {
                 if ((Board[i][j].checkers).type == KING)
-                    printf("\033[31m X* "); //king will be denoted with an asterix next to it
+                    printf("\033[31m X*"); //king will be denoted with an asterix next to it
                 else
                     printf("\033[31m X ");
                 printf("\033[0m|");
             }
-            else if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == BLUE) && ((Board[i][j].checkers).type == NORMAL))
+            else if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == BLUE))
             {
                 if ((Board[i][j].checkers).type == KING)
-                    printf("\033[36m O* ");
+                    printf("\033[36m O*");
                 else
                     printf("\033[36m O ");
                 printf("\033[0m|");
@@ -393,7 +393,7 @@ int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates 
         {
             Board[c2.x - 1][c2.y].state = FULL;
             Board[c2.x - 1][c2.y].checkers.colour = RED;
-            if (c2.y == 7)
+            if (c2.x == 8)
             {
                 Board[c2.x - 1][c2.y].checkers.type = KING;
             }
@@ -406,7 +406,7 @@ int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates 
         {
             Board[c2.x - 1][c2.y].state = FULL;
             Board[c2.x - 1][c2.y].checkers.colour = BLUE;
-            if (c2.y == 0)
+            if (c2.x == 1)
             {
                 Board[c2.x - 1][c2.y].checkers.type = KING;
             }
