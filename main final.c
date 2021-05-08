@@ -35,15 +35,19 @@ int main(void)
             }
             if (input == 1)
             {
+                input_move(CheckerBoard);
             }
             else if (input == 2)
             {
+                allPossibleMoves(CheckerBoard);
             }
             else if (input == 3)
             {
+                review(CheckerBoard);
             }
             else
             {
+                undo(CheckerBoard);
             }
         }
     }
