@@ -395,6 +395,7 @@ int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates 
         }
     }
     return 1;
+
 }
 
 int if_capture(checkersGrid Board[][SIZE], char turn)
@@ -426,6 +427,7 @@ int if_capture(checkersGrid Board[][SIZE], char turn)
                 }
         }
         return flag;
+
 }
 
 void allPossibleMoves(checkersGrid Board[][SIZE], char turn)
