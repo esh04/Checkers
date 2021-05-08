@@ -395,6 +395,39 @@ int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates 
         }
     }
     return 1;
+
+}
+
+int if_capture(checkersGrid Board[][SIZE], char turn)
+{       int colour, step, flag = 0;
+        char input;
+        if(turn == 'X')
+        {
+                colour = RED;
+                step = 2;
+        }
+        else
+        {
+                colour = BLUE;
+                step = -2;
+        }
+        for(int i = 0; i < SIZE; i++)
+        {
+                for(int j = 0; j < SIZE; j++)
+                {
+                        //we'll first check which one of these are within bounds. 
+                        if ((Board[i][j].checkers).colour == colour)
+                        {
+                                input = j + 'A';
+                                flag = flag | isvalid(Board, turn, input, i, input + 2, i + 2) | isvalid(Board, turn, input, i, input + 2, i - 2) | isvalid(Board, turn, input, i, input - 2, i + 2) | isvalid(Board, turn, input, i, input - 2, i - 2);
+                                // j will be the alphabet, i is the letter input        
+                                //pass all possible vanues to is_valid function and see if a one is being returned
+
+                        }
+                }
+        }
+        return flag;
+
 }
 
 void allPossibleMoves(checkersGrid Board[][SIZE], char turn)
