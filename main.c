@@ -3,6 +3,8 @@
 #include "Que.h"
 #include "checkers.h"
 
+// ************File used to call & run the functions************
+
 int main(void)
 {
     checkersGrid CheckerBoard[SIZE][SIZE];
