@@ -1,5 +1,6 @@
 #include "checkers.h"
 #include "stack.h"
+#include "Que.h"
 
 StackContents stack[10000];
 
@@ -7,7 +8,10 @@ int main()
 {
     checkersGrid CheckerBoard[SIZE][SIZE];
     initBoard(CheckerBoard);
-    int ans = 1, temp_size = 0;
+
+    Queue q= createQueue();
+    int count=0;
+    int ans = 1;
     char turn = 'O';
     char ch;
     int counter = 0;
@@ -35,14 +39,21 @@ int main()
 
             // Taking inputs
             char y1, y2;
-            if (counter == 0) //visible only for first move as undo will not be valid at this point, hence only all posible moves 
+            if (counter == 0) //visible only for first move as undo will not be valid at this point, hence only all posible moves
             {
                 printf("Press 2 if you want to view all possible moves for %c, else press any other key!\n", turn);
                 int a;
                 scanf("%d", &a);
                 if (a == 2)
                 {
-                    allPossibleMoves(CheckerBoard, turn); //prints coordinates of all moves possible of the current player
+                    printf("Enter k: ");
+                    int k = 0;
+                    scanf("%d", &k);
+                    allPossibleMoves(CheckerBoard, turn, k); //prints coordinates of all moves possible of the current player
+                    int temp;
+                    printf("\n\nPress any key to continue.\n");
+                    scanf("%d", &temp);
+                 
                 }
                 system("clear");
                 printBoard(CheckerBoard);
@@ -79,6 +90,9 @@ int main()
             {
                 system("clear");
                 printBoard(CheckerBoard);
+                
+                 enQueue( q,start,final,turn);
+                 count++;
                 // If Valid move push into stack everytime
                 StackContents StackValues;
                 StackValues.start = start;
@@ -87,33 +101,46 @@ int main()
                 push(stack, StackValues);
 
                 // Asking for Undo and all possible moves Option from user
-                printf("\nPress 1 to Undo, 2 to view all possible moves for %c, else press any other key!\n", switchTurn(turn));
+                printf("\nPress 1 to Undo, 2 to view all possible moves for %c, 3 to review all moves, else press any other key!\n", switchTurn(turn));
                 int a;
                 scanf("%d", &a);
                 if (a == 1)
                 {
                     int moves;
-                    printf("Enter no. of moves you want to Undo\n");
+                    printf("Enter the number of moves you want to Undo\n");
                     scanf("%d", &moves);
 
                     // Do Undo
                     int undoAns = undo(CheckerBoard, stack, moves, capture);
+                    for(int i=0;i<moves;i++)
+                    {
+                          pull(q);
+                          count--;
+                    }
                     if (moves % 2 == 1)
-                    {//turn swicthes if we undo odd number of moves but remains same when we undo even number
+                    {                            //turn swicthes if we undo odd number of moves but remains same when we undo even number
                         turn = switchTurn(turn); //toggles turn
                     }
                     if (undoAns == 0)
                     {
-                        printf("The no. of moves were Invalid");
+                        printf("The number of moves were Invalid");
                     }
                 }
                 else if (a == 2)
                 {
-
-                    allPossibleMoves(CheckerBoard, switchTurn(turn));//will check all possible moves of next player hence the toggle
+                    printf("Enter k: ");
+                    int k = 0;
+                    scanf("%d", &k);
+                    allPossibleMoves(CheckerBoard, switchTurn(turn), k); //will check all possible moves of next player hence the toggle
+                    int temp;
+                    printf("\n\nPress any key to continue.\n");
+                    scanf("%d", &temp);
+                }
+                else if(a == 3)
+                {
+                    Reviewgame(q,count);
                 }
 
-                
                 turn = switchTurn(turn); //toggle turn
             }
         }
