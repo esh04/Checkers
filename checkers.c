@@ -64,14 +64,20 @@ void printBoard(checkersGrid Board[][SIZE])
         printf("%d  |", i + 1);
         for (int j = 0; j < SIZE; j++)
         {
-            if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == RED) && ((Board[i][j].checkers).type == NORMAL))
+           if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == RED))
             {
-                printf("\033[31m X ");
+                if ((Board[i][j].checkers).type == KING)
+                    printf("\033[31m X*"); //king will be denoted with an asterix next to it
+                else
+                    printf("\033[31m X ");
                 printf("\033[0m|");
             }
-            else if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == BLUE) && ((Board[i][j].checkers).type == NORMAL))
+            else if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == BLUE))
             {
-                printf("\033[36m O ");
+                if ((Board[i][j].checkers).type == KING)
+                    printf("\033[36m O*");
+                else
+                    printf("\033[36m O ");
                 printf("\033[0m|");
             }
             else
@@ -387,7 +393,7 @@ int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates 
         {
             Board[c2.x - 1][c2.y].state = FULL;
             Board[c2.x - 1][c2.y].checkers.colour = RED;
-            if (c2.y == 7)
+            if (c2.x == 8)
             {
                 Board[c2.x - 1][c2.y].checkers.type = KING;
             }
@@ -400,7 +406,7 @@ int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates 
         {
             Board[c2.x - 1][c2.y].state = FULL;
             Board[c2.x - 1][c2.y].checkers.colour = BLUE;
-            if (c2.y == 0)
+            if (c2.x == 1)
             {
                 Board[c2.x - 1][c2.y].checkers.type = KING;
             }
@@ -409,36 +415,100 @@ int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates 
                 Board[c2.x - 1][c2.y].checkers.type = NORMAL;
             }
         }
+	// for double captures 
+	if(is_capture(Board, turn, c2) >= 1)
+	{
+		//double captures is possible, return 2
+		return 2;
+	}
+	
     }
     return 1;
 }
 
-int if_capture(checkersGrid Board[][SIZE], char turn)
+///
+//checking for coordinates where captures can be continued, from before 
+coordinates* double_captures(checkersGrid Board[][SIZE], char turn, coordinates c)
 {
-    int colour, step, flag = 0;
-    char input;
-    if (turn == 'X')
-    {
-        colour = RED;
-        step = 2;
-    }
-    else
-    {
-        colour = BLUE;
-        step = -2;
-    }
-    for (int i = 0; i < SIZE; i++)
-    {
-        for (int j = 0; j < SIZE; j++)
+int x = c.x, i = 0, temp; 
+char y = c.y + 'A';
+int size = isvalid(Board, turn, y, x, y + 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x - 2) + isvalid(Board, turn, y, x, y + 2, x -2);
+coordinates *final_coordinates;
+final_coordinates = (coordinates *)malloc(sizeof(coordinates) * size);
+if(isvalid(Board, turn, y, x, y + 2, x + 2) == 1)
+{
+	final_coordinates[i].x = x + 2;
+	temp = y + 2 - 'A';
+	final_coordinates[i].y = temp;
+	i++;
+}
+if(isvalid(Board, turn, y, x, y - 2, x + 2) == 1)
+{
+        final_coordinates[i].x = x + 2;
+	temp = y - 2 - 'A';
+        final_coordinates[i].y = temp;//int(y - 2 - 'A');
+        i++;
+}
+if(isvalid(Board, turn, y, x, y - 2, x - 2) == 1)
+{
+        final_coordinates[i].x = x - 2;
+	temp = y - 2 - 'A';
+        final_coordinates[i].y = temp;//int(y - 2 - 'A');
+        i++;
+}
+if(isvalid(Board, turn, y, x, y + 2, x -2) == 1)
+{
+        final_coordinates[i].x = x - 2;
+	temp = y + 2 - 'A';
+        final_coordinates[i].y = temp;
+        i++;
+}
+return final_coordinates;
+}
+/////
+//
+//checking if capture is possible for a single square 
+int is_capture(checkersGrid Board[][SIZE], char turn, coordinates c)
+{
+	//if captures is possible, return 1 else return 0
+	int x = c.x;
+	char y = c.y + 'A';
+       	return isvalid(Board, turn, y, x, y + 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x - 2) + isvalid(Board, turn, y, x, y + 2, x -2); 
+}
+
+///checking if captures is possible at all 
+int if_capture(checkersGrid Board[][SIZE], char turn)
+
+{       int colour, flag = 0;
+        //char input;
+	coordinates temp;
+        /*if(turn == 'X')
         {
-            //we'll first check which one of these are within bounds.
-            if ((Board[i][j].checkers).colour == colour)
-            {
-                input = j + 'A';
-                flag = flag | isvalid(Board, turn, input, i, input + 2, i + 2) | isvalid(Board, turn, input, i, input + 2, i - 2) | isvalid(Board, turn, input, i, input - 2, i + 2) | isvalid(Board, turn, input, i, input - 2, i - 2);
-                // j will be the alphabet, i is the letter input
-                //pass all possible vanues to is_valid function and see if a one is being returned
-            }
+                colour = RED;
+                step = 2;
+        }
+        else
+        {
+                colour = BLUE;
+                step = -2;
+        }*/
+        for(int i = 0; i < SIZE; i++)
+        {
+                for(int j = 0; j < SIZE; j++)
+                {
+                        //we'll first check which one of these are within bounds. 
+                        if ((Board[i][j].checkers).colour == colour)
+                        {
+				temp.x = i;
+				temp.y = j + 'A';
+                                //flag = flag | isvalid(Board, turn, input, i, input + 2, i + 2) | isvalid(Board, turn, input, i, input + 2, i - 2) | isvalid(Board, turn, input, i, input - 2, i + 2) | isvalid(Board, turn, input, i, input - 2, i - 2);
+				flag = flag | is_capture(Board, turn, temp);
+                                // j will be the alphabet, i is the letter input        
+                                //pass all possible vanues to is_valid function and see if a one is being returned
+
+                        }
+                }
+
         }
     }
     return flag;
@@ -496,7 +566,14 @@ void allPossibleMoves(checkersGrid Board[][SIZE], char turn, int k)
                     initial.x = i;
                     initial.y = j;
 
-                    //check valid moves for this peice
+            if ((tempBoard[j][i].checkers).colour == colour)
+            {
+                coordinates initial, final;
+                initial.x = i;
+                initial.y = j;
+
+                //check valid moves for this peice
+
 
                     if ((tempBoard[j][i].checkers).type == KING)
                     {
@@ -574,7 +651,7 @@ void introduction()
 }
 
 // Stack Implementation in C- using arrays
-int top;
+int top = -1;
 
 void push(StackContents s[10000], StackContents c)
 {
@@ -595,10 +672,24 @@ void pop(StackContents s[10000])
     }
 }
 
+char switchTurn(char turn)
+{
+    if (turn == 'X')
+    {
+        // Player- O turn
+        turn = 'O';
+    }
+    else
+    { // Player- X turn
+        turn = 'X';
+    }
+    return turn;
+}
+
 int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves, int capture)
 {
     // Stack
-    if (top < moves - 1)
+    if (top <= moves - 1)
     {
         return 0;
     }
@@ -681,6 +772,7 @@ int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves, int captur
             }
         }
     }
+    return 1;
 }
 Que newmove(coordinates a, coordinates b, char c)
 {

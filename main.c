@@ -8,13 +8,14 @@ int main()
 {
     checkersGrid CheckerBoard[SIZE][SIZE];
     initBoard(CheckerBoard);
+
     Queue q= createQueue();
     int count=0;
-    
     int ans = 1;
     char turn = 'O';
     char ch;
     int counter = 0;
+    coordinates *temp;
     introduction();
     if (scanf("%c", &ch))
         while (1)
@@ -25,7 +26,7 @@ int main()
             // Prints the board
             printBoard(CheckerBoard);
 
-            coordinates start, final;
+            coordinates start, final;// *temp;
             printf("\n                   ");
 
             printf(" ************* %c's Turn *************\n", turn);
@@ -77,7 +78,7 @@ int main()
             //checks whether the coordinates are for capture
             int capture = captures(CheckerBoard, turn, start, final);
 
-            ans = movements(CheckerBoard, turn, start, final) || capture; //move will be valid if either of capture or movements are tru
+            ans = movements(CheckerBoard, turn, start, final) | capture; //move will be valid if either of capture or movements are tru
             printf("\n\n");
 
             if (ans == 0)
@@ -85,7 +86,7 @@ int main()
                 // Invalid move
                 printf("\n      Invalid Move, Try Again!\n");
             }
-            else
+            else if(ans == 1)
             {
                 system("clear");
                 printBoard(CheckerBoard);
@@ -100,24 +101,29 @@ int main()
                 push(stack, StackValues);
 
                 // Asking for Undo and all possible moves Option from user
-                printf("\nPress 1 to Undo, 2 to view all possible moves and 3 for review for %c, else press any other key!\n", switchTurn(turn));
+                printf("\nPress 1 to Undo, 2 to view all possible moves for %c, 3 to review all moves, else press any other key!\n", switchTurn(turn));
                 int a;
                 scanf("%d", &a);
                 if (a == 1)
                 {
                     int moves;
-                    printf("Enter no. of moves you want to Undo\n");
+                    printf("Enter the number of moves you want to Undo\n");
                     scanf("%d", &moves);
 
                     // Do Undo
                     int undoAns = undo(CheckerBoard, stack, moves, capture);
+                    for(int i=0;i<moves;i++)
+                    {
+                          pull(q);
+                          count--;
+                    }
                     if (moves % 2 == 1)
                     {                            //turn swicthes if we undo odd number of moves but remains same when we undo even number
                         turn = switchTurn(turn); //toggles turn
                     }
                     if (undoAns == 0)
                     {
-                        printf("The no. of moves were Invalid");
+                        printf("The number of moves were Invalid");
                     }
                 }
                 else if (a == 2)
