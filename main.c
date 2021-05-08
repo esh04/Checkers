@@ -1,148 +1,126 @@
 #include "checkers.h"
 #include "stack.h"
 #include "Que.h"
+#include "checkers.h"
 
-StackContents stack[10000];
-
-int main()
+int main(void)
 {
     checkersGrid CheckerBoard[SIZE][SIZE];
     initBoard(CheckerBoard);
-
-    Queue q= createQueue();
-    int count=0;
-    int ans = 1;
+    StackContents stack[10000];
+    Queue q = createQueue();
+    int count_queue = 0;
     char turn = 'O';
-    char ch;
-    int counter = 0;
-    coordinates *temp;
+    int input, capture, valid;
+    coordinates start, final;
+    char temp1, temp2;
+    int moves;
+    int reply;
+    int undo_ans;
+    int k;
+    int temp;
     introduction();
-    if (scanf("%c", &ch))
+    if (getchar())
+    {
         while (1)
         {
-            // To clear output everytime
             system("clear");
-
-            // Prints the board
             printBoard(CheckerBoard);
-
-            coordinates start, final;// *temp;
             printf("\n                   ");
-
             printf(" ************* %c's Turn *************\n", turn);
-            if (ans == 0) // ans is 0 incase of an invalid move
+            printf("Enter 0 to exit, 1 to input moves, 2 to undo, 3 to review, 4 to show possible moves\n");
+            scanf("%d", &input);
+            while (input < 0 || input > 4)
             {
-                printf("\n                   ");
-
-                printf("      Invalid Move, Try Again!\n");
+                printf("Invalid Input. Try again!!\n");
+                printf("Enter 0 to exit, 1 to input moves, 2 to undo, 3 to review, 4 to show possible moves\n");
+                scanf("%d", &input);
             }
-
-            // Taking inputs
-            char y1, y2;
-            if (counter == 0) //visible only for first move as undo will not be valid at this point, hence only all posible moves
+            if (input == 0)
             {
-                printf("Press 2 if you want to view all possible moves for %c, else press any other key!\n", turn);
-                int a;
-                scanf("%d", &a);
-                if (a == 2)
+                printf("Thank you for playing the game!!\n");
+                return 0;
+            }
+            if (input == 1)
+            {
+                printf("                   ");
+                printf("     Enter values of X1 Y1 X2 Y2\n");
+                scanf(" %c %d %c %d", &temp1, &start.x, &temp2, &final.x);
+                temp1 = toupper(temp1);
+                temp2 = toupper(temp2);
+                start.y = temp1-65;
+                final.y = temp2-65;
+                int capture = captures(CheckerBoard, turn, start, final);
+
+                valid = movements(CheckerBoard, turn, start, final) || capture; //move will be valid if either of capture or movements are tru
+                printf("\n\n");
+
+                if (valid == 0)
                 {
-                    printf("Enter k: ");
-                    int k = 0;
-                    scanf("%d", &k);
-                    allPossibleMoves(CheckerBoard, turn, k); //prints coordinates of all moves possible of the current player
-                    int temp;
-                    printf("\n\nPress any key to continue.\n");
-                    scanf("%d", &temp);
-                 
+                    // Invalid move
+                    printf("\n      Invalid Move, Try Again!\n");
                 }
-                system("clear");
-                printBoard(CheckerBoard);
-                printf("\n                   ");
-                printf(" ************* %c's Turn *************\n", turn);
-            }
-
-            printf("                   ");
-            printf("     Enter values of X1 Y1 X2 Y2\n");
-
-            //Input from user
-            scanf("\n%c %d %c %d", &y1, &start.x, &y2, &final.x);
-
-            // Takes lower characters as input
-            y1 = toupper(y1);
-            y2 = toupper(y2);
-
-            // Converting to integer values
-            start.y = y1 - 'A';
-            final.y = y2 - 'A';
-
-            //checks whether the coordinates are for capture
-            int capture = captures(CheckerBoard, turn, start, final);
-
-            ans = movements(CheckerBoard, turn, start, final) | capture; //move will be valid if either of capture or movements are tru
-            printf("\n\n");
-
-            if (ans == 0)
-            {
-                // Invalid move
-                printf("\n      Invalid Move, Try Again!\n");
-            }
-            else if(ans == 1)
-            {
-                system("clear");
-                printBoard(CheckerBoard);
-                
-                 enQueue( q,start,final,turn);
-                 count++;
-                // If Valid move push into stack everytime
-                StackContents StackValues;
-                StackValues.start = start;
-                StackValues.final = final;
-                StackValues.turn = turn;
-                push(stack, StackValues);
-
-                // Asking for Undo and all possible moves Option from user
-                printf("\nPress 1 to Undo, 2 to view all possible moves for %c, 3 to review all moves, else press any other key!\n", switchTurn(turn));
-                int a;
-                scanf("%d", &a);
-                if (a == 1)
+                else
                 {
-                    int moves;
-                    printf("Enter the number of moves you want to Undo\n");
-                    scanf("%d", &moves);
-
-                    // Do Undo
-                    int undoAns = undo(CheckerBoard, stack, moves, capture);
-                    for(int i=0;i<moves;i++)
+                    enQueue(q, start, final, turn);
+                    count_queue++;
+                    // If Valid move push into stack everytime
+                    StackContents StackValues;
+                    StackValues.start = start;
+                    StackValues.final = final;
+                    StackValues.turn = turn;
+                    StackValues.cap = capture;
+                    if (CheckerBoard[final.x - 1][final.y].checkers.type == KING)
+                        StackValues.type = 1;
+                    else
+                        StackValues.type = 0;
+                    push(stack, StackValues);
+                    turn = switchTurn(turn);
+                }
+            }
+            else if (input == 2)
+            {
+                printf("Enter the number of moves you want to undo:\n");
+                scanf("%d", &moves);
+                printf("Does player %c accept %c request to undo %d moves?\nEnter 1 to accept or any other number to deny\n", switchTurn(turn), turn, moves);
+                scanf("%d", &reply);
+                if (reply == 1)
+                {
+                    printf("The player %c accepts\n", switchTurn(turn));
+                    undo_ans = undo(CheckerBoard, stack, moves);
+                    if (undo_ans == 1)
                     {
-                          pull(q);
-                          count--;
-                    }
-                    if (moves % 2 == 1)
-                    {                            //turn swicthes if we undo odd number of moves but remains same when we undo even number
-                        turn = switchTurn(turn); //toggles turn
-                    }
-                    if (undoAns == 0)
-                    {
-                        printf("The number of moves were Invalid");
+                        for (int i = 0; i < moves; i++)
+                        {
+                            pull(q);
+                            count_queue--;
+                        }
+                        if (moves % 2 == 1)
+                        {                            //turn swicthes if we undo odd number of moves but remains same when we undo even number
+                            turn = switchTurn(turn); //toggles turn
+                        }
                     }
                 }
-                else if (a == 2)
+                else
                 {
-                    printf("Enter k: ");
-                    int k = 0;
-                    scanf("%d", &k);
-                    allPossibleMoves(CheckerBoard, switchTurn(turn), k); //will check all possible moves of next player hence the toggle
-                    int temp;
-                    printf("\n\nPress any key to continue.\n");
-                    scanf("%d", &temp);
+                    printf("                        ");
+                    printf("The player %c denies\n", switchTurn(turn));
                 }
-                else if(a == 3)
-                {
-                    Reviewgame(q,count);
-                }
-
-                turn = switchTurn(turn); //toggle turn
+            }
+            else if (input == 3)
+            {
+                Reviewgame(q, count_queue);
+            }
+            else
+            {
+                printf("                        ");
+                printf("Enter the number of moves(k):");
+                scanf("%d", &k);
+                allPossibleMoves(CheckerBoard, switchTurn(turn), k); //will check all possible moves of next player hence the toggle
+                printf("\nEnter a number to continue.\n");
+                scanf("%d", &temp);
             }
         }
+    }
     return 0;
 }

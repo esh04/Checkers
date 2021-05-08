@@ -666,7 +666,6 @@ void introduction()
            " +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
     printf("\n\n\n\n Press any key to continue..");
 }
-
 // Stack Implementation in C- using arrays
 int top = -1;
 
@@ -689,10 +688,11 @@ void pop(StackContents s[10000])
     }
 }
 
-int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves, int capture)
+
+int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves)
 {
     // Stack
-    if (top <= moves - 1)
+    if (top < moves - 1)
     {
         return 0;
     }
@@ -705,36 +705,51 @@ int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves, int captur
 
         for (int i = 0; i < moves; i++)
         {
-            if (capture == 1 && moves == 1)
-            {
-                StackContents AllValues = stack[top];
-                coordinates c1 = AllValues.start; // Initial
-                coordinates c2 = AllValues.final; // Final
-                char turn = AllValues.turn;       // Turn can be X or O
 
-                pop(stack);
+            StackContents AllValues = stack[top];
+            coordinates c1 = AllValues.start; // Initial
+            coordinates c2 = AllValues.final; // Final
+            char turn = AllValues.turn;
+            int capture = AllValues.cap; // Turn can be X or O
+            int type = AllValues.type;
+
+            pop(stack);
+            if (capture == 2 || capture == 1)
+            {
 
                 if (turn == 'X')
                 {
                     // Inital State
                     Board[c1.x - 1][c1.y].state = FULL;
                     Board[c1.x - 1][c1.y].checkers.colour = RED;
-                    Board[c1.x - 1][c1.y].checkers.type = NORMAL;
+                    if (type == 1)
+                        Board[c1.x - 1][c1.y].checkers.type = KING;
+                    else
+                        Board[c1.x - 1][c1.y].checkers.type = NORMAL;
 
                     Board[(c1.x + c2.x) / 2 - 1][(c1.y + c2.y) / 2].state = FULL;
                     Board[(c1.x + c2.x) / 2 - 1][(c1.y + c2.y) / 2].checkers.colour = BLUE;
-                    Board[(c1.x + c2.x) / 2 - 1][(c1.y + c2.y) / 2].checkers.type = NORMAL;
+                    if (capture == 2)
+                        Board[(c1.x + c2.x) / 2 - 1][(c1.y + c2.y) / 2].checkers.type = KING;
+                    else
+                        Board[(c1.x + c2.x) / 2 - 1][(c1.y + c2.y) / 2].checkers.type = NORMAL;
                 }
                 else
                 {
                     // Inital State
                     Board[c1.x - 1][c1.y].state = FULL;
                     Board[c1.x - 1][c1.y].checkers.colour = BLUE;
-                    Board[c1.x - 1][c1.y].checkers.type = NORMAL;
+                    if (type == 1)
+                        Board[c1.x - 1][c1.y].checkers.type = KING;
+                    else
+                        Board[c1.x - 1][c1.y].checkers.type = NORMAL;
 
                     Board[(c1.x + c2.x) / 2 - 1][(c1.y + c2.y) / 2].state = FULL;
                     Board[(c1.x + c2.x) / 2 - 1][(c1.y + c2.y) / 2].checkers.colour = RED;
-                    Board[(c1.x + c2.x) / 2 - 1][(c1.y + c2.y) / 2].checkers.type = NORMAL;
+                    if (capture == 2)
+                        Board[(c1.x + c2.x) / 2 - 1][(c1.y + c2.y) / 2].checkers.type = KING;
+                    else
+                        Board[(c1.x + c2.x) / 2 - 1][(c1.y + c2.y) / 2].checkers.type = NORMAL;
                 }
 
                 // Final State
@@ -746,26 +761,25 @@ int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves, int captur
             else
             {
 
-                StackContents AllValues = stack[top];
-                coordinates c1 = AllValues.start; // Initial
-                coordinates c2 = AllValues.final; // Final
-                char turn = AllValues.turn;       // Turn can be X or O
-
-                pop(stack);
-
                 if (turn == 'X')
                 {
                     // Inital State
                     Board[c1.x - 1][c1.y].state = FULL;
                     Board[c1.x - 1][c1.y].checkers.colour = RED;
-                    Board[c1.x - 1][c1.y].checkers.type = NORMAL;
+                    if (type == 1)
+                        Board[c1.x - 1][c1.y].checkers.type = KING;
+                    else
+                        Board[c1.x - 1][c1.y].checkers.type = NORMAL;
                 }
                 else
                 {
                     // Inital State
                     Board[c1.x - 1][c1.y].state = FULL;
                     Board[c1.x - 1][c1.y].checkers.colour = BLUE;
-                    Board[c1.x - 1][c1.y].checkers.type = NORMAL;
+                    if (type == 1)
+                        Board[c1.x - 1][c1.y].checkers.type = KING;
+                    else
+                        Board[c1.x - 1][c1.y].checkers.type = NORMAL;
                 }
 
                 // Final State
