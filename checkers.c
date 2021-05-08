@@ -6,7 +6,7 @@ void initBoard(checkersGrid Board[][SIZE])
     for (int i = 0; i < SIZE; i++)
     {
         for (int j = 0; j < SIZE; j++)
-        { //empty, nocolour and nopeice are properties corresponding to an empty square on the board
+        {
             Board[i][j].state = EMPTY;
             (Board[i][j].checkers).colour = NOCOLOUR;
             (Board[i][j].checkers).type = NOPEICE;
@@ -43,7 +43,6 @@ void initBoard(checkersGrid Board[][SIZE])
     }
 }
 
-//prints the checkerboard in its current state
 void printBoard(checkersGrid Board[][SIZE])
 {
     for (int i = 0; i < SIZE; i++)
@@ -66,18 +65,12 @@ void printBoard(checkersGrid Board[][SIZE])
         {
             if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == RED) && ((Board[i][j].checkers).type == NORMAL))
             {
-                if ((Board[i][j].checkers).type == KING)
-                    printf("\033[31m X* "); //king will be denoted with an asterix next to it
-                else
-                    printf("\033[31m X ");
+                printf("\033[31m X ");
                 printf("\033[0m|");
             }
             else if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == BLUE) && ((Board[i][j].checkers).type == NORMAL))
             {
-                if ((Board[i][j].checkers).type == KING)
-                    printf("\033[36m O* ");
-                else
-                    printf("\033[36m O ");
+                printf("\033[36m O ");
                 printf("\033[0m|");
             }
             else
@@ -109,8 +102,6 @@ void printBoard(checkersGrid Board[][SIZE])
     }
     printf("\n");
 }
-
-//checks whether the given input is valid
 int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
 {
     int m;
@@ -351,7 +342,6 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
     }
     return 1;
 }
-
 int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates c2)
 {
     char y1, y2;
@@ -405,6 +395,39 @@ int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates 
         }
     }
     return 1;
+
+}
+
+int if_capture(checkersGrid Board[][SIZE], char turn)
+{       int colour, step, flag = 0;
+        char input;
+        if(turn == 'X')
+        {
+                colour = RED;
+                step = 2;
+        }
+        else
+        {
+                colour = BLUE;
+                step = -2;
+        }
+        for(int i = 0; i < SIZE; i++)
+        {
+                for(int j = 0; j < SIZE; j++)
+                {
+                        //we'll first check which one of these are within bounds. 
+                        if ((Board[i][j].checkers).colour == colour)
+                        {
+                                input = j + 'A';
+                                flag = flag | isvalid(Board, turn, input, i, input + 2, i + 2) | isvalid(Board, turn, input, i, input + 2, i - 2) | isvalid(Board, turn, input, i, input - 2, i + 2) | isvalid(Board, turn, input, i, input - 2, i - 2);
+                                // j will be the alphabet, i is the letter input        
+                                //pass all possible vanues to is_valid function and see if a one is being returned
+
+                        }
+                }
+        }
+        return flag;
+
 }
 
 void allPossibleMoves(checkersGrid Board[][SIZE], char turn, int k)
@@ -447,19 +470,21 @@ void allPossibleMoves(checkersGrid Board[][SIZE], char turn, int k)
         allPossibleMoves(tempBoard, switchTurn(turn), k - 1);
         return;
     }
-    int counter = 0;
+
     for (int i = 0; i < SIZE; i++)
     {
         for (int j = 0; j < SIZE; j++)
         {
 
+
             if ((tempBoard[j][i].checkers).colour == colour)
-            {
+
                 coordinates initial, final;
                 initial.x = i;
                 initial.y = j;
 
                 //check valid moves for this peice
+
                 if ((tempBoard[j][i].checkers).type == KING)
                 {
                     //can move to backward diagonal too
@@ -511,12 +536,13 @@ void allPossibleMoves(checkersGrid Board[][SIZE], char turn, int k)
                     if (k - 1 > 0)
                         allPossibleMoves(tempBoard, switchTurn(turn), k - 1); //recursion after toggling the turn and decrementing k as one iteration is completed
                 }
+
             }
         }
     }
 }
 
-void introduction() //introductory page that shows up towards the start of the game
+void introduction()
 {
     system("clear");
 
@@ -642,17 +668,4 @@ int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves, int captur
             }
         }
     }
-}
-char switchTurn(char turn)
-{
-    if (turn == 'X')
-    {
-        // Player- O turn
-        turn = 'O';
-    }
-    else
-    { // Player- X turn
-        turn = 'X';
-    }
-    return turn;
 }
