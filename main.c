@@ -100,13 +100,13 @@ int main()
                 push(stack, StackValues);
 
                 // Asking for Undo and all possible moves Option from user
-                printf("\nPress 1 to Undo, 2 to view all possible moves and 3 for review for %c, else press any other key!\n", switchTurn(turn));
+                printf("\nPress 1 to Undo, 2 to view all possible moves for %c, 3 to review all moves, else press any other key!\n", switchTurn(turn));
                 int a;
                 scanf("%d", &a);
                 if (a == 1)
                 {
                     int moves;
-                    printf("Enter no. of moves you want to Undo\n");
+                    printf("Enter the number of moves you want to Undo\n");
                     scanf("%d", &moves);
 
                     // Do Undo
@@ -122,7 +122,7 @@ int main()
                     }
                     if (undoAns == 0)
                     {
-                        printf("The no. of moves were Invalid");
+                        printf("The number of moves were Invalid");
                     }
                 }
                 else if (a == 2)
