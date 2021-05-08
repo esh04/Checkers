@@ -101,7 +101,7 @@ int main()
                 push(stack, StackValues);
 
                 // Asking for Undo and all possible moves Option from user
-                printf("\nPress 1 to Undo, 2 to view all possible moves for %c, 3 to review all moves, else press any other key!\n", switchTurn(turn));
+                printf("\nPress 1 to Undo, 2 to view all possible moves for %c, 3 to review all moves, else press any other key to continue!\n", switchTurn(turn));
                 int a;
                 scanf("%d", &a);
                 if (a == 1)
