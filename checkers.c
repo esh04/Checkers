@@ -665,24 +665,10 @@ void pop(StackContents s[10000])
     }
 }
 
-char switchTurn(char turn)
-{
-    if (turn == 'X')
-    {
-        // Player- O turn
-        turn = 'O';
-    }
-    else
-    { // Player- X turn
-        turn = 'X';
-    }
-    return turn;
-}
-
 int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves, int capture)
-{
+{   
     // Stack
-    if (top <= moves - 1)
+    if (top < moves - 1) 
     {
         return 0;
     }
