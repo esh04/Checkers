@@ -31,4 +31,9 @@ void initBoard(checkersGrid Board[][SIZE]);
 void printBoard(checkersGrid Board[][SIZE]);
 int isValid(checkersGrid Board[][SIZE], char turn, coordinates start, coordinates end);
 void introduction();
+int checkWinner(checkersGrid Board[][SIZE]);
+void undo(checkersGrid Board[][SIZE]);
+void review(checkersGrid Board[][SIZE]);
+void allPossibleMoves(checkersGrid Board[][SIZE]);
+
 #endif
