@@ -129,7 +129,7 @@ void printBoard(checkersGrid Board[][SIZE])
 bool ifdouble(checkersGrid Board[][SIZE], coordinates a, char turn)
 {
     int x = a.x;
-    int y = a.y + 'A';
+    char y = a.y + 'A';
     int variable = isvalid(Board, turn, y, x, y + 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x - 2) + isvalid(Board, turn, y, x, y + 2, x - 2);
     return variable > 0;
 }
@@ -1013,6 +1013,35 @@ int winner(checkersGrid Board[][SIZE], char turn)
     else if (o_move == false || o_count == 0)
     {
         return 2;
+    }
+    return 0;
+}
+int if_capture_possible(checkersGrid Board[][SIZE], char turn)
+{
+    int colour;
+    coordinates temp;
+    if (turn == 'X')
+    {
+        colour = RED;
+    }
+    else
+    {
+        colour = BLUE;
+    }
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            if (Board[i][j].checkers.colour == colour)
+            {
+                temp.x = i + 1;
+                temp.y = j;
+                if (ifdouble(Board, temp, turn))
+                {
+                    return 1;
+                }
+            }
+        }
     }
     return 0;
 }
