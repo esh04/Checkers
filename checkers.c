@@ -329,6 +329,13 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
     return 1;
 }
 
+/******************************************************************
+ * Movements return 0 in case of an invalid move
+ * In case of valid move it captures if capture is possible, 
+ * else just changes the coordinates of the player with
+ * turn from c1 (initial coordinates) to c2(final coordinates).
+ * For valid moves, it returns 1.
+******************************************************************/
 int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates c2)
 {
     char Y1, Y2;
@@ -388,6 +395,9 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
     }
     return 1; // Returns 1 for a Successful Move
 }
+
+
+
 int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates c2)
 {
     char y1, y2;
@@ -487,8 +497,7 @@ coordinates *double_captures(checkersGrid Board[][SIZE], char turn, coordinates 
     }
     return final_coordinates;
 }
-/////
-//
+
 //checking if capture is possible for a single square
 int is_capture(checkersGrid Board[][SIZE], char turn, coordinates c)
 {
@@ -701,16 +710,18 @@ void introduction()
            " +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
     printf("\n\n\n\n Press enter to continue..................");
 }
-// Stack Implementation in C- using arrays
+
+
+//**************Stack Implementation in C- using arrays******************
 int top = -1; // Top of the stack
 
-void push(StackContents s[10000], StackContents c)
+void push(StackContents s[10000], StackContents c) //Pushes into a stack of StackContents
 {
     top++;
     s[top] = c;
 }
 
-void pop(StackContents s[10000])
+void pop(StackContents s[10000]) // Pops/removes the top value from the stack
 {
     if (top <= -1)
     {
@@ -723,6 +734,13 @@ void pop(StackContents s[10000])
     }
 }
 
+/***********************************************************
+ * Undo the no. of moves entered by the user taking 
+ * consideration that both player agrees. 
+ * Uses stack as data structure, which stores all the 
+ * moves of both the players in StackContents everytime
+ * they have a valid move.
+***********************************************************/
 int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves)
 {
     // Implementation using Stack
@@ -751,9 +769,9 @@ int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves)
                     // Setting the values for Inital State
                     Board[c1.x - 1][c1.y].state = FULL;
                     Board[c1.x - 1][c1.y].checkers.colour = RED;
-                    if (type == 1)
+                    if (type == 1) // For KING
                         Board[c1.x - 1][c1.y].checkers.type = KING;
-                    else
+                    else  // For NORMAL Piece
                         Board[c1.x - 1][c1.y].checkers.type = NORMAL;
 
                     Board[(c1.x + c2.x) / 2 - 1][(c1.y + c2.y) / 2].state = FULL;
@@ -768,16 +786,16 @@ int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves)
                     // Setting the values for Inital State
                     Board[c1.x - 1][c1.y].state = FULL;
                     Board[c1.x - 1][c1.y].checkers.colour = BLUE;
-                    if (type == 1)
+                    if (type == 1) // For KING
                         Board[c1.x - 1][c1.y].checkers.type = KING;
-                    else
+                    else //For NORMAL Piece
                         Board[c1.x - 1][c1.y].checkers.type = NORMAL;
 
                     Board[(c1.x + c2.x) / 2 - 1][(c1.y + c2.y) / 2].state = FULL;
                     Board[(c1.x + c2.x) / 2 - 1][(c1.y + c2.y) / 2].checkers.colour = RED;
-                    if (capture == 2)
+                    if (capture == 2) // For KING
                         Board[(c1.x + c2.x) / 2 - 1][(c1.y + c2.y) / 2].checkers.type = KING;
-                    else
+                    else //For NORMAL piece
                         Board[(c1.x + c2.x) / 2 - 1][(c1.y + c2.y) / 2].checkers.type = NORMAL;
                 }
 
@@ -795,9 +813,9 @@ int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves)
                     // Setting the values for Inital State
                     Board[c1.x - 1][c1.y].state = FULL;
                     Board[c1.x - 1][c1.y].checkers.colour = RED;
-                    if (type == 1)
+                    if (type == 1) // For KING
                         Board[c1.x - 1][c1.y].checkers.type = KING;
-                    else
+                    else // For NORMAL Piece
                         Board[c1.x - 1][c1.y].checkers.type = NORMAL;
                 }
                 else // For player - O
@@ -805,9 +823,9 @@ int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves)
                     // Setting the values for Inital State
                     Board[c1.x - 1][c1.y].state = FULL;
                     Board[c1.x - 1][c1.y].checkers.colour = BLUE;
-                    if (type == 1)
+                    if (type == 1) // For KING
                         Board[c1.x - 1][c1.y].checkers.type = KING;
-                    else
+                    else // For NORMAL piece
                         Board[c1.x - 1][c1.y].checkers.type = NORMAL;
                 }
 
