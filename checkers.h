@@ -30,6 +30,6 @@ char switchTurn(char turn);
 void PossibleCapturesRepeatingSteps(checkersGrid tempBoard[][SIZE], char turn, coordinates initial, coordinates final, int k);
 void temporaryBoard(checkersGrid Board[][SIZE], checkersGrid tempBoard[][SIZE]);
 void PossibleMovesRepeatingSteps(checkersGrid Board[][SIZE], char turn, coordinates initial, coordinates final, int k);
-
+void sound(); // Adds sound when a valid move(either diagonal or capture) is made
 
 #endif

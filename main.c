@@ -78,7 +78,8 @@ int main(void)
                 if (capture_temp != capture_possible)
                     valid = -1;
                 else
-                    valid = movements(CheckerBoard, turn, start, final) || capture; //move will be valid if either of capture or movements are tru
+                    valid = movements(CheckerBoard, turn, start, final) || capture; //move will be valid if either of capture or movements are true
+
                 printf("\n\n");
                 if (win != 0)
                 {
@@ -107,13 +108,14 @@ int main(void)
                     printBoard(CheckerBoard);
                     printf("\n               ");
                     printf(" ************ %c's Turn ************\n", turn);
-                    printf("\n      Invalid Move, Try Again! Capture is possible\n");
+                    printf("\n           Invalid Move, Try Again! Capture is possible\n");
 
                     printf("Enter anything to continue........\n");
                     fgets(dummy, 100, stdin);
                 }
-                else
-                {
+                else // Valid move
+                {   
+                    sound();
                     enQueue(q, start, final, turn);
                     count_queue++;
                     // If Valid move push into stack everytime
@@ -222,6 +224,7 @@ int main(void)
             {
                 printf("                  Enter the number of moves(k):");
                 scanf("%d", &k);
+
                 system("clear");
                 printBoard(CheckerBoard);
                 printf("\n               ");
@@ -229,6 +232,7 @@ int main(void)
                 allPossibleMoves(CheckerBoard, switchTurn(turn), k); //will check all possible moves of next player hence the toggle
                 printf("Enter anything to continue........\n");
                 fgets(dummy, 100, stdin);
+
             }
         }
     }
