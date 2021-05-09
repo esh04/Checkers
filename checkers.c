@@ -843,7 +843,7 @@ Que newmove(coordinates a, coordinates b, char c)
 {
     Que temp = (Que)malloc(sizeof(struct quecontents));
     temp->c1.x = a.x;
-    temp->c1.y = a.y;
+    temp->c1.y = a.y;// creating new node for storing a set of coordinates
     temp->c2.x = b.x;
     temp->c2.y = b.y;
     temp->c = c;
@@ -851,7 +851,7 @@ Que newmove(coordinates a, coordinates b, char c)
     return temp;
 }
 // basically my datastructure has three properties
-//1. enque 2.Deque 3.eject
+//1. enque 2.Deque 3.pull
 
 Queue createQueue()
 {
@@ -862,7 +862,7 @@ Queue createQueue()
 void enQueue(Queue q, coordinates a, coordinates b, char c)
 {
     Que temp = newmove(a, b, c);
-    // If queue is empty, then new node is front and rear both
+    
     if (q->rear == NULL)
     {
         q->front = q->rear = temp;
@@ -896,7 +896,7 @@ Que deQueue(Queue q)
 
 void pull(Queue q)
 {
-
+// this function is used when undo function is called it actually deletes the no of moves called by the undo
     Que s;
     s = (Que)malloc(sizeof(struct quecontents));
 
@@ -928,43 +928,47 @@ void pull(Queue q)
 
 void Reviewgame(Queue q, int n)
 {
-    int count = 0;
+
+// shows all movements of the game from the start
+
+    int count = 0;// a counter to indicate how many moves were completed
     char h;
     //int x1,x2,y1,y2;
     coordinates c1, c2;
     char d;
     int g;
     checkersGrid Board[8][8];
-    initBoard(Board);
+    initBoard(Board);// initalising the checkers board
     while (count < n)
     {
 
         if (count == 0)
         {
-            system("clear");
+            system("clear");// clears the terminal
             printBoard(Board);
+            // a loop for delay of 1 second to distinguish the original board and the first move
             for (int c = 1; c <= 32767; c++)
                 for (int d = 1; d <= 32767; d++)
                 {
                 }
         }
         Que p = (Que)malloc(sizeof(struct quecontents));
-        p = deQueue(q);
+        p = deQueue(q);// deque(q) returns a pointer to the coordinates and turn for the movement.
         c1.x = p->c1.x;
         c1.y = p->c1.y;
         c2.x = p->c2.x;
         c2.y = p->c2.y;
         d = p->c;
 
-        enQueue(q, c1, c2, d);
+        enQueue(q, c1, c2, d);// again storing this movement which is helpful when the player calls review later in the game
 
-        if (abs(c2.x - c1.x) == 2 && abs(c2.y - c1.y) == 2)
+        if (abs(c2.x - c1.x) == 2 && abs(c2.y - c1.y) == 2)// if difference of coordinates=2 jump(capture) takes place
         {
             g = captures(Board, d, c1, c2);
         }
         else
         {
-            g = movements(Board, d, c1, c2);
+            g = movements(Board, d, c1, c2); // if the difference is only 1 just movement takes place
         }
 
         system("clear");
