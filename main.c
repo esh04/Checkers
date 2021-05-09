@@ -70,7 +70,7 @@ int main(void)
                 else
                     valid = movements(CheckerBoard, turn, start, final) || capture; //move will be valid if either of capture or movements are tru
                 printf("\n\n");
-                if(win != 0)
+                if (win != 0)
                 {
                     printf("You cannot input as winner is declared; unless you undo\n");
                 }
@@ -100,19 +100,24 @@ int main(void)
                     else
                         StackValues.type = 0;
                     push(stack, StackValues);
-                    if (ifdouble(CheckerBoard, final, turn))
+                    if (ifdouble(CheckerBoard, final, turn) && capture > 0)
                         ;
                     else
                         turn = switchTurn(turn);
                 }
                 win = winner(CheckerBoard, turn);
-                if(win == 1)
+                if (win == 1)
                 {
                     printf("The winner is O\n");
                 }
-                else if(win == 2)
+                else if (win == 2)
                 {
                     printf("The winner is X\n");
+                }
+                if (win != 0)
+                {
+                    printf("Enter any number to continue\n");
+                    scanf("%d", &dummy);
                 }
             }
             else if (input == 2)
@@ -127,7 +132,7 @@ int main(void)
                     undo_ans = undo(CheckerBoard, stack, moves);
                     if (undo_ans == 1)
                     {
-                        if(moves > 0)
+                        if (moves > 0)
                         {
                             win = 0;
                         }
@@ -140,6 +145,11 @@ int main(void)
                         {                            //turn swicthes if we undo odd number of moves but remains same when we undo even number
                             turn = switchTurn(turn); //toggles turn
                         }
+                    }
+                    else if (undo_ans == 0)
+                    {
+                        printf("Enter a number to continue\n");
+                        scanf("%d", &dummy);
                     }
                 }
                 else
