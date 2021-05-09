@@ -362,11 +362,11 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
             // Change the current piece features
             Board[c2.x - 1][c2.y].state = FULL;
             Board[c2.x - 1][c2.y].checkers.colour = RED;
-            if (c2.x == 8)
+            if (c2.x == 8) // For KING 
             {
                 Board[c2.x - 1][c2.y].checkers.type = KING;
             }
-            else
+            else 
             {
                 Board[c2.x - 1][c2.y].checkers.type = Board[c1.x - 1][c1.y].checkers.type;
             }
@@ -378,7 +378,7 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
             // Change the current piece features
             Board[c2.x - 1][c2.y].state = FULL;
             Board[c2.x - 1][c2.y].checkers.colour = BLUE;
-            if (c2.x == 1)
+            if (c2.x == 1) // For KING
             {
                 Board[c2.x - 1][c2.y].checkers.type = KING;
             }
