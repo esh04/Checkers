@@ -46,7 +46,7 @@ int main(void)
         if (!strcmp(input, "0"))
         {
             system("clear");
-            printf("                  Thank you for playing the game!!\n");
+            printf("                    Thank you for playing the game!\n");
             return 0;
         }
         if (!strcmp(input, "1"))
