@@ -57,7 +57,7 @@ int main(void)
                 int capture_possible = if_capture(CheckerBoard, turn);
                 int capture = captures(CheckerBoard, turn, start, final);
                 if (capture != capture_possible)
-                    valid = 0;
+                    valid = -1;
                 else
                     valid = movements(CheckerBoard, turn, start, final) || capture; //move will be valid if either of capture or movements are tru
                 printf("\n\n");
@@ -73,6 +73,17 @@ int main(void)
                     printf("\n               ");
                     printf(" ************ %c's Turn ************\n", turn);
                     printf("\n                     Invalid Move, Try Again!\n");
+
+                    printf("                    Enter a number to continue\n");
+                    scanf("%d", &dummy);
+                }
+                else if(valid == -1)
+                {
+                    system("clear");
+                    printBoard(CheckerBoard);
+                    printf("\n               ");
+                    printf(" ************ %c's Turn ************\n", turn);
+                    printf("\n      Invalid Move, Try Again! Capture is possible\n");
 
                     printf("                    Enter a number to continue\n");
                     scanf("%d", &dummy);
@@ -114,10 +125,6 @@ int main(void)
             }
             else if (input == 2)
             {
-                system("clear");
-                printBoard(CheckerBoard);
-                printf("\n               ");
-                printf(" ************ %c's Turn ************\n", turn);
                 printf("           Enter the number of moves you want to undo:\n");
                 scanf("%d", &moves);
                 printf("         Does player %c accept %c request to undo %d moves?\n          Enter 1 to accept or any other number to deny\n", switchTurn(turn), turn, moves);
@@ -152,14 +159,21 @@ int main(void)
                 {
 
                     printf("                     The player %c denies\n", switchTurn(turn));
-   
+
                     printf("                 Enter a number to continue\n");
                     scanf("%d", &dummy);
                 }
             }
             else if (input == 3)
             {
-                Reviewgame(q, count_queue);
+                if (count_queue == 0)
+                {
+                    printf("Cannot review in the 0th move\n");
+                    printf("Enter a number to continue\n");
+                    scanf("%d", &dummy);
+                }
+                else
+                    Reviewgame(q, count_queue);
             }
             else if (input == 4)
             {
