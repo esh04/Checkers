@@ -11,6 +11,7 @@
 
 
 // ************Functions declarations************
+int winner(checkersGrid Board[][SIZE], char turn);
 bool ifdouble(checkersGrid Board[][SIZE], coordinates a, char turn);
 void initBoard(checkersGrid Board[][SIZE]);
 void printBoard(checkersGrid Board[][SIZE]);

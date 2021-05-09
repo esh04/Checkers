@@ -22,6 +22,7 @@ int main(void)
     int k;
     int temp;
     int dummy;
+    int win;
     introduction();
     if (getchar())
     {
@@ -69,7 +70,10 @@ int main(void)
                 else
                     valid = movements(CheckerBoard, turn, start, final) || capture; //move will be valid if either of capture or movements are tru
                 printf("\n\n");
-
+                if(win != 0)
+                {
+                    printf("You cannot input as winner is declared; unless you undo\n");
+                }
                 if (valid == 0)
                 {
                     // Invalid move
@@ -101,6 +105,15 @@ int main(void)
                     else
                         turn = switchTurn(turn);
                 }
+                win = winner(CheckerBoard, turn);
+                if(win == 1)
+                {
+                    printf("The winner is O\n");
+                }
+                else if(win == 2)
+                {
+                    printf("The winner is X\n");
+                }
             }
             else if (input == 2)
             {
@@ -114,6 +127,10 @@ int main(void)
                     undo_ans = undo(CheckerBoard, stack, moves);
                     if (undo_ans == 1)
                     {
+                        if(moves > 0)
+                        {
+                            win = 0;
+                        }
                         for (int i = 0; i < moves; i++)
                         {
                             pull(q);

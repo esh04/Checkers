@@ -932,3 +932,59 @@ void Reviewgame(Queue q, int n)
         count++;
     }
 }
+int winner(checkersGrid Board[][SIZE], char turn)
+{
+    int x_count = 0;
+    int o_count = 0;
+    bool x_move = false;
+    bool o_move = false;
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            if (Board[i][j].checkers.colour == BLUE)
+            {
+                o_count++;
+                if (turn == 'O')
+                {
+                    if (o_move == false)
+                    {
+                        for (int z = 1; z <= 2; z++)
+                        {
+                            if (isvalid(Board, turn, j + 'A', i + 1, j + 'A' + z, i + 1 + z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' - z, i + 1 + z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' + z, i + 1 - z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' - z, i + 1 - z))
+                                o_move = true;
+                            if (o_move)
+                                break;
+                        }
+                    }
+                }
+            }
+            else if (Board[i][j].checkers.colour == RED)
+            {
+                x_count++;
+                if (turn == 'X')
+                {
+                    if (x_move == false)
+                    {
+                        for (int z = 1; z <= 2; z++)
+                        {
+                            if (isvalid(Board, turn, j + 'A', i + 1, j + 'A' + z, i + 1 + z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' - z, i + 1 + z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' + z, i + 1 - z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' - z, i + 1 - z))
+                                x_move = true;
+                            if (x_move)
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if(x_move == false || x_count == 0)
+    {
+        return 1;
+    }
+    else if(o_move == false || o_count == 0)
+    {
+        return 2;
+    }
+    return 0;
+}
