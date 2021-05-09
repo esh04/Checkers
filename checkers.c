@@ -345,7 +345,7 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
             }
             else
             {
-                Board[c2.x - 1][c2.y].checkers.type = NORMAL;
+                Board[c2.x - 1][c2.y].checkers.type = Board[c1.x - 1][c1.y].checkers.type;
             }
         }
 
@@ -361,7 +361,7 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
             }
             else
             {
-                Board[c2.x - 1][c2.y].checkers.type = NORMAL;
+                Board[c2.x - 1][c2.y].checkers.type = Board[c1.x - 1][c1.y].checkers.type;
             }
         }
 
@@ -391,9 +391,6 @@ int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates 
     }
     else
     {
-        Board[c1.x - 1][c1.y].state = EMPTY;
-        Board[c1.x - 1][c1.y].checkers.colour = NOCOLOUR;
-        Board[c1.x - 1][c1.y].checkers.type = NOPEICE;
         Board[x_coordinate - 1][y_coordinate].state = EMPTY;
         Board[x_coordinate - 1][y_coordinate].checkers.colour = NOCOLOUR;
         Board[x_coordinate - 1][y_coordinate].checkers.type = NOPEICE;
@@ -407,7 +404,7 @@ int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates 
             }
             else
             {
-                Board[c2.x - 1][c2.y].checkers.type = NORMAL;
+                Board[c2.x - 1][c2.y].checkers.type = Board[c1.x - 1][c1.y].checkers.type;
             }
         }
         else
@@ -420,9 +417,12 @@ int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates 
             }
             else
             {
-                Board[c2.x - 1][c2.y].checkers.type = NORMAL;
+                Board[c2.x - 1][c2.y].checkers.type = Board[c1.x - 1][c1.y].checkers.type;
             }
         }
+        Board[c1.x - 1][c1.y].state = EMPTY;
+        Board[c1.x - 1][c1.y].checkers.colour = NOCOLOUR;
+        Board[c1.x - 1][c1.y].checkers.type = NOPEICE;
         // for double captures
         if (is_capture(Board, turn, c2) >= 1)
         {
@@ -978,11 +978,11 @@ int winner(checkersGrid Board[][SIZE], char turn)
             }
         }
     }
-    if(x_move == false || x_count == 0)
+    if (x_move == false || x_count == 0)
     {
         return 1;
     }
-    else if(o_move == false || o_count == 0)
+    else if (o_move == false || o_count == 0)
     {
         return 2;
     }
