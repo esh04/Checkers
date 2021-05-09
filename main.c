@@ -4,6 +4,8 @@
 #include "checkers.h"
 #include "checkers.h"
 #include "Que.h"
+#include "checkers.h"
+#include "Que.h"
 
 // ************File used to call & run the functions************
 
@@ -54,9 +56,10 @@ int main(void)
                 temp2 = toupper(temp2);
                 start.y = temp1 - 65;
                 final.y = temp2 - 65;
-                int capture_possible = if_capture(CheckerBoard, turn);
+                int capture_possible = if_capture_possible(CheckerBoard, turn);
                 int capture = captures(CheckerBoard, turn, start, final);
-                if (capture != capture_possible)
+                int capture_temp = capture > 0 ? 1 : 0;
+                if (capture_temp != capture_possible)
                     valid = -1;
                 else
                     valid = movements(CheckerBoard, turn, start, final) || capture; //move will be valid if either of capture or movements are true
@@ -78,7 +81,7 @@ int main(void)
                     printf("                    Enter a number to continue\n");
                     scanf("%d", &dummy);
                 }
-                else if(valid == -1)
+                else if (valid == -1)
                 {
                     system("clear");
                     printBoard(CheckerBoard);
@@ -90,8 +93,8 @@ int main(void)
                     scanf("%d", &dummy);
                 }
                 else // Valid move
-                {
-                    printf("\a");  // To add sound when a move(either diagonal or capture) is made
+                {   
+                    sound();
                     enQueue(q, start, final, turn);
                     count_queue++;
                     // If Valid move push into stack everytime
