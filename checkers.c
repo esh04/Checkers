@@ -155,6 +155,7 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
         m = 0;
     }
     // here m represents the player O or X
+    
     // m=0(player-O) and m=1(player-X)
     if (P == 'X')
     {
@@ -174,15 +175,15 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
     {
         return 0;
     }
-    if (a > 7 || b > 7 || c > 7 || d > 7)
+    if (a > 7 || b > 7 || c > 7 || d > 7) // if coordinates are out of bounds function returns 0
     {
         return 0;
     }
 
     g = c - a > 0 ? c - a : a - c;
-    h = d - b > 0 ? d - b : b - d;
+    h = d - b > 0 ? d - b : b - d; 
 
-    if (g != h || g > 2 || h > 2)
+    if (g != h || g > 2 || h > 2)  // if difference between the x-coordinates not equal to difference between y-coordinates or if they are greater than 2 function returns 0
         return 0;
 
     // checks whether  peice is present at coordinates (a,b)  and no piece is present at coordinates (c,d)
@@ -193,18 +194,18 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
 
     if (m == 0) // for player-O(BLUE)
     {
-        if ((Board[b][a].checkers).type == NORMAL)
+        if ((Board[b][a].checkers).type == NORMAL) // if the piece is normal
         {
             if ((Board[b][a].checkers).colour == RED) // if that position contains another player's piece
                 return 0;
 
-            if (d == b + 1 || d == b + 2)
+            if (d == b + 1 || d == b + 2)  // it can move only forward cannot move backward
             {
                 return 0;
             }
-            if (d == b - 2)
+            if (d == b - 2) 
             {
-                if (c == a - 2)
+                if (c == a - 2) // if the difference is greater than 2 checks whether diagnolly middle position contains opposite colour or not
                 {
                     if ((Board[b - 1][a - 1].checkers).colour == BLUE || (Board[b - 1][a - 1].checkers).colour == NOCOLOUR)
                         return 0;
@@ -223,9 +224,9 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
         {
             if ((Board[b][a].checkers).colour == RED) // if that position contains another player's piece
                 return 0;
-            if (d == b - 2)
+            if (d == b - 2)// as it is a king it can move diagnolly backward or forward
             {
-                if (c == a - 2)
+                if (c == a - 2)// checks whether the middle piece is of opposite colour or not
                 {
                     if ((Board[b - 1][a - 1].checkers).colour == BLUE || (Board[b - 1][a - 1].checkers).colour == NOCOLOUR)
 
@@ -265,11 +266,11 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
             if ((Board[b][a].checkers).colour == BLUE) // if that position contains another player's piece
                 return 0;
 
-            if (d == b - 1 || d == b - 2)
+            if (d == b - 1 || d == b - 2)// it can move only forward cannot move backward
             {
                 return 0;
             }
-            if (d == b + 2)
+            if (d == b + 2)// if the difference of y coordinates is equal to 2
             {
                 if (c == a - 2)
                 {
