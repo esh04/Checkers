@@ -977,6 +977,10 @@ int winner(checkersGrid Board[][SIZE], char turn)
             }
         }
     }
+    if (turn == 'O')
+        x_move = true;
+    else
+        o_move = true;
     if (x_move == false || x_count == 0)
     {
         return 1;
