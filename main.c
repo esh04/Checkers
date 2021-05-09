@@ -57,7 +57,7 @@ int main(void)
                 int capture_possible = if_capture(CheckerBoard, turn);
                 int capture = captures(CheckerBoard, turn, start, final);
                 if (capture != capture_possible)
-                    valid = 0;
+                    valid = -1;
                 else
                     valid = movements(CheckerBoard, turn, start, final) || capture; //move will be valid if either of capture or movements are tru
                 printf("\n\n");
@@ -73,6 +73,17 @@ int main(void)
                     printf("\n               ");
                     printf(" ************ %c's Turn ************\n", turn);
                     printf("\n                     Invalid Move, Try Again!\n");
+
+                    printf("                    Enter a number to continue\n");
+                    scanf("%d", &dummy);
+                }
+                else if(valid == -1)
+                {
+                    system("clear");
+                    printBoard(CheckerBoard);
+                    printf("\n               ");
+                    printf(" ************ %c's Turn ************\n", turn);
+                    printf("\n      Invalid Move, Try Again! Capture is possible\n");
 
                     printf("                    Enter a number to continue\n");
                     scanf("%d", &dummy);
