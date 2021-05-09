@@ -20,12 +20,14 @@
 #define KING 4
 #define NOPEICE -3
 
+#define K 3 //for the maximum number upto which all possible moves can be shown
+
 //structures for board and the peices
 
 typedef struct coordinates
 {
     int x; // coordinate x is an aplhabet so the ascii - 'A' can be stored. 
-    int y; // board starts from 1, hence input - 1 will be stored.
+    int y; 
 } coordinates;
 
 typedef struct peice
