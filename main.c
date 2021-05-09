@@ -2,6 +2,8 @@
 #include "stack.h"
 #include "Que.h"
 #include "checkers.h"
+#include "checkers.h"
+#include "Que.h"
 
 // ************File used to call & run the functions************
 
@@ -22,7 +24,7 @@ int main(void)
     int k;
     int temp;
     int dummy;
-    int win;
+    int win = 0;
     introduction();
     if (getchar())
     {
@@ -90,7 +92,7 @@ int main(void)
                     else
                         StackValues.type = 0;
                     push(stack, StackValues);
-                    if (ifdouble(CheckerBoard, final, turn))
+                    if (ifdouble(CheckerBoard, final, turn) && capture > 0)
                         ;
                     else
                         turn = switchTurn(turn);
@@ -103,6 +105,11 @@ int main(void)
                 else if (win == 2)
                 {
                     printf("The winner is X\n");
+                }
+                if (win != 0)
+                {
+                    printf("Enter any number to continue\n");
+                    scanf("%d", &dummy);
                 }
             }
             else if (input == 2)
@@ -134,6 +141,11 @@ int main(void)
                         {                            //turn swicthes if we undo odd number of moves but remains same when we undo even number
                             turn = switchTurn(turn); //toggles turn
                         }
+                    }
+                    else if (undo_ans == 0)
+                    {
+                        printf("Enter a number to continue\n");
+                        scanf("%d", &dummy);
                     }
                 }
                 else
