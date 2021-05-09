@@ -1018,3 +1018,8 @@ int winner(checkersGrid Board[][SIZE], char turn)
     }
     return 0;
 }
+
+void sound(){
+    // To add sound when a valid move(either diagonal or capture) is made
+    printf("\a");  
+}

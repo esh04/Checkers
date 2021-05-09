@@ -90,8 +90,8 @@ int main(void)
                     scanf("%d", &dummy);
                 }
                 else // Valid move
-                {
-                    printf("\a");  // To add sound when a move(either diagonal or capture) is made
+                {   
+                    sound();
                     enQueue(q, start, final, turn);
                     count_queue++;
                     // If Valid move push into stack everytime
