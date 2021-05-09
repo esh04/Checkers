@@ -61,21 +61,21 @@ void printBoard(checkersGrid Board[][SIZE])
                 printf("----");
         }
         printf("-");
-        
+
         if (i == 1)
-        printf("   Enter:\n");
-        else if (i==2)
-        printf("   0 to exit\n");
-        else if (i==3)
-        printf("   1 to input moves\n");
-        else if (i==4)
-        printf("   2 to undo\n");
-        else if(i==5)
-        printf("   3 to review\n");
-        else if (i==6)
-        printf("   4 to show possible moves\n");
-        else 
-        printf("\n");
+            printf("   Enter:\n");
+        else if (i == 2)
+            printf("   0 to exit\n");
+        else if (i == 3)
+            printf("   1 to input moves\n");
+        else if (i == 4)
+            printf("   2 to undo\n");
+        else if (i == 5)
+            printf("   3 to review\n");
+        else if (i == 6)
+            printf("   4 to show possible moves\n");
+        else
+            printf("\n");
 
         printf("              ");
 
@@ -104,8 +104,6 @@ void printBoard(checkersGrid Board[][SIZE])
             }
         }
         printf("\n");
-       
-      
     }
     printf("                ");
 
@@ -552,11 +550,11 @@ void PossibleCapturesRepeatingSteps(checkersGrid Board[][SIZE], char turn, coord
             for (int m = 0; m < K - k; m++)
                 printf("\t");
             printf("      %c%d to %c%d->", initial.y + 'A', initial.x, final.y + 'A', final.x);
-            printf("      %c%d to %c%d\n", final.y + 'A', final.x, doubleCaptures[n].y + 'A', doubleCaptures[n].x); //final will become initial for capture
-            if (k - 1 > 0)                                                                                          //condition to make sure uneccesary recursion doesnt take place
-                allPossibleMoves(tempBoard, switchTurn(turn), k - 1);                                               //recursion to find futher moves, that can be considered as "children" of this move
+            printf(" %c%d to %c%d\n", final.y + 'A', final.x, doubleCaptures[n].y + 'A', doubleCaptures[n].x); //final will become initial for capture
+            captures(tempBoard, turn, final, doubleCaptures[n]);
+            if (k - 1 > 0)                                            //condition to make sure uneccesary recursion doesnt take place
+                allPossibleMoves(tempBoard, switchTurn(turn), k - 1); //recursion to find futher moves, that can be considered as "children" of this move
         }
-
     }
     else
     {
@@ -700,7 +698,7 @@ void introduction()
            "   ######  ##     ## ########  ######  ##    ## ######## ##     ##  ######  \n"
            " ____________________________________________________________________________\n\n"
            " +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
-    printf("\n\n\n\n Press any key to continue."    );
+    printf("\n\n\n\n Press any key to continue.");
 }
 // Stack Implementation in C- using arrays
 int top = -1; // Top of the stack
