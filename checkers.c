@@ -698,7 +698,7 @@ void introduction()
            "   ######  ##     ## ########  ######  ##    ## ######## ##     ##  ######  \n"
            " ____________________________________________________________________________\n\n"
            " +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
-    printf("\n\n\n\n Press enter to continue..................");
+    printf("\n\n\n\n Enter anything to continue..................");
 }
 // Stack Implementation in C- using arrays
 int top = -1; // Top of the stack
@@ -1053,3 +1053,15 @@ int if_capture_possible(checkersGrid Board[][SIZE], char turn)
     return 0;
 }
 
+char *remove_spaces(char *str)
+{
+	int i = 0, j = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ')
+          str[j++] = str[i];
+		i++;
+	}
+	str[j] = '\0';
+	return str;
+}
