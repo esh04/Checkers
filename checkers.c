@@ -536,8 +536,8 @@ int if_capture(checkersGrid Board[][SIZE], char turn)
 void PossibleCapturesRepeatingSteps(checkersGrid Board[][SIZE], char turn, coordinates initial, coordinates final, int k)
 {
     checkersGrid tempBoard[SIZE][SIZE];
-    temporaryBoard(Board, tempBoard); 
-    captures(tempBoard, turn, initial, final);//make a capture on the new temo board
+    temporaryBoard(Board, tempBoard);
+    captures(tempBoard, turn, initial, final);   //make a capture on the new temo board
     if (is_capture(tempBoard, turn, final) == 1) //checks whether more captures are possible from the given peice
     {
         coordinates *doubleCaptures = double_captures(tempBoard, turn, final); //will store a list of all further captures
@@ -551,7 +551,7 @@ void PossibleCapturesRepeatingSteps(checkersGrid Board[][SIZE], char turn, coord
                 printf("\t");
             printf("      %c%d to %c%d->", initial.y + 'A', initial.x, final.y + 'A', final.x);
             printf(" %c%d to %c%d\n", final.y + 'A', final.x, doubleCaptures[n].y + 'A', doubleCaptures[n].x); //final will become initial for capture
-            captures(tempBoard, turn, final, doubleCaptures[n]); 
+            captures(tempBoard, turn, final, doubleCaptures[n]);
             if (k - 1 > 0)                                            //condition to make sure uneccesary recursion doesnt take place
                 allPossibleMoves(tempBoard, switchTurn(turn), k - 1); //recursion to find futher moves, that can be considered as "children" of this move
         }
@@ -911,6 +911,7 @@ void Reviewgame(Queue q, int n)
 {
     int count = 0;
     char h;
+    char dummy[100];
     //int x1,x2,y1,y2;
     coordinates c1, c2;
     char d;
@@ -920,15 +921,11 @@ void Reviewgame(Queue q, int n)
     while (count < n)
     {
 
-        if (count == 0)
-        {
-            system("clear");
-            printBoard(Board);
-            for (int c = 1; c <= 32767; c++)
-                for (int d = 1; d <= 32767; d++)
-                {
-                }
-        }
+        system("clear");
+        printBoard(Board);
+        printf("\n                  Press any key to see next move!\n");
+        scanf("%[^\n]", dummy);
+        getchar();
         Que p = (Que)malloc(sizeof(struct quecontents));
         p = deQueue(q);
         c1.x = p->c1.x;
@@ -950,12 +947,10 @@ void Reviewgame(Queue q, int n)
 
         system("clear");
         printBoard(Board);
-        printf("\n                  Press any key to see next move!\n");
-        scanf("\n%c", &h);
-
         count++;
     }
 }
+
 int winner(checkersGrid Board[][SIZE], char turn)
 {
     int x_count = 0;
@@ -1017,10 +1012,10 @@ int winner(checkersGrid Board[][SIZE], char turn)
     return 0;
 }
 
-
-void sound(){
+void sound()
+{
     // To add sound when a valid move(either diagonal or capture) is made
-    printf("\a");  
+    printf("\a");
 }
 
 int if_capture_possible(checkersGrid Board[][SIZE], char turn)
@@ -1055,13 +1050,13 @@ int if_capture_possible(checkersGrid Board[][SIZE], char turn)
 
 char *remove_spaces(char *str)
 {
-	int i = 0, j = 0;
-	while (str[i])
-	{
-		if (str[i] != ' ')
-          str[j++] = str[i];
-		i++;
-	}
-	str[j] = '\0';
-	return str;
+    int i = 0, j = 0;
+    while (str[i])
+    {
+        if (str[i] != ' ')
+            str[j++] = str[i];
+        i++;
+    }
+    str[j] = '\0';
+    return str;
 }
