@@ -79,7 +79,7 @@ int main(void)
                 printf("\n               ");
                 printf(" ************ %c's Turn ************\n", turn);
                 printf("You cannot input as winner is declared; unless you undo\n");
-                printf("Enter anything to continue........\n");
+                printf("Enter anything to continue.\n");
                 scanf("%[^\n]", dummy);
                 getchar();
             }
