@@ -26,7 +26,7 @@ void initBoard(checkersGrid Board[][SIZE])
             {
                 Board[i][j].state = FULL;
                 (Board[i][j].checkers).colour = RED;
-                (Board[i][j].checkers).type = NORMAL;
+                (Board[i][j].checkers).type = NORMAL; //initially all peices are normal
 
                 Board[SIZE - 1 - i][j + 1].state = FULL;
                 (Board[SIZE - 1 - i][j + 1].checkers).colour = BLUE;
@@ -61,26 +61,26 @@ void printBoard(checkersGrid Board[][SIZE])
                 printf("----");
         }
         printf("-");
-        
+
         if (i == 1)
-        printf("   Enter:\n");
-        else if (i==2)
-        printf("   0 to exit\n");
-        else if (i==3)
-        printf("   1 to input moves\n");
-        else if (i==4)
-        printf("   2 to undo\n");
-        else if(i==5)
-        printf("   3 to review\n");
-        else if (i==6)
-        printf("   4 to show possible moves\n");
-        else 
-        printf("\n");
+            printf("   Enter:\n");
+        else if (i == 2)
+            printf("   0 to exit\n");
+        else if (i == 3)
+            printf("   1 to input moves\n");
+        else if (i == 4)
+            printf("   2 to undo\n");
+        else if (i == 5)
+            printf("   3 to review\n");
+        else if (i == 6)
+            printf("   4 to show possible moves\n");
+        else
+            printf("\n");
 
         printf("              ");
 
         printf("%d  |", i + 1);
-        for (int j = 0; j < SIZE; j++)
+        for (int j = 0; j < SIZE; j++) //print all peices in their current state
         {
             if ((Board[i][j].state == FULL) && ((Board[i][j].checkers).colour == RED))
             {
@@ -104,8 +104,6 @@ void printBoard(checkersGrid Board[][SIZE])
             }
         }
         printf("\n");
-       
-      
     }
     printf("                ");
 
@@ -131,7 +129,7 @@ void printBoard(checkersGrid Board[][SIZE])
 bool ifdouble(checkersGrid Board[][SIZE], coordinates a, char turn)
 {
     int x = a.x;
-    int y = a.y + 'A';
+    char y = a.y + 'A';
     int variable = isvalid(Board, turn, y, x, y + 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x - 2) + isvalid(Board, turn, y, x, y + 2, x - 2);
     return variable > 0;
 }
@@ -534,12 +532,12 @@ int if_capture(checkersGrid Board[][SIZE], char turn)
 
     return flag;
 }
-
+//these are the repeating steps that are used in the function allPossibleMoves
 void PossibleCapturesRepeatingSteps(checkersGrid Board[][SIZE], char turn, coordinates initial, coordinates final, int k)
 {
     checkersGrid tempBoard[SIZE][SIZE];
-    temporaryBoard(Board, tempBoard);
-    captures(tempBoard, turn, initial, final);
+    temporaryBoard(Board, tempBoard); 
+    captures(tempBoard, turn, initial, final);//make a capture on the new temo board
     if (is_capture(tempBoard, turn, final) == 1) //checks whether more captures are possible from the given peice
     {
         coordinates *doubleCaptures = double_captures(tempBoard, turn, final); //will store a list of all further captures
@@ -552,11 +550,11 @@ void PossibleCapturesRepeatingSteps(checkersGrid Board[][SIZE], char turn, coord
             for (int m = 0; m < K - k; m++)
                 printf("\t");
             printf("      %c%d to %c%d->", initial.y + 'A', initial.x, final.y + 'A', final.x);
-            printf("      %c%d to %c%d\n", final.y + 'A', final.x, doubleCaptures[n].y + 'A', doubleCaptures[n].x); //final will become initial for capture
-            if (k - 1 > 0)                                                                                          //condition to make sure uneccesary recursion doesnt take place
-                allPossibleMoves(tempBoard, switchTurn(turn), k - 1);                                               //recursion to find futher moves, that can be considered as "children" of this move
+            printf(" %c%d to %c%d\n", final.y + 'A', final.x, doubleCaptures[n].y + 'A', doubleCaptures[n].x); //final will become initial for capture
+            captures(tempBoard, turn, final, doubleCaptures[n]); 
+            if (k - 1 > 0)                                            //condition to make sure uneccesary recursion doesnt take place
+                allPossibleMoves(tempBoard, switchTurn(turn), k - 1); //recursion to find futher moves, that can be considered as "children" of this move
         }
-
     }
     else
     {
@@ -580,7 +578,7 @@ void PossibleMovesRepeatingSteps(checkersGrid Board[][SIZE], char turn, coordina
         allPossibleMoves(tempBoard, switchTurn(turn), k - 1); //recursion after toggling the turn and decrementing k as one iteration is completed
     //printBoard(tempBoard); //this can be enabled if we want to print all possible moves from the current position
 }
-void temporaryBoard(checkersGrid Board[][SIZE], checkersGrid tempBoard[][SIZE])
+void temporaryBoard(checkersGrid Board[][SIZE], checkersGrid tempBoard[][SIZE]) //make a copy of the board so that the contents of the original board dont change
 {
 
     //Copy contents of Board to tempBoard
@@ -700,7 +698,7 @@ void introduction()
            "   ######  ##     ## ########  ######  ##    ## ######## ##     ##  ######  \n"
            " ____________________________________________________________________________\n\n"
            " +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
-    printf("\n\n\n\n Press any key to continue."    );
+    printf("\n\n\n\n Press any key to continue.");
 }
 // Stack Implementation in C- using arrays
 int top = -1; // Top of the stack
@@ -1019,7 +1017,39 @@ int winner(checkersGrid Board[][SIZE], char turn)
     return 0;
 }
 
+
 void sound(){
     // To add sound when a valid move(either diagonal or capture) is made
     printf("\a");  
 }
+
+int if_capture_possible(checkersGrid Board[][SIZE], char turn)
+{
+    int colour;
+    coordinates temp;
+    if (turn == 'X')
+    {
+        colour = RED;
+    }
+    else
+    {
+        colour = BLUE;
+    }
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            if (Board[i][j].checkers.colour == colour)
+            {
+                temp.x = i + 1;
+                temp.y = j;
+                if (ifdouble(Board, temp, turn))
+                {
+                    return 1;
+                }
+            }
+        }
+    }
+    return 0;
+}
+
