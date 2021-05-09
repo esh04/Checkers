@@ -537,8 +537,8 @@ void PossibleCapturesRepeatingSteps(checkersGrid Board[][SIZE], char turn, coord
         {
             for (int m = 0; m < 3 - k; m++)
                 printf("\t");
-            printf("%c%d to %c%d->", initial.y + 'A', initial.x, final.y + 'A', final.x);
-            printf(" %c%d to %c%d\n", final.y + 'A', final.x, doubleCaptures[n].y + 'A', doubleCaptures[n].x); //final will become initial
+            printf("      %c%d to %c%d->", initial.y + 'A', initial.x, final.y + 'A', final.x);
+            printf("      %c%d to %c%d\n", final.y + 'A', final.x, doubleCaptures[n].y + 'A', doubleCaptures[n].x); //final will become initial
             if (k - 1 > 0)
                 allPossibleMoves(tempBoard, switchTurn(turn), k - 1);
         }
@@ -547,7 +547,7 @@ void PossibleCapturesRepeatingSteps(checkersGrid Board[][SIZE], char turn, coord
     {
         for (int m = 0; m < 3 - k; m++)
             printf("\t");
-        printf("%c%d to %c%d->\n", initial.y + 'A', initial.x, final.y + 'A', final.x);
+        printf("      %c%d to %c%d->\n", initial.y + 'A', initial.x, final.y + 'A', final.x);
         if (k - 1 > 0)
             allPossibleMoves(tempBoard, switchTurn(turn), k - 1);
     }
@@ -556,7 +556,7 @@ void PossibleMovesRepeatingSteps(checkersGrid Board[][SIZE], char turn, coordina
 {
     for (int m = 0; m < 3 - k; m++)
         printf("\t");
-    printf("%c%d to %c%d->\n", initial.y + 'A', initial.x, final.y + 'A', final.x);
+    printf("      %c%d to %c%d->\n", initial.y + 'A', initial.x, final.y + 'A', final.x);
     checkersGrid tempBoard[SIZE][SIZE];
     temporaryBoard(Board, tempBoard);
     movements(tempBoard, turn, initial, final);
@@ -926,7 +926,7 @@ void Reviewgame(Queue q, int n)
 
         system("clear");
         printBoard(Board);
-        printf("--------Press any alphabet to see next move------\n");
+        printf("\n                      Press any alphabet to see next move!\n");
         scanf("\n%c", &h);
 
         count++;

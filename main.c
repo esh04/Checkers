@@ -31,23 +31,33 @@ int main(void)
             printBoard(CheckerBoard);
             printf("\n                   ");
             printf(" ************* %c's Turn *************\n", turn);
-            printf("Enter 0 to exit, 1 to input moves, 2 to undo, 3 to review, 4 to show possible moves\n");
+            printf("                      Invalid Input. Try again!!\n");
+            printf("                      Enter 0 to exit\n");
+            printf("                      Enter 1 to input moves\n");
+            printf("                      Enter 2 to undo\n");
+            printf("                      Enter 3 to review\n");
+            printf("                      Enter 4 to show possible moves\n");
             scanf("%d", &input);
             while (input < 0 || input > 4)
             {
                 printf("Invalid Input. Try again!!\n");
-                printf("Enter 0 to exit, 1 to input moves, 2 to undo, 3 to review, 4 to show possible moves\n");
+                printf("                      Invalid Input. Try again!!\n");
+                printf("                      Enter 0 to exit\n");
+                printf("                      Enter 1 to input moves\n");
+                printf("                      Enter 2 to undo\n");
+                printf("                      Enter 3 to review\n");
+                printf("                      Enter 4 to show possible moves\n");
                 scanf("%d", &input);
             }
             if (input == 0)
             {
-                printf("Thank you for playing the game!!\n");
+                printf("                      Thank you for playing the game!!\n");
                 return 0;
             }
             if (input == 1)
             {
                 printf("                   ");
-                printf("     Enter values of X1 Y1 X2 Y2\n");
+                printf("   Enter values of X1 Y1 X2 Y2\n");
                 scanf(" %c %d %c %d", &temp1, &start.x, &temp2, &final.x);
                 temp1 = toupper(temp1);
                 temp2 = toupper(temp2);
@@ -64,9 +74,13 @@ int main(void)
                 if (valid == 0)
                 {
                     // Invalid move
-                    printf("Invalid Move, Try Again!\n");
+
+                    printf("\n    Invalid Move, Try Again!\n");
+
+                    
                     printf("Enter a number to continue\n");
                     scanf("%d", &dummy);
+
                 }
                 else
                 {
@@ -91,13 +105,13 @@ int main(void)
             }
             else if (input == 2)
             {
-                printf("Enter the number of moves you want to undo:\n");
+                printf("                      Enter the number of moves you want to undo:\n");
                 scanf("%d", &moves);
-                printf("Does player %c accept %c request to undo %d moves?\nEnter 1 to accept or any other number to deny\n", switchTurn(turn), turn, moves);
+                printf("                      Does player %c accept %c request to undo %d moves?\n                      Enter 1 to accept or any other number to deny\n", switchTurn(turn), turn, moves);
                 scanf("%d", &reply);
                 if (reply == 1)
                 {
-                    printf("The player %c accepts\n", switchTurn(turn));
+                    printf("                      The player %c accepts\n", switchTurn(turn));
                     undo_ans = undo(CheckerBoard, stack, moves);
                     if (undo_ans == 1)
                     {
@@ -114,9 +128,12 @@ int main(void)
                 }
                 else
                 {
-                    printf("The player %c denies\n", switchTurn(turn));
+
+                    printf("                      The player %c denies\n", switchTurn(turn));
+
                     printf("Enter a number to continue\n");
                     scanf("%d", &dummy);
+
                 }
             }
             else if (input == 3)
@@ -125,10 +142,10 @@ int main(void)
             }
             else
             {
-                printf("Enter the number of moves(k):");
+                printf("                      Enter the number of moves(k):");
                 scanf("%d", &k);
                 allPossibleMoves(CheckerBoard, switchTurn(turn), k); //will check all possible moves of next player hence the toggle
-                printf("\nEnter a number to continue.\n");
+                printf("\n                      Enter a number to continue.\n");
                 scanf("%d", &temp);
             }
         }
