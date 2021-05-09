@@ -111,7 +111,13 @@ void printBoard(checkersGrid Board[][SIZE])
     }
     printf("\n");
 }
-
+bool ifdouble(checkersGrid Board[][SIZE], coordinates a, char turn)
+{
+    int x = a.x;
+    int y = a.y + 'A';
+    int variable = isvalid(Board, turn, y, x, y + 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x - 2) + isvalid(Board, turn, y, x, y + 2, x - 2);
+    return variable > 0;
+}
 char switchTurn(char turn)
 {
     if (turn == 'X')
@@ -425,6 +431,14 @@ int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates 
         }
     }
     return 1;
+}
+
+bool ifdouble(checkersGrid Board[][SIZE], coordinates a, char turn)
+{
+    int x = a.x;
+    int y = a.y + 'A';
+    int variable = isvalid(Board, turn, y, x, y + 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x - 2) + isvalid(Board, turn, y, x, y + 2, x - 2);
+    return variable > 0;
 }
 
 ///
