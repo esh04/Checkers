@@ -2,6 +2,8 @@
 #include "stack.h"
 #include "Que.h"
 #include "checkers.h"
+#include "checkers.h"
+#include "Que.h"
 
 // ************File used to call & run the functions************
 
@@ -22,7 +24,7 @@ int main(void)
     int k;
     int temp;
     int dummy;
-    int win;
+    int win = 0;
     introduction();
     if (getchar())
     {
