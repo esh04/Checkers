@@ -18,7 +18,7 @@ void initBoard(checkersGrid Board[][SIZE])
 
     //place the inital pieces
 
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < K; i++)
     {
         for (int j = 0; j < SIZE; j = j + 2)
         {
@@ -524,45 +524,44 @@ void PossibleCapturesRepeatingSteps(checkersGrid Board[][SIZE], char turn, coord
     checkersGrid tempBoard[SIZE][SIZE];
     temporaryBoard(Board, tempBoard);
     captures(tempBoard, turn, initial, final);
-    if (is_capture(tempBoard, turn, final) == 1)
+    if (is_capture(tempBoard, turn, final) == 1) //checks whether more captures are possible from the given peice
     {
-
-        //double capture
-        coordinates *doubleCaptures = double_captures(tempBoard, turn, final);
+        coordinates *doubleCaptures = double_captures(tempBoard, turn, final); //will store a list of all further captures
         int x = initial.x;
         char y = initial.y + 'A';
         int size = isvalid(tempBoard, turn, y, x, y + 2, x + 2) + isvalid(tempBoard, turn, y, x, y - 2, x + 2) + isvalid(tempBoard, turn, y, x, y - 2, x - 2) + isvalid(tempBoard, turn, y, x, y + 2, x - 2);
 
-        for (int n = 0; n < size; n++)
+        for (int n = 0; n < size; n++) //size is the number of further captures possible
         {
-            for (int m = 0; m < 3 - k; m++)
+            for (int m = 0; m < K - k; m++)
                 printf("\t");
             printf("      %c%d to %c%d->", initial.y + 'A', initial.x, final.y + 'A', final.x);
-            printf("      %c%d to %c%d\n", final.y + 'A', final.x, doubleCaptures[n].y + 'A', doubleCaptures[n].x); //final will become initial
-            if (k - 1 > 0)
-                allPossibleMoves(tempBoard, switchTurn(turn), k - 1);
+            printf("      %c%d to %c%d\n", final.y + 'A', final.x, doubleCaptures[n].y + 'A', doubleCaptures[n].x); //final will become initial for capture
+            if (k - 1 > 0)                                                                                          //condition to make sure uneccesary recursion doesnt take place
+                allPossibleMoves(tempBoard, switchTurn(turn), k - 1);                                               //recursion to find futher moves, that can be considered as "children" of this move
         }
     }
     else
     {
-        for (int m = 0; m < 3 - k; m++)
+        //if no further captures are possible
+        for (int m = 0; m < K - k; m++)
             printf("\t");
         printf("      %c%d to %c%d->\n", initial.y + 'A', initial.x, final.y + 'A', final.x);
         if (k - 1 > 0)
-            allPossibleMoves(tempBoard, switchTurn(turn), k - 1);
+            allPossibleMoves(tempBoard, switchTurn(turn), k - 1); //recursion
     }
 }
 void PossibleMovesRepeatingSteps(checkersGrid Board[][SIZE], char turn, coordinates initial, coordinates final, int k)
 {
-    for (int m = 0; m < 3 - k; m++)
+    for (int m = 0; m < K - k; m++)
         printf("\t");
-    printf("      %c%d to %c%d->\n", initial.y + 'A', initial.x, final.y + 'A', final.x);
+    printf("      %c%d to %c%d->\n", initial.y + 'A', initial.x, final.y + 'A', final.x); //prints the valid move
     checkersGrid tempBoard[SIZE][SIZE];
     temporaryBoard(Board, tempBoard);
-    movements(tempBoard, turn, initial, final);
+    movements(tempBoard, turn, initial, final); //makes a movement on a new tempBoard created
     if (k - 1 > 0)
         allPossibleMoves(tempBoard, switchTurn(turn), k - 1); //recursion after toggling the turn and decrementing k as one iteration is completed
-    //printBoard(tempBoard);
+    //printBoard(tempBoard); //this can be enabled if we want to print all possible moves from the current position
 }
 void temporaryBoard(checkersGrid Board[][SIZE], checkersGrid tempBoard[][SIZE])
 {
@@ -578,10 +577,18 @@ void temporaryBoard(checkersGrid Board[][SIZE], checkersGrid tempBoard[][SIZE])
         }
     }
 }
+
+/*LIST OF ALL POSSIBLE MOVES:
+    1. forward empty diagonal for every peice not captured
+    2. if its king forward and backward diagonals 
+    3. jump/double jump -- should be the only valid move when exists
+    First two conditions are taken care of by the isvalid function
+ */
+// This function uses recursion resembling depth first search, where we print the first possible move and then print all their possible children and so on.
 void allPossibleMoves(checkersGrid Board[][SIZE], char turn, int k)
 {
 
-    if (if_capture(Board, turn))
+    if (if_capture(Board, turn)) //if capture is possible that should be the only possible move at that time
     {
         for (int i = 0; i < SIZE; i++)
         {
@@ -592,8 +599,10 @@ void allPossibleMoves(checkersGrid Board[][SIZE], char turn, int k)
                 initial.x = i + 1;
                 initial.y = j;
 
-                if (is_capture(Board, turn, initial)) //check if capture is possible by that peice
+                if (is_capture(Board, turn, initial)) //check if capture is possible at that position
                 {
+                    //checking the possible captures
+
                     if (isvalid(Board, turn, initial.y + 'A', initial.x, initial.y + 'A' + 2, initial.x + 2))
                     {
                         final.x = initial.x + 2;
@@ -622,7 +631,7 @@ void allPossibleMoves(checkersGrid Board[][SIZE], char turn, int k)
             }
         }
     }
-    else
+    else //if no captures possible check for all other moves
         for (int i = 0; i < SIZE; i++)
         {
             for (int j = 0; j < SIZE; j++)
@@ -978,11 +987,11 @@ int winner(checkersGrid Board[][SIZE], char turn)
             }
         }
     }
-    if(x_move == false || x_count == 0)
+    if (x_move == false || x_count == 0)
     {
         return 1;
     }
-    else if(o_move == false || o_count == 0)
+    else if (o_move == false || o_count == 0)
     {
         return 2;
     }
