@@ -83,7 +83,7 @@ int main(void)
                     printBoard(CheckerBoard);
                     printf("\n               ");
                     printf(" ************ %c's Turn ************\n", turn);
-                    printf("\n      Invalid Move, Try Again! Capture is possible\n");
+                    printf("\n           Invalid Move, Try Again! Capture is possible\n");
 
                     printf("                    Enter a number to continue\n");
                     scanf("%d", &dummy);
@@ -179,7 +179,7 @@ int main(void)
             {
                 printf("                  Enter the number of moves(k):");
                 scanf("%d", &k);
-                allPossibleMoves(CheckerBoard, switchTurn(turn), k); //will check all possible moves of next player hence the toggle
+                allPossibleMoves(CheckerBoard, turn, k); 
                 printf("\n                Enter a number to continue.\n");
                 scanf("%d", &temp);
             }
