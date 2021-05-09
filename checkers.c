@@ -320,7 +320,7 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
     Y2 = c2.y + 'A';
 
     // isvalid=0 if invalid move, else isvalid=1
-    int ans = isvalid(Board, turn, Y1, c1.x, Y2, c2.x); 
+    int ans = isvalid(Board, turn, Y1, c1.x, Y2, c2.x);
 
     if (ans == 0) // Invalid move
     {
@@ -433,14 +433,6 @@ int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates 
     return 1;
 }
 
-bool ifdouble(checkersGrid Board[][SIZE], coordinates a, char turn)
-{
-    int x = a.x;
-    int y = a.y + 'A';
-    int variable = isvalid(Board, turn, y, x, y + 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x - 2) + isvalid(Board, turn, y, x, y + 2, x - 2);
-    return variable > 0;
-}
-
 ///
 //checking for coordinates where captures can be continued, from before
 coordinates *double_captures(checkersGrid Board[][SIZE], char turn, coordinates c)
@@ -516,6 +508,8 @@ int if_capture(checkersGrid Board[][SIZE], char turn)
                 temp.y = i;
                 //flag = flag | isvalid(Board, turn, input, i, input + 2, i + 2) | isvalid(Board, turn, input, i, input + 2, i - 2) | isvalid(Board, turn, input, i, input - 2, i + 2) | isvalid(Board, turn, input, i, input - 2, i - 2);
                 flag = flag | is_capture(Board, turn, temp);
+                if (flag == 1)
+                    return flag;
                 // j will be the alphabet, i is the letter input
                 //pass all possible vanues to is_valid function and see if a one is being returned
             }
@@ -538,9 +532,9 @@ void PossibleCapturesRepeatingSteps(checkersGrid Board[][SIZE], char turn, coord
         int x = initial.x;
         char y = initial.y + 'A';
         int size = isvalid(tempBoard, turn, y, x, y + 2, x + 2) + isvalid(tempBoard, turn, y, x, y - 2, x + 2) + isvalid(tempBoard, turn, y, x, y - 2, x - 2) + isvalid(tempBoard, turn, y, x, y + 2, x - 2);
-      
+
         for (int n = 0; n < size; n++)
-        {          
+        {
             for (int m = 0; m < 3 - k; m++)
                 printf("\t");
             printf("%c%d to %c%d->", initial.y + 'A', initial.x, final.y + 'A', final.x);
@@ -687,7 +681,7 @@ int top = -1; // Top of the stack
 
 void push(StackContents s[10000], StackContents c)
 {
-    top++; 
+    top++;
     s[top] = c;
 }
 
@@ -703,7 +697,6 @@ void pop(StackContents s[10000])
         top--;
     }
 }
-
 
 int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves)
 {
