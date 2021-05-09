@@ -66,8 +66,9 @@ int main(void)
                 int capture = captures(CheckerBoard, turn, start, final);
                 if (capture != capture_possible)
                     valid = 0;
-                else
-                    valid = movements(CheckerBoard, turn, start, final) || capture; //move will be valid if either of capture or movements are tru
+                else{
+                    valid = movements(CheckerBoard, turn, start, final) || capture; //move will be valid if either of capture or movements are true
+                }
                 printf("\n\n");
 
                 if (valid == 0)
@@ -81,8 +82,9 @@ int main(void)
                     scanf("%d", &dummy);
 
                 }
-                else
+                else // Valid move
                 {
+                    printf("\a");  // To add sound when a move(either diagonal or capture) is made
                     enQueue(q, start, final, turn);
                     count_queue++;
                     // If Valid move push into stack everytime
