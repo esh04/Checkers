@@ -21,6 +21,7 @@ int main(void)
     int undo_ans;
     int k;
     int temp;
+    int dummy;
     introduction();
     if (getchar())
     {
@@ -52,15 +53,20 @@ int main(void)
                 temp2 = toupper(temp2);
                 start.y = temp1 - 65;
                 final.y = temp2 - 65;
+                int capture_possible = if_capture(CheckerBoard, turn);
                 int capture = captures(CheckerBoard, turn, start, final);
-
-                valid = movements(CheckerBoard, turn, start, final) || capture; //move will be valid if either of capture or movements are tru
+                if (capture != capture_possible)
+                    valid = 0;
+                else
+                    valid = movements(CheckerBoard, turn, start, final) || capture; //move will be valid if either of capture or movements are tru
                 printf("\n\n");
 
                 if (valid == 0)
                 {
                     // Invalid move
-                    printf("\n      Invalid Move, Try Again!\n");
+                    printf("Invalid Move, Try Again!\n");
+                    printf("Enter a number to continue\n");
+                    scanf("%d", &dummy);
                 }
                 else
                 {
@@ -109,6 +115,8 @@ int main(void)
                 else
                 {
                     printf("The player %c denies\n", switchTurn(turn));
+                    printf("Enter a number to continue\n");
+                    scanf("%d", &dummy);
                 }
             }
             else if (input == 3)
