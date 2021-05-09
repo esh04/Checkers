@@ -1,12 +1,18 @@
 #ifndef __CHECKERS_H
 #define __CHECKERS_H
 
+// ************Header files Included************
 #include <stdio.h>
-#include<stdlib.h>
-#include<ctype.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <stdbool.h>
 #include "constants.h"
 #include "stack.h"
 
+
+// ************Functions declarations************
+int winner(checkersGrid Board[][SIZE], char turn);
+bool ifdouble(checkersGrid Board[][SIZE], coordinates a, char turn);
 void initBoard(checkersGrid Board[][SIZE]);
 void printBoard(checkersGrid Board[][SIZE]);
 int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d);
