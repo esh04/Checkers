@@ -239,6 +239,7 @@ int main(void)
             printBoard(CheckerBoard);
             printf("\n               ");
             printf(" ************ %c's Turn ************\n", turn);
+            printf("Invalid input\n");
             printf("Enter anything to continue........\n");
             scanf("%[^\n]", dummy);
             getchar();
