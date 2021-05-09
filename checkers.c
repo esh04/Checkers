@@ -543,8 +543,8 @@ void PossibleCapturesRepeatingSteps(checkersGrid Board[][SIZE], char turn, coord
     if (is_capture(tempBoard, turn, final) == 1) //checks whether more captures are possible from the given peice
     {
         coordinates *doubleCaptures = double_captures(tempBoard, turn, final); //will store a list of all further captures
-        int x = initial.x;
-        char y = initial.y + 'A';
+        int x = final.x;
+        char y = final.y + 'A';
         int size = isvalid(tempBoard, turn, y, x, y + 2, x + 2) + isvalid(tempBoard, turn, y, x, y - 2, x + 2) + isvalid(tempBoard, turn, y, x, y - 2, x - 2) + isvalid(tempBoard, turn, y, x, y + 2, x - 2);
 
         for (int n = 0; n < size; n++) //size is the number of further captures possible
@@ -556,6 +556,7 @@ void PossibleCapturesRepeatingSteps(checkersGrid Board[][SIZE], char turn, coord
             if (k - 1 > 0)                                                                                          //condition to make sure uneccesary recursion doesnt take place
                 allPossibleMoves(tempBoard, switchTurn(turn), k - 1);                                               //recursion to find futher moves, that can be considered as "children" of this move
         }
+
     }
     else
     {
@@ -627,8 +628,8 @@ void allPossibleMoves(checkersGrid Board[][SIZE], char turn, int k)
                     }
                     else if (isvalid(Board, turn, initial.y + 'A', initial.x, initial.y + 'A' - 2, initial.x + 2))
                     {
-                        final.x = initial.x - 2;
-                        final.y = initial.y + 2;
+                        final.x = initial.x + 2;
+                        final.y = initial.y - 2;
                         PossibleCapturesRepeatingSteps(Board, turn, initial, final, k);
                     }
                     else if (isvalid(Board, turn, initial.y + 'A', initial.x, initial.y + 'A' - 2, initial.x - 2))
@@ -951,7 +952,7 @@ void Reviewgame(Queue q, int n)
 
         system("clear");
         printBoard(Board);
-        printf("\n                      Press any alphabet to see next move!\n");
+        printf("\n                  Press any key to see next move!\n");
         scanf("\n%c", &h);
 
         count++;
