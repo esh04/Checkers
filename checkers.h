@@ -8,6 +8,7 @@
 #include <stdbool.h>
 #include "constants.h"
 #include "stack.h"
+#include <string.h>
 
 
 // ************Functions declarations************
