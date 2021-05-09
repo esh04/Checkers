@@ -48,9 +48,10 @@ void initBoard(checkersGrid Board[][SIZE])
 
 void printBoard(checkersGrid Board[][SIZE])
 {
+
     for (int i = 0; i < SIZE; i++)
     {
-        printf("                   ");
+        printf("              ");
 
         for (int k = 0; k < SIZE + 1; k++)
         {
@@ -60,8 +61,23 @@ void printBoard(checkersGrid Board[][SIZE])
                 printf("----");
         }
         printf("-");
+        
+        if (i == 1)
+        printf("   Enter:\n");
+        else if (i==2)
+        printf("   0 to exit\n");
+        else if (i==3)
+        printf("   1 to input moves\n");
+        else if (i==4)
+        printf("   2 to undo\n");
+        else if(i==5)
+        printf("   3 to review\n");
+        else if (i==6)
+        printf("   4 to show possible moves\n");
+        else 
         printf("\n");
-        printf("                   ");
+
+        printf("              ");
 
         printf("%d  |", i + 1);
         for (int j = 0; j < SIZE; j++)
@@ -87,23 +103,24 @@ void printBoard(checkersGrid Board[][SIZE])
                 printf("   |");
             }
         }
-
         printf("\n");
+       
+      
     }
-    printf("                   ");
+    printf("                ");
 
     for (int k = 0; k < SIZE + 1; k++)
     {
         if (k == 0)
-            printf("   ");
+            printf(" ");
         else
             printf("----");
     }
-    printf("                   ");
+    printf("              ");
 
     printf("\n");
     printf("   ");
-    printf("                   ");
+    printf("              ");
 
     for (int i = 0; i < SIZE; i++)
     {
@@ -683,7 +700,7 @@ void introduction()
            "   ######  ##     ## ########  ######  ##    ## ######## ##     ##  ######  \n"
            " ____________________________________________________________________________\n\n"
            " +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
-    printf("\n\n\n\n Press any key to continue..");
+    printf("\n\n\n\n Press any key to continue."    );
 }
 // Stack Implementation in C- using arrays
 int top = -1; // Top of the stack
