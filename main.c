@@ -31,7 +31,6 @@ int main(void)
             printBoard(CheckerBoard);
             printf("\n                   ");
             printf(" ************* %c's Turn *************\n", turn);
-            printf("                      Invalid Input. Try again!!\n");
             printf("                      Enter 0 to exit\n");
             printf("                      Enter 1 to input moves\n");
             printf("                      Enter 2 to undo\n");
@@ -40,7 +39,7 @@ int main(void)
             scanf("%d", &input);
             while (input < 0 || input > 4)
             {
-                printf("Invalid Input. Try again!!\n");
+                printf("                      Invalid Input. Try again!!\n");
                 printf("                      Invalid Input. Try again!!\n");
                 printf("                      Enter 0 to exit\n");
                 printf("                      Enter 1 to input moves\n");
@@ -75,10 +74,10 @@ int main(void)
                 {
                     // Invalid move
 
-                    printf("\n    Invalid Move, Try Again!\n");
+                    printf("\n                      Invalid Move, Try Again!\n");
 
                     
-                    printf("Enter a number to continue\n");
+                    printf("                      Enter a number to continue\n");
                     scanf("%d", &dummy);
 
                 }
