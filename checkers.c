@@ -698,7 +698,7 @@ void introduction()
            "   ######  ##     ## ########  ######  ##    ## ######## ##     ##  ######  \n"
            " ____________________________________________________________________________\n\n"
            " +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
-    printf("\n\n\n\n Press any key to continue.");
+    printf("\n\n\n\n Press enter to continue..................");
 }
 // Stack Implementation in C- using arrays
 int top = -1; // Top of the stack

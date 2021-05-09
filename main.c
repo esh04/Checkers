@@ -25,8 +25,11 @@ int main(void)
     int undo_ans;
     int k;
     int temp;
-    int dummy;
+    char dummy[100];
     int win = 0;
+    int capture_possible;
+    int capture_temp;
+    char s[100];
     introduction();
     if (getchar())
     {
@@ -36,19 +39,32 @@ int main(void)
             printBoard(CheckerBoard);
             printf("\n               ");
             printf(" ************ %c's Turn ************\n", turn);
-            scanf("%d", &input);
+            printf("Input: ");
+            fgets(s, 100, stdin);
+            input = atoi(s);
             while (input < 0 || input > 4)
             {
+                system("clear");
+                printBoard(CheckerBoard);
+                printf("\n               ");
+                printf(" ************ %c's Turn ************\n", turn);
                 printf("                    Invalid Input. Try again!\n");
-                scanf("%d", &input);
+                printf("Input: ");
+                fgets(dummy, 100, stdin);
+                input = atoi(s);
             }
             if (input == 0)
             {
-                printf("                  Thank you for playing the game!\n");
+                system("clear");
+                printf("                  Thank you for playing the game!!\n");
                 return 0;
             }
             if (input == 1)
             {
+                system("clear");
+                printBoard(CheckerBoard);
+                printf("\n               ");
+                printf(" ************ %c's Turn ************\n", turn);
                 printf("             ");
                 printf("      Enter values of X1 Y1 X2 Y2\n");
                 scanf(" %c %d %c %d", &temp1, &start.x, &temp2, &final.x);
@@ -56,9 +72,9 @@ int main(void)
                 temp2 = toupper(temp2);
                 start.y = temp1 - 65;
                 final.y = temp2 - 65;
-                int capture_possible = if_capture_possible(CheckerBoard, turn);
-                int capture = captures(CheckerBoard, turn, start, final);
-                int capture_temp = capture > 0 ? 1 : 0;
+                capture_possible = if_capture_possible(CheckerBoard, turn);
+                capture = captures(CheckerBoard, turn, start, final);
+                capture_temp = capture > 0 ? 1 : 0;
                 if (capture_temp != capture_possible)
                     valid = -1;
                 else
@@ -67,7 +83,13 @@ int main(void)
                 printf("\n\n");
                 if (win != 0)
                 {
+                    system("clear");
+                    printBoard(CheckerBoard);
+                    printf("\n               ");
+                    printf(" ************ %c's Turn ************\n", turn);
                     printf("You cannot input as winner is declared; unless you undo\n");
+                    printf("Enter anything to continue........\n");
+                    fgets(dummy, 100, stdin);
                 }
                 if (valid == 0)
                 {
@@ -77,9 +99,8 @@ int main(void)
                     printf("\n               ");
                     printf(" ************ %c's Turn ************\n", turn);
                     printf("\n                     Invalid Move, Try Again!\n");
-
-                    printf("                    Enter a number to continue\n");
-                    scanf("%d", &dummy);
+                    printf("Enter anything to continue........\n");
+                    fgets(dummy, 100, stdin);
                 }
                 else if (valid == -1)
                 {
@@ -89,8 +110,8 @@ int main(void)
                     printf(" ************ %c's Turn ************\n", turn);
                     printf("\n           Invalid Move, Try Again! Capture is possible\n");
 
-                    printf("                    Enter a number to continue\n");
-                    scanf("%d", &dummy);
+                    printf("Enter anything to continue........\n");
+                    fgets(dummy, 100, stdin);
                 }
                 else // Valid move
                 {   
@@ -116,16 +137,24 @@ int main(void)
                 win = winner(CheckerBoard, turn);
                 if (win == 1)
                 {
+                    system("clear");
+                    printBoard(CheckerBoard);
+                    printf("\n               ");
+                    printf(" ************ %c's Turn ************\n", turn);
                     printf("The winner is O\n");
                 }
                 else if (win == 2)
                 {
+                    system("clear");
+                    printBoard(CheckerBoard);
+                    printf("\n               ");
+                    printf(" ************ %c's Turn ************\n", turn);
                     printf("The winner is X\n");
                 }
                 if (win != 0)
                 {
-                    printf("Enter any number to continue\n");
-                    scanf("%d", &dummy);
+                    printf("Enter anything to continue........\n");
+                    fgets(dummy, 100, stdin);
                 }
             }
             else if (input == 2)
@@ -156,26 +185,37 @@ int main(void)
                     }
                     else if (undo_ans == 0)
                     {
-                        printf("Enter a number to continue\n");
-                        scanf("%d", &dummy);
+                        system("clear");
+                        printBoard(CheckerBoard);
+                        printf("\n               ");
+                        printf(" ************ %c's Turn ************\n", turn);
+                        printf("Invalid number of moves\n");
+                        printf("Enter anything to continue........\n");
+                        fgets(dummy, 100, stdin);
                     }
                 }
                 else
                 {
-
+                    system("clear");
+                    printBoard(CheckerBoard);
+                    printf("\n               ");
+                    printf(" ************ %c's Turn ************\n", turn);
                     printf("                     The player %c denies\n", switchTurn(turn));
-
-                    printf("                 Enter a number to continue\n");
-                    scanf("%d", &dummy);
+                    printf("Enter anything to continue........\n");
+                    fgets(dummy, 100, stdin);
                 }
             }
             else if (input == 3)
             {
                 if (count_queue == 0)
                 {
+                    system("clear");
+                    printBoard(CheckerBoard);
+                    printf("\n               ");
+                    printf(" ************ %c's Turn ************\n", turn);
                     printf("Cannot review in the 0th move\n");
-                    printf("Enter a number to continue\n");
-                    scanf("%d", &dummy);
+                    printf("Enter anything to continue........\n");
+                    fgets(dummy, 100, stdin);
                 }
                 else
                     Reviewgame(q, count_queue);
@@ -184,13 +224,15 @@ int main(void)
             {
                 printf("                  Enter the number of moves(k):");
                 scanf("%d", &k);
-                allPossibleMoves(CheckerBoard, turn, k); 
-                printf("\n                Enter a number to continue.\n");
-                scanf("%d", &temp);
-            }
-            else
-            {
-                printf("                    Invalid Input. Try again!\n");
+
+                system("clear");
+                printBoard(CheckerBoard);
+                printf("\n               ");
+                printf(" ************ %c's Turn ************\n", turn);
+                allPossibleMoves(CheckerBoard, switchTurn(turn), k); //will check all possible moves of next player hence the toggle
+                printf("Enter anything to continue........\n");
+                fgets(dummy, 100, stdin);
+
             }
         }
     }
