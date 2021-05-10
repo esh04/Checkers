@@ -835,13 +835,13 @@ int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves)
 Que newmove(coordinates a, coordinates b, char c)
 {
     Que temp = (Que)malloc(sizeof(struct quecontents));
-    temp->c1.x = a.x;
+    temp->c1.x = a.x;// storing coordinates
     temp->c1.y = a.y;
     temp->c2.x = b.x;
     temp->c2.y = b.y;
     temp->c = c;
     temp->next = NULL;
-    return temp;
+    return temp;// returning a pointer to the coordinates
 }
 // basically my datastructure has three properties
 //1. enque 2.Deque 3.eject
@@ -850,7 +850,7 @@ Queue createQueue()
 {
     Queue q = (Queue)malloc(sizeof(struct queue));
     q->front = q->rear = NULL;
-    return q;
+    return q;// creating a empty queue
 }
 void enQueue(Queue q, coordinates a, coordinates b, char c)
 {
@@ -861,7 +861,7 @@ void enQueue(Queue q, coordinates a, coordinates b, char c)
         q->front = q->rear = temp;
         return;
     }
-    // Add the new node at the end of queue and change rear
+    // Add the new node at the end of queue and change rear to pint to the newnode
 
     q->rear->next = temp;
     q->rear = temp;
@@ -889,10 +889,10 @@ Que deQueue(Queue q)
 
 void pull(Queue q)
 {
-
+// this function is used to remove some coordinates from the rear end of the Queue when undo is called
     Que s;
     s = (Que)malloc(sizeof(struct quecontents));
-
+// if Queue is empty we are going to return as there are no moves to pull
     if (q->front == NULL)
     {
         return;
@@ -922,6 +922,7 @@ void pull(Queue q)
 void Reviewgame(Queue q, int n)
 {
     int count = 0;
+    
     char h;
     char dummy[100];
     //int x1,x2,y1,y2;
@@ -939,16 +940,16 @@ void Reviewgame(Queue q, int n)
         scanf("%[^\n]", dummy);
         getchar();
         Que p = (Que)malloc(sizeof(struct quecontents));
-        p = deQueue(q);
+        p = deQueue(q);// removes coordinates from front and stores the coordinates in c1 and c2
         c1.x = p->c1.x;
         c1.y = p->c1.y;
         c2.x = p->c2.x;
         c2.y = p->c2.y;
         d = p->c;
 
-        enQueue(q, c1, c2, d);
+        enQueue(q, c1, c2, d);//adding coordinates so that they are useful when review is called again
 
-        if (abs(c2.x - c1.x) == 2 && abs(c2.y - c1.y) == 2)
+        if (abs(c2.x - c1.x) == 2 && abs(c2.y - c1.y) == 2)//if difference is greater than 2 capture is going to happen as these coordinates are already valid
         {
             g = captures(Board, d, c1, c2);
         }
