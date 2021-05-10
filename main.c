@@ -207,7 +207,7 @@ int main(void)
                     printBoard(CheckerBoard);
                     printf("\n               ");
                     printf(" ************ %c's Turn ************\n", turn);
-                    printf("                     The player %c denies\n", switchTurn(turn));
+                    printf("                     The player %c denies\n", turn);
                     printf("Enter anything to continue........\n");
                     scanf("%[^\n]", dummy);
                     getchar();
