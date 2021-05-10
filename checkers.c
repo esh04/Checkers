@@ -1,6 +1,6 @@
 #include "checkers.h"
 #include "Que.h"
-
+#include "stack.h"
 //************This file contains definition of all functions************
 
 void initBoard(checkersGrid Board[][SIZE])
@@ -980,7 +980,7 @@ int winner(checkersGrid Board[][SIZE], char turn)
                 {
                     for (int z = 1; z <= 2; z++)
                     {
-                        if (isvalid(Board, turn, j + 'A', i + 1, j + 'A' + z, i + 1 + z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' - z, i + 1 + z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' + z, i + 1 - z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' - z, i + 1 - z))
+                        if (isvalid(Board, 'O', j + 'A', i + 1, j + 'A' + z, i + 1 + z) + isvalid(Board, 'O', j + 'A', i + 1, j + 'A' - z, i + 1 + z) + isvalid(Board, 'O', j + 'A', i + 1, j + 'A' + z, i + 1 - z) + isvalid(Board, 'O', j + 'A', i + 1, j + 'A' - z, i + 1 - z))
                             o_move = true;
                         if (o_move)
                             break;
@@ -994,7 +994,7 @@ int winner(checkersGrid Board[][SIZE], char turn)
                 {
                     for (int z = 1; z <= 2; z++)
                     {
-                        if (isvalid(Board, turn, j + 'A', i + 1, j + 'A' + z, i + 1 + z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' - z, i + 1 + z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' + z, i + 1 - z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' - z, i + 1 - z))
+                        if (isvalid(Board, 'X', j + 'A', i + 1, j + 'A' + z, i + 1 + z) + isvalid(Board, 'X', j + 'A', i + 1, j + 'A' - z, i + 1 + z) + isvalid(Board, 'X', j + 'A', i + 1, j + 'A' + z, i + 1 - z) + isvalid(Board, 'X', j + 'A', i + 1, j + 'A' - z, i + 1 - z))
                             x_move = true;
                         if (x_move)
                             break;
