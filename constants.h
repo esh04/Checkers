@@ -26,24 +26,25 @@
 
 typedef struct coordinates
 {
-    int x; // coordinate x is an aplhabet so the ascii - 'A' can be stored. 
-    int y; 
+    int x; // coordinate x is an aplhabet so the ascii - 'A' can be stored.
+    int y;
 } coordinates;
 
 typedef struct peice
 {
-    int type; // whether the peice is a king or a normal piece. No piece if that coordinate has no peice on the b
+    int type;   // whether the peice is a king or a normal piece. No piece if that coordinate has no peice on the b
     int colour; //colour of the peice, will be no colour if no peice exists on the location
 } peice;
 
 typedef struct checkersGrid
 {
-    int state; //empty or full
+    int state;      //empty or full
     peice checkers; // peice assosciated with that position in the grid;
 } checkersGrid;
 
-typedef struct Moves{
-    coordinates coord; // Stores x and y coordinates
+typedef struct Moves
+{
+    coordinates coord;  // Stores x and y coordinates
     struct Moves *next; // Pointer to next move
-}Moves;
+} Moves;
 #endif
