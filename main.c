@@ -75,7 +75,7 @@ int main(void)
                 printf("\n               ");
                 printf(" ************ %c's Turn ************\n", turn);
                 printf("You cannot input as winner is declared; unless you undo\n");
-                printf("Enter anything to continue........\n");
+                printf("Enter anything to continue.\n");
                 scanf("%[^\n]", dummy);
                 getchar();
             }
@@ -98,7 +98,7 @@ int main(void)
                 printf("\n               ");
                 printf(" ************ %c's Turn ************\n", turn);
                 printf("\n           Invalid Move, Try Again! Capture is possible\n");
-                printf("Enter anything to continue........\n");
+                printf("Enter anything to continue.\n");
                 scanf("%[^\n]", dummy);
                 getchar();
             }
@@ -142,7 +142,7 @@ int main(void)
             }
             if (win != 0)
             {
-                printf("Enter anything to continue........\n");
+                printf("Enter anything to continue.\n");
                 scanf("%[^\n]", dummy);
                 getchar();
             }
@@ -223,7 +223,7 @@ int main(void)
                 printf("\n               ");
                 printf(" ************ %c's Turn ************\n", turn);
                 printf("Cannot review in the 0th move\n");
-                printf("Enter anything to continue........\n");
+                printf("Enter anything to continue.\n");
                 scanf("%[^\n]", dummy);
                 getchar();
             }
@@ -240,7 +240,7 @@ int main(void)
             printf("\n               ");
             printf(" ************ %c's Turn ************\n", turn);
             allPossibleMoves(CheckerBoard, switchTurn(turn), k); //will check all possible moves of next player hence the toggle
-            printf("Enter anything to continue........\n");
+            printf("Enter anything to continue.\n");
             scanf("%[^\n]", dummy);
             getchar();
         }
@@ -251,7 +251,7 @@ int main(void)
             printf("\n               ");
             printf(" ************ %c's Turn ************\n", turn);
             printf("Invalid input\n");
-            printf("Enter anything to continue........\n");
+            printf("Enter anything to continue.\n");
             scanf("%[^\n]", dummy);
             getchar();
         }
