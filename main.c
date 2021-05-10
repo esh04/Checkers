@@ -25,6 +25,7 @@ int main(void)
     int capture_possible;
     int capture_temp;
     char input[100];
+    int draw;
     introduction();
     scanf("%[^\n]", input);
     getchar();
@@ -38,14 +39,47 @@ int main(void)
         scanf("%[^\n]", input);
         getchar();
         remove_spaces(input);
-        if (!strcmp(input, "0"))
+        if (!strcmp(input, "5"))
+        {
+            if (win == 0)
+            {
+                system("clear");
+                printBoard(CheckerBoard);
+                printf("\n               ");
+                printf(" ************ %c's Turn ************\n", switchTurn(turn));
+                printf("Does %c accept the draw offer?\nEnter 1 to accept, else enter any other number\n", switchTurn(turn));
+                scanf("%d", &draw);
+                getchar();
+                if (draw == 1)
+                {
+                    win = 3;
+                    system("clear");
+                    printBoard(CheckerBoard);
+                    printf("\n               ");
+                    printf(" ************ %c's Turn ************\n", switchTurn(turn));
+                    printf("The game is a draw\n");
+                }
+                else
+                {
+                    printf("Player %c does not accept\n", switchTurn(turn));
+                }
+            }
+            else
+            {
+                printf("Can't offer draw after win\n");
+            }
+            printf("Enter anything to continue.");
+            scanf("%[^\n]", dummy);
+            getchar();
+        }
+        else if (!strcmp(input, "0"))
         {
             system("clear");
             printBoard(CheckerBoard);
             printf("\n                  Thank you for playing the game!!\n\n");
             return 0;
         }
-        if (!strcmp(input, "1"))
+        else if (!strcmp(input, "1"))
         {
             system("clear");
             printBoard(CheckerBoard);
@@ -124,6 +158,14 @@ int main(void)
                     turn = switchTurn(turn);
             }
             win = winner(CheckerBoard, turn);
+            if (win == 3)
+            {
+                system("clear");
+                printBoard(CheckerBoard);
+                printf("\n               ");
+                printf(" ************ %c's Turn ************\n", turn);
+                printf("The game is a draw\n");
+            }
             if (win == 1)
             {
                 system("clear");
@@ -165,12 +207,19 @@ int main(void)
                 printf("           Enter the number of moves you want to undo:\n");
                 scanf(" %d", &moves);
                 getchar();
+                system("clear");
+                printBoard(CheckerBoard);
+                printf("\n               ");
+                printf(" ************ %c's Turn ************\n", switchTurn(turn));
                 printf("         Does player %c accept %c's request to undo %d moves?\n          Enter 1 to accept or any other number to deny\n", switchTurn(turn), turn, moves);
                 scanf(" %d", &reply);
                 getchar();
                 if (reply == 1)
                 {
                     printf("                   The player %c accepts\n", switchTurn(turn));
+                    printf("Enter anything to undo\n");
+                    scanf("%[^\n]", dummy);
+                    getchar();
                     undo_ans = undo(CheckerBoard, stack, moves);
                     if (undo_ans == 1)
                     {

@@ -74,6 +74,8 @@ void printBoard(checkersGrid Board[][SIZE])
             printf("   3 to review\n");
         else if (i == 6)
             printf("   4 to show possible moves\n");
+        else if (i == 7)
+            printf("   5 to propse a draw\n");
         else
             printf("\n");
 
@@ -155,7 +157,7 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
         m = 0;
     }
     // here m represents the player O or X
-    
+
     // m=0(player-O) and m=1(player-X)
     if (P == 'X')
     {
@@ -181,9 +183,9 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
     }
 
     g = c - a > 0 ? c - a : a - c;
-    h = d - b > 0 ? d - b : b - d; 
+    h = d - b > 0 ? d - b : b - d;
 
-    if (g != h || g > 2 || h > 2)  // if difference between the x-coordinates not equal to difference between y-coordinates or if they are greater than 2 function returns 0
+    if (g != h || g > 2 || h > 2) // if difference between the x-coordinates not equal to difference between y-coordinates or if they are greater than 2 function returns 0
         return 0;
 
     // checks whether  peice is present at coordinates (a,b)  and no piece is present at coordinates (c,d)
@@ -199,11 +201,11 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
             if ((Board[b][a].checkers).colour == RED) // if that position contains another player's piece
                 return 0;
 
-            if (d == b + 1 || d == b + 2)  // it can move only forward cannot move backward
+            if (d == b + 1 || d == b + 2) // it can move only forward cannot move backward
             {
                 return 0;
             }
-            if (d == b - 2) 
+            if (d == b - 2)
             {
                 if (c == a - 2) // if the difference is greater than 2 checks whether diagnolly middle position contains opposite colour or not
                 {
@@ -224,9 +226,9 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
         {
             if ((Board[b][a].checkers).colour == RED) // if that position contains another player's piece
                 return 0;
-            if (d == b - 2)// as it is a king it can move diagnolly backward or forward
+            if (d == b - 2) // as it is a king it can move diagnolly backward or forward
             {
-                if (c == a - 2)// checks whether the middle piece is of opposite colour or not
+                if (c == a - 2) // checks whether the middle piece is of opposite colour or not
                 {
                     if ((Board[b - 1][a - 1].checkers).colour == BLUE || (Board[b - 1][a - 1].checkers).colour == NOCOLOUR)
 
@@ -266,11 +268,11 @@ int isvalid(checkersGrid Board[][SIZE], char P, char M, int b, char N, int d)
             if ((Board[b][a].checkers).colour == BLUE) // if that position contains another player's piece
                 return 0;
 
-            if (d == b - 1 || d == b - 2)// it can move only forward cannot move backward
+            if (d == b - 1 || d == b - 2) // it can move only forward cannot move backward
             {
                 return 0;
             }
-            if (d == b + 2)// if the difference of y coordinates is equal to 2
+            if (d == b + 2) // if the difference of y coordinates is equal to 2
             {
                 if (c == a - 2)
                 {
@@ -362,11 +364,11 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
             // Change the current piece features
             Board[c2.x - 1][c2.y].state = FULL;
             Board[c2.x - 1][c2.y].checkers.colour = RED;
-            if (c2.x == 8) // For KING 
+            if (c2.x == 8) // For KING
             {
                 Board[c2.x - 1][c2.y].checkers.type = KING;
             }
-            else 
+            else
             {
                 Board[c2.x - 1][c2.y].checkers.type = Board[c1.x - 1][c1.y].checkers.type;
             }
@@ -395,8 +397,6 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
     }
     return 1; // Returns 1 for a Successful Move
 }
-
-
 
 int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates c2)
 {
@@ -712,7 +712,6 @@ void introduction()
     printf("\n\n\n\n Enter anything to continue.");
 }
 
-
 //**************Stack Implementation in C- using arrays******************
 int top = -1; // Top of the stack
 
@@ -764,7 +763,7 @@ int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves)
                     Board[c1.x - 1][c1.y].checkers.colour = RED;
                     if (type == 1) // For KING
                         Board[c1.x - 1][c1.y].checkers.type = KING;
-                    else  // For NORMAL Piece
+                    else // For NORMAL Piece
                         Board[c1.x - 1][c1.y].checkers.type = NORMAL;
 
                     Board[(c1.x + c2.x) / 2 - 1][(c1.y + c2.y) / 2].state = FULL;
@@ -977,48 +976,50 @@ int winner(checkersGrid Board[][SIZE], char turn)
             if (Board[i][j].checkers.colour == BLUE)
             {
                 o_count++;
-                if (turn == 'O')
+                if (o_move == false)
                 {
-                    if (o_move == false)
+                    for (int z = 1; z <= 2; z++)
                     {
-                        for (int z = 1; z <= 2; z++)
-                        {
-                            if (isvalid(Board, turn, j + 'A', i + 1, j + 'A' + z, i + 1 + z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' - z, i + 1 + z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' + z, i + 1 - z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' - z, i + 1 - z))
-                                o_move = true;
-                            if (o_move)
-                                break;
-                        }
+                        if (isvalid(Board, turn, j + 'A', i + 1, j + 'A' + z, i + 1 + z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' - z, i + 1 + z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' + z, i + 1 - z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' - z, i + 1 - z))
+                            o_move = true;
+                        if (o_move)
+                            break;
                     }
                 }
             }
             else if (Board[i][j].checkers.colour == RED)
             {
                 x_count++;
-                if (turn == 'X')
+                if (x_move == false)
                 {
-                    if (x_move == false)
+                    for (int z = 1; z <= 2; z++)
                     {
-                        for (int z = 1; z <= 2; z++)
-                        {
-                            if (isvalid(Board, turn, j + 'A', i + 1, j + 'A' + z, i + 1 + z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' - z, i + 1 + z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' + z, i + 1 - z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' - z, i + 1 - z))
-                                x_move = true;
-                            if (x_move)
-                                break;
-                        }
+                        if (isvalid(Board, turn, j + 'A', i + 1, j + 'A' + z, i + 1 + z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' - z, i + 1 + z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' + z, i + 1 - z) + isvalid(Board, turn, j + 'A', i + 1, j + 'A' - z, i + 1 - z))
+                            x_move = true;
+                        if (x_move)
+                            break;
                     }
                 }
             }
         }
     }
-    if (turn == 'O')
-        x_move = true;
-    else
-        o_move = true;
-    if (x_move == false || x_count == 0)
+    if (x_count == 0)
     {
         return 1;
     }
-    else if (o_move == false || o_count == 0)
+    else if (o_count == 0)
+    {
+        return 2;
+    }
+    if (x_move == false && o_move == false)
+    {
+        return 3;
+    }
+    if (x_move == false)
+    {
+        return 1;
+    }
+    if (o_move == false)
     {
         return 2;
     }
