@@ -1,6 +1,8 @@
 #ifndef __CONSTANTS_H
 #define __CONSTANTS_H
 
+//************This file contains the constants used in the functions implementation************
+
 // size of checkers
 #define SIZE 8
 
@@ -18,12 +20,14 @@
 #define KING 4
 #define NOPEICE -3
 
+#define K 3 //for the maximum number upto which all possible moves can be shown
+
 //structures for board and the peices
 
 typedef struct coordinates
 {
     int x; // coordinate x is an aplhabet so the ascii - 'A' can be stored. 
-    int y; // board starts from 1, hence input - 1 will be stored.
+    int y; 
 } coordinates;
 
 typedef struct peice
@@ -39,7 +43,7 @@ typedef struct checkersGrid
 } checkersGrid;
 
 typedef struct Moves{
-    coordinates coord;
-    struct Moves *next;
+    coordinates coord; // Stores x and y coordinates
+    struct Moves *next; // Pointer to next move
 }Moves;
 #endif
