@@ -128,10 +128,12 @@ void printBoard(checkersGrid Board[][SIZE])
     }
     printf("\n");
 }
+// this check if double capture moves are possible
 bool ifdouble(checkersGrid Board[][SIZE], coordinates a, char turn)
 {
     int x = a.x;
     char y = a.y + 'A';
+    // calls is valid to check if capture is valid
     int variable = isvalid(Board, turn, y, x, y + 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x - 2) + isvalid(Board, turn, y, x, y + 2, x - 2);
     return variable > 0;
 }
@@ -458,7 +460,6 @@ int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates 
     return x;
 }
 
-///
 //checking for coordinates where captures can be continued, from before
 coordinates *double_captures(checkersGrid Board[][SIZE], char turn, coordinates c)
 {
@@ -467,6 +468,7 @@ coordinates *double_captures(checkersGrid Board[][SIZE], char turn, coordinates 
     int size = isvalid(Board, turn, y, x, y + 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x - 2) + isvalid(Board, turn, y, x, y + 2, x - 2);
     coordinates *final_coordinates;
     final_coordinates = (coordinates *)malloc(sizeof(coordinates) * size);
+    // checks for all diagnol moves
     if (isvalid(Board, turn, y, x, y + 2, x + 2) == 1)
     {
         final_coordinates[i].x = x + 2;
@@ -542,7 +544,7 @@ int if_capture(checkersGrid Board[][SIZE], char turn)
 
     return flag;
 }
-//these are the repeating steps that are used in the function allPossibleMoves
+// these are the repeating steps that are used in the function allPossibleMoves
 void PossibleCapturesRepeatingSteps(checkersGrid Board[][SIZE], char turn, coordinates initial, coordinates final, int k)
 {
     checkersGrid tempBoard[SIZE][SIZE];
@@ -844,7 +846,6 @@ Que newmove(coordinates a, coordinates b, char c)
 }
 // basically my datastructure has three properties
 //1. enque 2.Deque 3.eject
-
 Queue createQueue()
 {
     Queue q = (Queue)malloc(sizeof(struct queue));
@@ -865,7 +866,7 @@ void enQueue(Queue q, coordinates a, coordinates b, char c)
     q->rear->next = temp;
     q->rear = temp;
 }
-
+// dequeues the queue
 Que deQueue(Queue q)
 {
     // If queue is empty, return NULL.
@@ -885,7 +886,7 @@ Que deQueue(Queue q)
 
     return temp;
 }
-
+// pulls out of queue
 void pull(Queue q)
 {
 
@@ -968,6 +969,7 @@ int winner(checkersGrid Board[][SIZE], char turn)
     int o_count = 0;
     bool x_move = false;
     bool o_move = false;
+    // checks for the number of peices for both colors and if there are any valid moves for both parties
     for (int i = 0; i < SIZE; i++)
     {
         for (int j = 0; j < SIZE; j++)
@@ -1002,22 +1004,27 @@ int winner(checkersGrid Board[][SIZE], char turn)
             }
         }
     }
+    // if count of X is 0, O is the winner
     if (x_count == 0)
     {
         return 1;
     }
+    // if count of O is 0, X is the winner
     else if (o_count == 0)
     {
         return 2;
     }
+    // game is tie, if either parties can't move
     if (x_move == false && o_move == false)
     {
         return 3;
     }
+    // if X can't move, O is the winner
     if (x_move == false)
     {
         return 1;
     }
+    // if O can't move, X is the winner
     if (o_move == false)
     {
         return 2;
@@ -1030,7 +1037,7 @@ void sound()
     // To add sound when a valid move(either diagonal or capture) is made
     printf("\a");
 }
-
+// derived from if_capture
 int if_capture_possible(checkersGrid Board[][SIZE], char turn)
 {
     int colour;
@@ -1043,6 +1050,7 @@ int if_capture_possible(checkersGrid Board[][SIZE], char turn)
     {
         colour = BLUE;
     }
+    // checks if any captures for the specific turn are possible and return accrodingly
     for (int i = 0; i < SIZE; i++)
     {
         for (int j = 0; j < SIZE; j++)
@@ -1060,7 +1068,7 @@ int if_capture_possible(checkersGrid Board[][SIZE], char turn)
     }
     return 0;
 }
-
+// removes whitespace from a string
 char *remove_spaces(char *str)
 {
     int i = 0, j = 0;

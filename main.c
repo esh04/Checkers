@@ -6,6 +6,7 @@
 
 int main(void)
 {
+    // variables
     checkersGrid CheckerBoard[SIZE][SIZE];
     initBoard(CheckerBoard);
     StackContents stack[10000];
@@ -26,11 +27,13 @@ int main(void)
     int capture_temp;
     char input[100];
     int draw;
+    // graphics
     introduction();
     scanf("%[^\n]", input);
     getchar();
     while (1)
     {
+        // takes input
         system("clear");
         printBoard(CheckerBoard);
         printf("\n               ");
@@ -39,6 +42,7 @@ int main(void)
         scanf("%[^\n]", input);
         getchar();
         remove_spaces(input);
+        // draw
         if (!strcmp(input, "5"))
         {
             if (win == 0)
@@ -72,6 +76,7 @@ int main(void)
             scanf("%[^\n]", dummy);
             getchar();
         }
+        // Exit 
         else if (!strcmp(input, "0"))
         {
             system("clear");
@@ -79,6 +84,7 @@ int main(void)
             printf("\n                  Thank you for playing the game!!\n\n");
             return 0;
         }
+        // Input moves
         else if (!strcmp(input, "1"))
         {
             system("clear");
@@ -93,15 +99,19 @@ int main(void)
             temp2 = toupper(temp2);
             start.y = temp1 - 65;
             final.y = temp2 - 65;
+            // check if captures in the current position are possible
             capture_possible = if_capture_possible(CheckerBoard, turn);
+            // check if capture move was played
             capture = captures(CheckerBoard, turn, start, final);
             capture_temp = capture > 0 ? 1 : 0;
+            // if capture was possible and that move was not played
             if (capture_temp != capture_possible)
                 valid = -1;
             else
                 valid = movements(CheckerBoard, turn, start, final) || capture; //move will be valid if either of capture or movements are true
 
             printf("\n\n");
+            // if win or draw has taken place input cannot be called
             if (win != 0)
             {
                 system("clear");
@@ -113,6 +123,7 @@ int main(void)
                 scanf("%[^\n]", dummy);
                 getchar();
             }
+            // if the move made was valid
             if (valid == 0)
             {
                 // Invalid move
@@ -125,6 +136,7 @@ int main(void)
                 scanf("%[^\n]", dummy);
                 getchar();
             }
+            // capture was possible but was not inputted my the player
             else if (valid == -1)
             {
                 system("clear");
@@ -136,9 +148,11 @@ int main(void)
                 scanf("%[^\n]", dummy);
                 getchar();
             }
-            else // Valid move
+            // Valid move
+            else
             {
                 sound();
+                // add to queue for review
                 enQueue(q, start, final, turn);
                 count_queue++;
                 // If Valid move push into stack everytime
@@ -152,12 +166,15 @@ int main(void)
                 else
                     StackValues.type = 0;
                 push(stack, StackValues);
+                // check if turn should be switched, it must not be if double or more captures are available consecutively
                 if (ifdouble(CheckerBoard, final, turn) && capture > 0)
                     ;
                 else
                     turn = switchTurn(turn);
             }
+            // check for winner
             win = winner(CheckerBoard, turn);
+            // draw
             if (win == 3)
             {
                 system("clear");
@@ -166,6 +183,7 @@ int main(void)
                 printf(" ************ %c's Turn ************\n", turn);
                 printf("The game is a draw\n");
             }
+            // O is the winner
             if (win == 1)
             {
                 system("clear");
@@ -174,6 +192,7 @@ int main(void)
                 printf(" ************ %c's Turn ************\n", turn);
                 printf("The winner is O\n");
             }
+            // X is the winner
             else if (win == 2)
             {
                 system("clear");
@@ -182,6 +201,7 @@ int main(void)
                 printf(" ************ %c's Turn ************\n", turn);
                 printf("The winner is X\n");
             }
+            // if winner has been declared
             if (win != 0)
             {
                 printf("Enter anything to continue.\n");
@@ -189,6 +209,7 @@ int main(void)
                 getchar();
             }
         }
+        // undo
         else if (!strcmp(input, "2"))
         {
             if (count_queue == 0)
@@ -204,6 +225,7 @@ int main(void)
             }
             else
             {
+                // take input
                 printf("           Enter the number of moves you want to undo:\n");
                 scanf(" %d", &moves);
                 getchar();
@@ -217,7 +239,7 @@ int main(void)
                 if (reply == 1)
                 {
                     printf("                   The player %c accepts\n", switchTurn(turn));
-                    printf("Enter anything to undo\n");
+                    printf("Enter anything to continue undo moves\n");
                     scanf("%[^\n]", dummy);
                     getchar();
                     undo_ans = undo(CheckerBoard, stack, moves);
@@ -227,6 +249,7 @@ int main(void)
                         {
                             win = 0;
                         }
+                        // if undo is called, moves are removed from review
                         for (int i = 0; i < moves; i++)
                         {
                             pull(q);
@@ -237,6 +260,7 @@ int main(void)
                             turn = switchTurn(turn); //toggles turn
                         }
                     }
+                    // if input in undo moves > than moves that have been played
                     else if (undo_ans == 0)
                     {
                         system("clear");
@@ -249,7 +273,7 @@ int main(void)
                         getchar();
                     }
                 }
-
+                // the opponent denies
                 else
                 {
                     system("clear");
@@ -263,6 +287,7 @@ int main(void)
                 }
             }
         }
+        // review
         else if (!strcmp(input, "3"))
         {
             if (count_queue == 0)
@@ -279,6 +304,7 @@ int main(void)
             else
                 Reviewgame(q, count_queue);
         }
+        // all possible moves
         else if (!strcmp(input, "4"))
         {
             printf("                  Enter the number of moves(k):");
@@ -293,6 +319,7 @@ int main(void)
             scanf("%[^\n]", dummy);
             getchar();
         }
+        // invalid input
         else
         {
             system("clear");
