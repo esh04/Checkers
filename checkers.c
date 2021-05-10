@@ -724,15 +724,7 @@ void push(StackContents s[10000], StackContents c) //Pushes into a stack of Stac
 
 void pop(StackContents s[10000]) // Pops/removes the top value from the stack
 {
-    if (top <= -1)
-    {
-        printf("You have entered a wrong value of moves!\n");
-        return;
-    }
-    else
-    {
-        top--;
-    }
+    top--;
 }
 
 /***********************************************************

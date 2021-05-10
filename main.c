@@ -1,11 +1,6 @@
 #include "checkers.h"
 #include "stack.h"
 #include "Que.h"
-#include "checkers.h"
-#include "checkers.h"
-#include "Que.h"
-#include "checkers.h"
-#include "Que.h"
 
 // ************File used to call & run the functions************
 
@@ -46,7 +41,8 @@ int main(void)
         if (!strcmp(input, "0"))
         {
             system("clear");
-            printf("                    Thank you for playing the game!\n");
+            printBoard(CheckerBoard);
+            printf("\n                  Thank you for playing the game!!\n\n");
             return 0;
         }
         if (!strcmp(input, "1"))
@@ -90,8 +86,8 @@ int main(void)
                 printBoard(CheckerBoard);
                 printf("\n               ");
                 printf(" ************ %c's Turn ************\n", turn);
-                printf("\n                     Invalid Move, Try Again!\n");
-                printf("Enter anything to continue.\n");
+                printf("                     Invalid Move, Try Again!\n");
+                printf("Enter anything to continue........\n");
                 scanf("%[^\n]", dummy);
                 getchar();
             }
@@ -153,54 +149,69 @@ int main(void)
         }
         else if (!strcmp(input, "2"))
         {
-            printf("           Enter the number of moves you want to undo:\n");
-            scanf(" %d", &moves);
-            getchar();
-            printf("         Does player %c accept %c's request to undo %d moves?\n          Enter 1 to accept or any other number to deny\n", switchTurn(turn), turn, moves);
-            scanf(" %d", &reply);
-            getchar();
-            if (reply == 1)
-            {
-                printf("                   The player %c accepts\n", switchTurn(turn));
-                undo_ans = undo(CheckerBoard, stack, moves);
-                if (undo_ans == 1)
-                {
-                    if (moves > 0)
-                    {
-                        win = 0;
-                    }
-                    for (int i = 0; i < moves; i++)
-                    {
-                        pull(q);
-                        count_queue--;
-                    }
-                    if (moves % 2 == 1)
-                    {                            //turn swicthes if we undo odd number of moves but remains same when we undo even number
-                        turn = switchTurn(turn); //toggles turn
-                    }
-                }
-                else if (undo_ans == 0)
-                {
-                    system("clear");
-                    printBoard(CheckerBoard);
-                    printf("\n               ");
-                    printf(" ************ %c's Turn ************\n", turn);
-                    printf("Invalid number of moves\n");
-                    printf("Enter anything to continue.\n");
-                    scanf("%[^\n]", dummy);
-                    getchar();
-                }
-            }
-            else
+            if (count_queue == 0)
             {
                 system("clear");
                 printBoard(CheckerBoard);
                 printf("\n               ");
                 printf(" ************ %c's Turn ************\n", turn);
-                printf("                     The player %c denies\n", switchTurn(turn));
-                printf("Enter anything to continue.\n");
+                printf("Can't undo on the 0th move\n");
+                printf("Enter anything to continue........\n");
                 scanf("%[^\n]", dummy);
                 getchar();
+            }
+            else
+            {
+                printf("           Enter the number of moves you want to undo:\n");
+                scanf(" %d", &moves);
+                getchar();
+                printf("         Does player %c accept %c's request to undo %d moves?\n          Enter 1 to accept or any other number to deny\n", switchTurn(turn), turn, moves);
+                scanf(" %d", &reply);
+                getchar();
+                if (reply == 1)
+                {
+                    printf("                   The player %c accepts\n", switchTurn(turn));
+                    undo_ans = undo(CheckerBoard, stack, moves);
+                    if (undo_ans == 1)
+                    {
+                        if (moves > 0)
+                        {
+                            win = 0;
+                        }
+                        for (int i = 0; i < moves; i++)
+                        {
+                            pull(q);
+                            count_queue--;
+                        }
+                        if (moves % 2 == 1)
+                        {                            //turn swicthes if we undo odd number of moves but remains same when we undo even number
+                            turn = switchTurn(turn); //toggles turn
+                        }
+                    }
+                    else if (undo_ans == 0)
+                    {
+                        system("clear");
+                        printBoard(CheckerBoard);
+                        printf("\n               ");
+                        printf(" ************ %c's Turn ************\n", turn);
+                        printf("Invalid Input, the number of moves to undo is greater than the number of moves played!!\n");
+                        printf("Enter anything to continue........\n");
+                        scanf("%[^\n]", dummy);
+                        getchar();
+                    }
+                }
+
+                else
+                {
+                    system("clear");
+                    printBoard(CheckerBoard);
+                    printf("\n               ");
+                    printf(" ************ %c's Turn ************\n", turn);
+                    printf("                     The player %c denies\n", switchTurn(turn));
+                    printf("Enter anything to continue........\n");
+                    scanf("%[^\n]", dummy);
+                    getchar();
+                }
             }
         }
         else if (!strcmp(input, "3"))
