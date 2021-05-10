@@ -711,15 +711,7 @@ void push(StackContents s[10000], StackContents c)
 
 void pop(StackContents s[10000])
 {
-    if (top <= -1)
-    {
-        printf("You have entered a wrong value of moves!\n");
-        return;
-    }
-    else
-    {
-        top--;
-    }
+    top--;
 }
 
 int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves)

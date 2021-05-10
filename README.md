@@ -4,7 +4,7 @@ Checkers (also known as Draughts) is a popular group of board games. The most co
 
 We have developed a terminal version of this game.
 
-![checkers terminal](checkers.png)
+![checkers terminal](./checkers.png)
 
 # How to run the game?
 
