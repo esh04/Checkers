@@ -87,7 +87,7 @@ int main(void)
                 printf("\n               ");
                 printf(" ************ %c's Turn ************\n", turn);
                 printf("                     Invalid Move, Try Again!\n");
-                printf("Enter anything to continue........\n");
+                printf("Enter anything to continue.\n");
                 scanf("%[^\n]", dummy);
                 getchar();
             }
@@ -156,7 +156,7 @@ int main(void)
                 printf("\n               ");
                 printf(" ************ %c's Turn ************\n", turn);
                 printf("Can't undo on the 0th move\n");
-                printf("Enter anything to continue........\n");
+                printf("Enter anything to continue.\n");
                 scanf("%[^\n]", dummy);
                 getchar();
             }
@@ -195,7 +195,7 @@ int main(void)
                         printf("\n               ");
                         printf(" ************ %c's Turn ************\n", turn);
                         printf("Invalid Input, the number of moves to undo is greater than the number of moves played!!\n");
-                        printf("Enter anything to continue........\n");
+                        printf("Enter anything to continue.\n");
                         scanf("%[^\n]", dummy);
                         getchar();
                     }
@@ -208,7 +208,7 @@ int main(void)
                     printf("\n               ");
                     printf(" ************ %c's Turn ************\n", turn);
                     printf("                     The player %c denies\n", switchTurn(turn));
-                    printf("Enter anything to continue........\n");
+                    printf("Enter anything to continue.\n");
                     scanf("%[^\n]", dummy);
                     getchar();
                 }
