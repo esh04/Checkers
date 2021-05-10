@@ -228,7 +228,7 @@ int main(void)
             printBoard(CheckerBoard);
             printf("\n               ");
             printf(" ************ %c's Turn ************\n", turn);
-            allPossibleMoves(CheckerBoard, switchTurn(turn), k); //will check all possible moves of next player hence the toggle
+            allPossibleMoves(CheckerBoard, turn, k); //will check all possible moves of player
             printf("Enter anything to continue.\n");
             scanf("%[^\n]", dummy);
             getchar();
