@@ -38,6 +38,7 @@ them
 - A feature to UNDO as many moves as asked by the players (provided both players agree)
 - A feature to REVIEW the game from the start, so the players can see what led to the current game state if they wish to
 - A feature to SHOW ALL POSSIBLE MOVES for the next k turns (if both players make a move each, that is counted as two turns), where k is a number that the player gives, in our program k must be ≤ 3 but it can easily be increased in constants.h if one wishes to; the output format for this function is the first column represents the possible moves in the k=1 turn, second column in k=2 and so on, represented like a tree structure, with the parent-> followed by its children i.e. the moves succeeding that move, an example of this is showed below
+
 ![moves](./moves.jpeg)
 
 # Enjoy the game!!
