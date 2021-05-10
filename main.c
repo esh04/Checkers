@@ -76,7 +76,7 @@ int main(void)
             scanf("%[^\n]", dummy);
             getchar();
         }
-        // Exit 
+        // Exit
         else if (!strcmp(input, "0"))
         {
             system("clear");

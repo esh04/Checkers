@@ -400,6 +400,7 @@ int movements(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates
     return 1; // Returns 1 for a Successful Move
 }
 
+//function that performs capture
 int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates c2)
 {
     char y1, y2;
@@ -419,28 +420,28 @@ int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates 
         return 0;
     }
     else
-    {
+    { //capture is performed by making the peice properties- empty, nocolour
         Board[x_coordinate - 1][y_coordinate].state = EMPTY;
         Board[x_coordinate - 1][y_coordinate].checkers.colour = NOCOLOUR;
-        if (Board[x_coordinate - 1][y_coordinate].checkers.type == KING)
+        if (Board[x_coordinate - 1][y_coordinate].checkers.type == KING) //if king is captured 2 is returned
             x = 2;
         else
-            x = 1;
-        Board[x_coordinate - 1][y_coordinate].checkers.type = NOPEICE;
+            x = 1;                                                     //if a normal peice is captured 1 is returned
+        Board[x_coordinate - 1][y_coordinate].checkers.type = NOPEICE; //updates that there is no peice at the coordinate anymore
         if (turn == 'X')
         {
             Board[c2.x - 1][c2.y].state = FULL;
             Board[c2.x - 1][c2.y].checkers.colour = RED;
             if (c2.x == 8)
             {
-                Board[c2.x - 1][c2.y].checkers.type = KING;
+                Board[c2.x - 1][c2.y].checkers.type = KING; //checks whether upon capture the peice becomes a king
             }
             else
             {
-                Board[c2.x - 1][c2.y].checkers.type = Board[c1.x - 1][c1.y].checkers.type;
+                Board[c2.x - 1][c2.y].checkers.type = Board[c1.x - 1][c1.y].checkers.type; //else retain the peice type from earlier
             }
         }
-        else
+        else //same changes for red
         {
             Board[c2.x - 1][c2.y].state = FULL;
             Board[c2.x - 1][c2.y].checkers.colour = BLUE;
@@ -453,6 +454,7 @@ int captures(checkersGrid Board[][SIZE], char turn, coordinates c1, coordinates 
                 Board[c2.x - 1][c2.y].checkers.type = Board[c1.x - 1][c1.y].checkers.type;
             }
         }
+        //old coordinates are made empty
         Board[c1.x - 1][c1.y].state = EMPTY;
         Board[c1.x - 1][c1.y].checkers.colour = NOCOLOUR;
         Board[c1.x - 1][c1.y].checkers.type = NOPEICE;
@@ -467,8 +469,8 @@ coordinates *double_captures(checkersGrid Board[][SIZE], char turn, coordinates 
     char y = c.y + 'A';
     int size = isvalid(Board, turn, y, x, y + 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x - 2) + isvalid(Board, turn, y, x, y + 2, x - 2);
     coordinates *final_coordinates;
-    //These are all the coordinates where captures will be taking place 
-    // Check the coordinates diagonally situated from the current square by two squares, and check for the existence of captures 
+    //These are all the coordinates where captures will be taking place
+    // Check the coordinates diagonally situated from the current square by two squares, and check for the existence of captures
     // x + 2, y + 2 | x - 2, y - 2 | x + 2, y - 2 | x - 2, y + 2 are all checked, now all that is left to check is to see if the captures can be done, upon which the size of the final_coordinates array increases
     final_coordinates = (coordinates *)malloc(sizeof(coordinates) * size);
     // checks for all diagnol moves
@@ -839,13 +841,13 @@ int undo(checkersGrid Board[][SIZE], StackContents *stack, int moves)
 Que newmove(coordinates a, coordinates b, char c)
 {
     Que temp = (Que)malloc(sizeof(struct quecontents));
-    temp->c1.x = a.x;// storing coordinates
+    temp->c1.x = a.x; // storing coordinates
     temp->c1.y = a.y;
     temp->c2.x = b.x;
     temp->c2.y = b.y;
     temp->c = c;
     temp->next = NULL;
-    return temp;// returning a pointer to the coordinates
+    return temp; // returning a pointer to the coordinates
 }
 // basically my datastructure has three properties
 //1. enque 2.Deque 3.eject
@@ -853,7 +855,7 @@ Queue createQueue()
 {
     Queue q = (Queue)malloc(sizeof(struct queue));
     q->front = q->rear = NULL;
-    return q;// creating a empty queue
+    return q; // creating a empty queue
 }
 void enQueue(Queue q, coordinates a, coordinates b, char c)
 {
@@ -892,10 +894,10 @@ Que deQueue(Queue q)
 // pulls out of queue
 void pull(Queue q)
 {
-// this function is used to remove some coordinates from the rear end of the Queue when undo is called
+    // this function is used to remove some coordinates from the rear end of the Queue when undo is called
     Que s;
     s = (Que)malloc(sizeof(struct quecontents));
-// if Queue is empty we are going to return as there are no moves to pull
+    // if Queue is empty we are going to return as there are no moves to pull
     if (q->front == NULL)
     {
         return;
@@ -925,7 +927,7 @@ void pull(Queue q)
 void Reviewgame(Queue q, int n)
 {
     int count = 0;
-    
+
     char h;
     char dummy[100];
     //int x1,x2,y1,y2;
@@ -943,16 +945,16 @@ void Reviewgame(Queue q, int n)
         scanf("%[^\n]", dummy);
         getchar();
         Que p = (Que)malloc(sizeof(struct quecontents));
-        p = deQueue(q);// removes coordinates from front and stores the coordinates in c1 and c2
+        p = deQueue(q); // removes coordinates from front and stores the coordinates in c1 and c2
         c1.x = p->c1.x;
         c1.y = p->c1.y;
         c2.x = p->c2.x;
         c2.y = p->c2.y;
         d = p->c;
 
-        enQueue(q, c1, c2, d);//adding coordinates so that they are useful when review is called again
+        enQueue(q, c1, c2, d); //adding coordinates so that they are useful when review is called again
 
-        if (abs(c2.x - c1.x) == 2 && abs(c2.y - c1.y) == 2)//if difference is greater than 2 capture is going to happen as these coordinates are already valid
+        if (abs(c2.x - c1.x) == 2 && abs(c2.y - c1.y) == 2) //if difference is greater than 2 capture is going to happen as these coordinates are already valid
         {
             g = captures(Board, d, c1, c2);
         }

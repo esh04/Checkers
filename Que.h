@@ -28,6 +28,6 @@ Queue createQueue();
 void enQueue(Queue q, coordinates a, coordinates b, char c);
 Que deQueue(Queue q);
 void pull(Queue q);
-void Reviewgame(Queue q,int n);
+void Reviewgame(Queue q, int n);
 
 #endif
