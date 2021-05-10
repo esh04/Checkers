@@ -43,4 +43,4 @@ them
 
 P.S. Press Enter after every input
 
-# Enjoy the game!!
+# Enjoy the game!
