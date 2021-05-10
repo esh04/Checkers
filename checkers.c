@@ -466,6 +466,9 @@ coordinates *double_captures(checkersGrid Board[][SIZE], char turn, coordinates 
     char y = c.y + 'A';
     int size = isvalid(Board, turn, y, x, y + 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x + 2) + isvalid(Board, turn, y, x, y - 2, x - 2) + isvalid(Board, turn, y, x, y + 2, x - 2);
     coordinates *final_coordinates;
+    //These are all the coordinates where captures will be taking place 
+    // Check the coordinates diagonally situated from the current square by two squares, and check for the existence of captures 
+    // x + 2, y + 2 | x - 2, y - 2 | x + 2, y - 2 | x - 2, y + 2 are all checked, now all that is left to check is to see if the captures can be done, upon which the size of the final_coordinates array increases
     final_coordinates = (coordinates *)malloc(sizeof(coordinates) * size);
     if (isvalid(Board, turn, y, x, y + 2, x + 2) == 1)
     {
